@@ -1,0 +1,244 @@
+import React, { useState, useEffect } from "react";
+import { Button, Form, Input, DatePicker } from "antd";
+import { BiLeftArrowAlt } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+// import {
+//   useFetchAdminProfileQuery,
+//   useUpdateAdminProfileMutation,
+// } from "../../../redux/apiSlices/authSlice";
+import logo from "../../../assets/randomProfile2.jpg";
+import toast from "react-hot-toast";
+import rentMeLogo from "../../../assets/navLogo.png";
+import { ProfileImg } from "../../../assets/assets";
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
+const PersonalInfo = () => {
+  const [contact, setContact] = useState("");
+  const [imgURL, setImgURL] = useState();
+  const [file, setFile] = useState(null);
+  const [form] = Form.useForm();
+
+
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
+  const isLoading = false;
+
+  // const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
+  // const [updateAdminProfile] = useUpdateAdminProfileMutation();
+
+  const fetchAdminProfile = [];
+
+  const adminData = fetchAdminProfile?.data;
+
+  useEffect(() => {
+    if (adminData) {
+      form.setFieldsValue({
+        name: adminData?.name,
+        email: adminData?.email,
+        address: adminData?.address,
+        phone: adminData?.contact,
+      });
+      setImgURL(`${baseUrl}${adminData?.profileImg}`);
+      setContact(adminData?.contact);
+    }
+  }, [form, adminData]);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <img src={rentMeLogo} alt="" />
+      </div>
+    );
+  }
+
+  const onChangeImage = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const imgUrl = URL.createObjectURL(selectedFile);
+      setImgURL(imgUrl);
+      setFile(selectedFile);
+    }
+  };
+
+  const onFinish = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("address", values.address);
+      formData.append("contact", contact);
+
+      if (file) {
+        formData.append("image", file);
+      } else {
+        formData.append("imageUrl", imgURL);
+      }
+
+      const response = await updateAdminProfile(formData);
+
+      if (response.data) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Error updating form:", error);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  return (
+    <div>
+      <div className="flex bg-white p-10 mt-10 rounded-2xl border gap-10 w-full">
+        {/* Profile Picture */}
+        <div>
+          <div className="flex flex-col items-center gap-10 px-20 py-12 rounded-xl justify-center">
+            <input
+              onChange={onChangeImage}
+              type="file"
+              id="img"
+              className="hidden"
+            />
+            <label
+              htmlFor="img"
+              className="relative w-48 h-48 cursor-pointer rounded-full border border-gray-700 bg-white bg-cover bg-center"
+              style={{ backgroundImage: `url(${imgURL ? imgURL : ProfileImg})` }}
+            >
+              <div className="absolute bottom-2 right-2 w-10 h-10 rounded-full border-2 border-gray-700 bg-gray-100 flex items-center justify-center">
+                <MdOutlineAddPhotoAlternate
+                  size={20}
+                  className="text-gray-700"
+                />
+              </div>
+            </label>
+          </div>
+        </div>
+        <div className="w-8/12">
+          {/* Input Form */}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <div className="grid grid-cols-2 gap-5">
+              {/* Form Column One */}
+              <div>
+                <Form.Item
+                  name="name"
+                  label="Your Name"
+                  rules={[{ required: true, message: "Please enter your name" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+
+                <Form.Item
+                  name="email"
+                  label="Email"
+                  rules={[
+                    { type: "email", message: "Please enter a valid email" },
+                    { required: true, message: "Please enter your email" },
+                  ]}
+                >
+                  <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+
+                <Form.Item
+                  name="dateofbirth"
+                  label="Date of Birth"
+                  rules={[{ required: true, message: "Date of Birth" }]}
+                >
+                  <DatePicker className="py-3 bg-gray-100 w-full rounded-xl" />
+                  {/* <DatePicker onChange={onChange} className="py-3 bg-gray-100 rounded-xl" /> */}
+                </Form.Item>
+
+                <Form.Item
+                  name="permanentaddress"
+                  label="Permanent Address"
+                  rules={[{ required: true, message: "Enter your Parmanent Address" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+                <Form.Item
+                  name="postalcode"
+                  label="Postal Code"
+                  rules={[{ required: true, message: "Your Postal Code" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+              </div>
+              {/* Form Column One */}
+              <div>
+                <Form.Item
+                  name="username"
+                  label="User Name"
+                  rules={[{ required: true, message: "Please enter your user name" }]}
+                >
+                  <Input disabled placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+
+                <Form.Item
+                  name="password"
+                  label="password"
+                >
+                  <Input disabled placeholder="* * * * * *" className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+                <Form.Item
+                  name="presentaddress"
+                  label="Present Address"
+                  rules={[{ required: true, message: "Enter Your Present Address" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+                <Form.Item
+                  name="city"
+                  label="City"
+                  rules={[{ required: true, message: "Please enter your City" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+                <Form.Item
+                  name="country"
+                  label="Country"
+                  rules={[{ required: true, message: "Please enter your Country" }]}
+                >
+                  <Input className="py-3 bg-gray-100 rounded-xl" />
+                </Form.Item>
+              </div>
+            </div>
+            {/* Submit Button */}
+            <div className="flex justify-end">
+            <Form.Item>
+              <Button
+                htmlType="submit"
+                block
+                style={{
+                  width: 178,
+                  height: 48,
+                  fontWeight: "400px",
+                  background: "#000000",
+                  color: "white",
+                }}
+                className="roboto-medium text-sm leading-4"
+              >
+                Save and Change
+              </Button>
+            </Form.Item>
+            </div>
+          </Form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PersonalInfo;
