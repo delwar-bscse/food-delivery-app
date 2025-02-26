@@ -15,6 +15,9 @@ export default {
         clrComplete: "#00006A",
         clrNormal: "#3557FF",
       },
+      boxShadow: {
+        'custom-card': '1px 1px 10px rgba(0, 0, 0, 0.10)',
+      },
     },
   },
   plugins: [],

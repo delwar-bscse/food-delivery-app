@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Table, Button, Space, Avatar } from "antd";
 import { Link } from "react-router-dom";
+
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { LuView } from "react-icons/lu";
 import randomImg from "../../assets/randomProfile2.jpg";
 
 const Users = () => {
@@ -14,160 +18,230 @@ const Users = () => {
         {
           id: "1",
           name: "John Doe",
-          email: "john@example.com",
           phoneNumber: "+123456789",
-          address: "123 Main St, Springfield",
-          totalServices: 12,
-          status: "VIP",
+          joined: "4th Sept, 2023",
+          earned: "30",
+          status: "active",
           profileImg: "https://randomuser.me/api/portraits/men/1.jpg",
-          fine: 50,
         },
         {
           id: "2",
           name: "Jane Smith",
-          email: "jane@example.com",
-          phoneNumber: "+987654321",
-          address: "456 Elm St, Springfield",
-          totalServices: 5,
-          status: "Regular",
-          profileImg: "https://randomuser.me/api/portraits/women/2.jpg",
+          phoneNumber: "+123456780",
+          joined: "4th Oct, 2024",
+          earned: "30",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/women/1.jpg",
         },
         {
           id: "3",
-          name: "Sam Wilson",
-          email: "sam@example.com",
-          phoneNumber: "+192837465",
-          address: "789 Oak St, Springfield",
-          totalServices: 3,
-          status: "New",
-          profileImg: "https://randomuser.me/api/portraits/men/3.jpg",
-          fine: 30,
+          name: "Alice Johnson",
+          phoneNumber: "+123456781",
+          joined: "15th Feb, 2023",
+          earned: "50",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/2.jpg",
         },
         {
           id: "4",
-          name: "Emily Johnson",
-          email: "emily@example.com",
-          phoneNumber: "+456789123",
-          address: "321 Pine St, Springfield",
-          totalServices: 8,
-          status: "VIP",
-          profileImg: "https://randomuser.me/api/portraits/women/4.jpg",
-          fine: 0,
+          name: "Bob Brown",
+          phoneNumber: "+123456782",
+          joined: "12th Dec, 2022",
+          earned: "70",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/2.jpg",
         },
         {
           id: "5",
-          name: "Michael Brown",
-          email: "michael@example.com",
-          phoneNumber: "+789456123",
-          address: "654 Maple St, Springfield",
-          totalServices: 6,
-          status: "Regular",
-          profileImg: "https://randomuser.me/api/portraits/men/5.jpg",
+          name: "Charlie Davis",
+          phoneNumber: "+123456783",
+          joined: "20th Jan, 2023",
+          earned: "90",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/3.jpg",
         },
         {
           id: "6",
-          name: "Sophia Davis",
-          email: "sophia@example.com",
-          phoneNumber: "+123987654",
-          address: "987 Birch St, Springfield",
-          totalServices: 7,
-          status: "New",
-          profileImg: "https://randomuser.me/api/portraits/women/6.jpg",
-          fine: 40,
+          name: "Diana Miller",
+          phoneNumber: "+123456784",
+          joined: "28th Mar, 2023",
+          earned: "120",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/3.jpg",
         },
         {
           id: "7",
-          name: "David Wilson",
-          email: "david@example.com",
-          phoneNumber: "+456321789",
-          address: "321 Cedar St, Springfield",
-          totalServices: 10,
-          status: "VIP",
-          profileImg: "https://randomuser.me/api/portraits/men/7.jpg",
+          name: "Edward Wilson",
+          phoneNumber: "+123456785",
+          joined: "19th Apr, 2022",
+          earned: "130",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/4.jpg",
         },
         {
           id: "8",
-          name: "Olivia Miller",
-          email: "olivia@example.com",
-          phoneNumber: "+789123456",
-          address: "654 Walnut St, Springfield",
-          totalServices: 9,
-          status: "Regular",
-          profileImg: "https://randomuser.me/api/portraits/women/8.jpg",
+          name: "Fiona Moore",
+          phoneNumber: "+123456786",
+          joined: "10th Oct, 2023",
+          earned: "110",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/4.jpg",
         },
         {
           id: "9",
-          name: "Liam Martinez",
-          email: "liam@example.com",
-          phoneNumber: "+123456987",
-          address: "987 Cedar St, Springfield",
-          totalServices: 4,
-          status: "New",
-          profileImg: "https://randomuser.me/api/portraits/men/9.jpg",
-          fine: 25,
+          name: "George Taylor",
+          phoneNumber: "+123456787",
+          joined: "5th Feb, 2023",
+          earned: "150",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/5.jpg",
         },
         {
           id: "10",
-          name: "Ava Hernandez",
-          email: "ava@example.com",
-          phoneNumber: "+456987123",
-          address: "321 Birch St, Springfield",
-          totalServices: 11,
-          status: "VIP",
-          profileImg: "https://randomuser.me/api/portraits/women/10.jpg",
+          name: "Hannah Lee",
+          phoneNumber: "+123456788",
+          joined: "15th May, 2023",
+          earned: "200",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/women/5.jpg",
         },
         {
           id: "11",
-          name: "James Anderson",
-          email: "james@example.com",
-          phoneNumber: "+789123789",
-          address: "654 Pine St, Springfield",
-          totalServices: 5,
-          status: "Regular",
-          profileImg: "https://randomuser.me/api/portraits/men/11.jpg",
+          name: "Ian Adams",
+          phoneNumber: "+1234567891",
+          joined: "3rd Aug, 2023",
+          earned: "250",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/6.jpg",
         },
         {
           id: "12",
-          name: "Isabella Garcia",
-          email: "isabella@example.com",
-          phoneNumber: "+123789456",
-          address: "987 Maple St, Springfield",
-          totalServices: 13,
-          status: "New",
-          profileImg: "https://randomuser.me/api/portraits/women/12.jpg",
+          name: "Julia Roberts",
+          phoneNumber: "+1234567892",
+          joined: "6th Nov, 2023",
+          earned: "270",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/6.jpg",
         },
         {
           id: "13",
-          name: "Lucas Martinez",
-          email: "lucas@example.com",
-          phoneNumber: "+456321654",
-          address: "321 Walnut St, Springfield",
-          totalServices: 6,
-          status: "VIP",
-          profileImg: "https://randomuser.me/api/portraits/men/13.jpg",
+          name: "Kevin Wright",
+          phoneNumber: "+1234567893",
+          joined: "12th Sept, 2023",
+          earned: "220",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/7.jpg",
         },
         {
           id: "14",
-          name: "Emma Harris",
-          email: "emma@example.com",
-          phoneNumber: "+789654321",
-          address: "654 Cedar St, Springfield",
-          totalServices: 7,
-          status: "Regular",
-          profileImg: "https://randomuser.me/api/portraits/women/14.jpg",
-          fine: 35,
+          name: "Lily Green",
+          phoneNumber: "+1234567894",
+          joined: "18th Apr, 2023",
+          earned: "310",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/7.jpg",
         },
         {
           id: "15",
-          name: "Ethan Thompson",
-          email: "ethan@example.com",
-          phoneNumber: "+123321456",
-          address: "987 Pine St, Springfield",
-          totalServices: 8,
-          status: "New",
-          profileImg: "https://randomuser.me/api/portraits/men/15.jpg",
+          name: "Michael Harris",
+          phoneNumber: "+1234567895",
+          joined: "27th Oct, 2023",
+          earned: "330",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/8.jpg",
         },
-      ],
+        {
+          id: "16",
+          name: "Nina Clark",
+          phoneNumber: "+1234567896",
+          joined: "1st Feb, 2024",
+          earned: "360",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/women/8.jpg",
+        },
+        {
+          id: "17",
+          name: "Oscar Lewis",
+          phoneNumber: "+1234567897",
+          joined: "9th Mar, 2023",
+          earned: "380",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/9.jpg",
+        },
+        {
+          id: "18",
+          name: "Paul Walker",
+          phoneNumber: "+1234567898",
+          joined: "10th Nov, 2023",
+          earned: "400",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/men/10.jpg",
+        },
+        {
+          id: "19",
+          name: "Quinn Scott",
+          phoneNumber: "+1234567899",
+          joined: "7th Oct, 2023",
+          earned: "420",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/11.jpg",
+        },
+        {
+          id: "20",
+          name: "Rachel King",
+          phoneNumber: "+1234567800",
+          joined: "22nd Dec, 2023",
+          earned: "450",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/9.jpg",
+        },
+        {
+          id: "21",
+          name: "Sam Young",
+          phoneNumber: "+1234567801",
+          joined: "19th Feb, 2024",
+          earned: "470",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/12.jpg",
+        },
+        {
+          id: "22",
+          name: "Tina Baker",
+          phoneNumber: "+1234567802",
+          joined: "30th Sept, 2023",
+          earned: "500",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/10.jpg",
+        },
+        {
+          id: "23",
+          name: "Ursula Mitchell",
+          phoneNumber: "+1234567803",
+          joined: "8th Mar, 2023",
+          earned: "520",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/11.jpg",
+        },
+        {
+          id: "24",
+          name: "Victor Robinson",
+          phoneNumber: "+1234567804",
+          joined: "11th Jan, 2024",
+          earned: "540",
+          status: "deactive",
+          profileImg: "https://randomuser.me/api/portraits/men/13.jpg",
+        },
+        {
+          id: "25",
+          name: "Wendy Harris",
+          phoneNumber: "+1234567805",
+          joined: "17th Nov, 2023",
+          earned: "560",
+          status: "active",
+          profileImg: "https://randomuser.me/api/portraits/women/12.jpg",
+        }
+      ]
+
     },
   };
 
@@ -204,24 +278,19 @@ const Users = () => {
       },
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Joined",
+      dataIndex: "joined",
+      key: "joined",
     },
     {
-      title: "Activity",
-      dataIndex: "totalServices",
-      key: "totalServices",
+      title: "Earned",
+      dataIndex: "earned",
+      key: "earned",
     },
     {
       title: "Status",
@@ -230,47 +299,27 @@ const Users = () => {
       render: (status) => {
         let color;
         switch (status) {
-          case "VIP":
-            color = "orange";
-            break;
-          case "Regular":
-            color = "blue";
-            break;
-          case "New":
+          case "active":
             color = "green";
+            break;
+          case "deactive":
+            color = "red";
             break;
           default:
-            color = "green";
+            color = "black";
         }
 
         return <span style={{ color }}>{status}</span>;
       },
     },
     {
-      title: "Fine",
-      dataIndex: "fine",
-      key: "fine",
-      render: (fine) =>
-        fine ? (
-          <span style={{ color: "red" }}>${fine}</span>
-        ) : (
-          <span className="text-green-700">No Fine</span>
-        ),
-    },
-    {
       title: "Actions",
       key: "actions",
-      render: (text, record) => (
-        <Space>
-          <Link to={`/user/profile/${record.id}`}>
-            <Button className="bg-[#FFF4E3] text-[#F3B806] border-none">
-              Details
-            </Button>
-          </Link>
-          <Button className="border border-red-600 text-red-700">
-            Restrict
-          </Button>
-        </Space>
+      render: (_, record) => (
+        <div className='flex justify-start items-center gap-3'>
+          <button className='text-white bg-yellow-500 p-1 rounded-sm'><LuView size={20} /></button>
+          <button className='text-white bg-red-500 p-1 rounded-sm'><RiDeleteBin5Line size={20} /></button>
+        </div>
       ),
     },
   ];

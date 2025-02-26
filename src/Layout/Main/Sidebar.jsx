@@ -70,7 +70,7 @@ const Sidebar = () => {
     {
       key: "/announcements",
       icon: <PiUsersThree size={24} />,
-      label: <Link to="/vendors">Announcements</Link>,
+      label: <Link to="/announcements">Announcements</Link>,
     },
     {
       key: "/view-reports",

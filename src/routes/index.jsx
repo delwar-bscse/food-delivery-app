@@ -41,6 +41,10 @@ import Services from "../Pages/Dashboard/Salon/Services";
 import Category from "../Pages/Dashboard/Salon/Category";
 import SubCategory from "../Pages/Dashboard/Salon/SubCategory";
 import Vendor from "../Pages/Dashboard/Vendor";
+import ViewRequest from "../Pages/Dashboard/ViewRequest";
+import Subscriptions from "../Pages/Dashboard/Subscriptions";
+import Announcements from "../Pages/Dashboard/Announcements";
+import OrderManagement from "../Pages/Dashboard/OrderManagement";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +88,22 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/order-management",
+        element: <OrderManagement />,
+      },
+      {
+        path: "/view-reports",
+        element: <ViewRequest />,
+      },
+      {
+        path: "/announcements",
+        element: <Announcements />,
+      },
+      {
+        path: "/subscriptions",
+        element: <Subscriptions />,
       },
       {
         path: "/vendors",
@@ -178,6 +198,10 @@ const router = createBrowserRouter([
         path: "/notification",
         element: <Notifications />,
       },
+      {
+        path: "*",
+        element: <NotFound/>,
+      }
     ],
   },
   {

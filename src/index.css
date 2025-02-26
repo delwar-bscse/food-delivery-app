@@ -99,9 +99,14 @@
 /* pagination style */
 .ant-pagination-item-active a {
   color: white !important;
-  background-color: #8b0000 !important;
+  background-color: #00006A !important;
 }
 
 .ant-switch-checked {
   background-color: #8b0000 !important;
 }
+
+.ant-table-cell {
+  vertical-align: top !important;
+}
+

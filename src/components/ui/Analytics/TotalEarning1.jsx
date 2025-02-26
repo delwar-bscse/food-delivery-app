@@ -89,7 +89,7 @@ export default class TotalEarning extends PureComponent {
   render() {
     return (
       <div className="w-full border-2 border-gray-300 rounded-2xl p-3">
-        <h4 className="text-2xl font-semibold text-gray-800 py-4">Area Charts</h4>
+        <h4 className="text-2xl font-semibold text-gray-800 py-4">Total Earning</h4>
         <ResponsiveContainer width="100%" height={400}>
           <AreaChart
             data={data}
