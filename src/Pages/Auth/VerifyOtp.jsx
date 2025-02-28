@@ -21,21 +21,24 @@ const VerifyOtp = () => {
   // const [resendOtp] = useResendOtpMutation(); // RTK Query mutation for resending OTP
 
   const onFinish = async () => {
-    try {
-      const response = await otpVerify({
-        email,
-        oneTimeCode: parseInt(otp),
-      }).unwrap();
+    console.log(otp);
+    navigate(`/auth/reset-password?email=${email}`);
 
-      if (response?.success) {
-        localStorage.setItem("Authorization", response.data);
-        navigate(`/auth/reset-password?email=${email}`);
-      } else {
-        console.error("OTP verification failed");
-      }
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-    }
+    // try {
+    //   const response = await otpVerify({
+    //     email,
+    //     oneTimeCode: parseInt(otp),
+    //   }).unwrap();
+
+    //   if (response?.success) {
+    //     localStorage.setItem("Authorization", response.data);
+    //     navigate(`/auth/reset-password?email=${email}`);
+    //   } else {
+    //     console.error("OTP verification failed");
+    //   }
+    // } catch (error) {
+    //   console.error("Error verifying OTP:", error);
+    // }
   };
 
   const handleResendEmail = async () => {

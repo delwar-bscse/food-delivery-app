@@ -8,38 +8,41 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
+  const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
 
-  // const [login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const onFinish = async (values) => {
-    try {
-      // console.log(values);
-      // const response = await login(values).unwrap();
-      // const { accessToken } = response?.data;
-      // const { refreshToken } = response?.data;
+    navigate("/");
+    // try {
+    //   console.log(values, "rememberMe: ", rememberMe);
+    //   const response = await login({mobileNumber:'01517166879'}).unwrap();
+    //   console.log(response?.data);
+    //   console.log("Token : ",response?.data?.token);
+    //   const { token } = response?.data;
+    //   // const { refreshToken } = response?.data;
 
-      if (values) {
-        // localStorage.setItem("authToken", accessToken);
-        // localStorage.setItem("refreshToken", refreshToken);
-        // Cookies.set("refreshToken", refreshToken);
-      } else {
-        // sessionStorage.setItem("authToken", accessToken);
-        // localStorage.setItem("refreshToken", refreshToken);
-        // Cookies.set("refreshToken", refreshToken);
-      }
+    //   if (values) {
+    //     localStorage.setItem("authToken", token);
+    //     // localStorage.setItem("refreshToken", refreshToken);
+    //     // Cookies.set("refreshToken", refreshToken);
+    //   } else {
+    //     // sessionStorage.setItem("authToken", token);
+    //     // localStorage.setItem("refreshToken", token);
+    //     // Cookies.set("refreshToken", refreshToken);
+    //   }
 
-      navigate("/");
-      toast.success("Login successful!");
-    } catch (error) {
-      toast.error(error || "An error occurred", {
-        style: {
-          fontSize: "18px",
-          padding: "20px",
-          maxWidth: "600px",
-        },
-      });
-    }
+    //   navigate("/");
+    //   toast.success("Login successful!");
+    // } catch (error) {
+    //   toast.error(error || "An error occurred", {
+    //     style: {
+    //       fontSize: "18px",
+    //       padding: "20px",
+    //       maxWidth: "600px",
+    //     },
+    //   });
+    // }
   };
 
   const onCheckboxChange = (e) => {

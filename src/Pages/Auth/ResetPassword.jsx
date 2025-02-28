@@ -13,21 +13,22 @@ const ResetPassword = () => {
   const onFinish = async (values) => {
     console.log({ email, ...values });
     const data = { email, ...values }; // Combine email and new password values into an object
+    navigate(`/auth/login`);
 
-    try {
-      const response = await resetPassword(data).unwrap();
-      console.log(response);
-      if (response?.success) {
-        message.success("Password updated successfully!");
-        navigate(`/auth/login`);
-      } else {
-        message.error(response?.message || "Failed to update password.");
-      }
-    } catch (error) {
-      message.error(
-        error?.data?.message || "An error occurred. Please try again."
-      );
-    }
+    // try {
+    //   const response = await resetPassword(data).unwrap();
+    //   console.log(response);
+    //   if (response?.success) {
+    //     message.success("Password updated successfully!");
+    //     navigate(`/auth/login`);
+    //   } else {
+    //     message.error(response?.message || "Failed to update password.");
+    //   }
+    // } catch (error) {
+    //   message.error(
+    //     error?.data?.message || "An error occurred. Please try again."
+    //   );
+    // }
   };
 
   return (

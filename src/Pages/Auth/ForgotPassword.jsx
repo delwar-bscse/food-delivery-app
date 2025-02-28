@@ -8,21 +8,23 @@ const ForgotPassword = () => {
   const [forgotPassword] = useForgotPasswordMutation(); // RTK Query hook
 
   const onFinish = async (values) => {
-    try {
-      // Trigger the RTK Query mutation with the email value
-      const response = await forgotPassword({ email: values.email }).unwrap();
+    console.log(values);
+    navigate(`/auth/verify-otp?email=${values.email}`);
+    // try {
+    //   // Trigger the RTK Query mutation with the email value
+    //   const response = await forgotPassword({ email: values.email }).unwrap();
 
-      // If the response is successful, navigate to the OTP page with email
-      if (response?.success) {
-        navigate(`/auth/verify-otp?email=${values.email}`);
-      } else {
-        // Handle failure, display error message if needed
-        console.error("Failed to send OTP:", response?.message);
-      }
-    } catch (error) {
-      // Handle RTK Query mutation error
-      console.error("Error:", error);
-    }
+    //   // If the response is successful, navigate to the OTP page with email
+    //   if (response?.success) {
+    //     navigate(`/auth/verify-otp?email=${values.email}`);
+    //   } else {
+    //     // Handle failure, display error message if needed
+    //     console.error("Failed to send OTP:", response?.message);
+    //   }
+    // } catch (error) {
+    //   // Handle RTK Query mutation error
+    //   console.error("Error:", error);
+    // }
   };
 
   return (

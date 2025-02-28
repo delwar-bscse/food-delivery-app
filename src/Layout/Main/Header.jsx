@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <div className="flex items-center gap-5 justify-end">
-      <Link to="/notification" className="h-fit mt-[10px] cursor-pointer">
+      <Link to="#" className="h-fit mt-[10px] cursor-pointer">
         <Badge count={5}>
           <FaRegBell color="#4E4E4E" size={24} />
         </Badge>

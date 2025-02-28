@@ -12,17 +12,17 @@ const Auth = () => {
     >
       <div
         style={{
-          backgroundImage: `url('${backgroundImage}')`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          opacity: 0.2,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1,
+          // backgroundImage: `url('${backgroundImage}')`,
+          // backgroundPosition: "center",
+          // backgroundRepeat: "no-repeat",
+          // backgroundSize: "cover",
+          // opacity: 0.2,
+          // position: "absolute",
+          // top: 0,
+          // left: 0,
+          // right: 0,
+          // bottom: 0,
+          // zIndex: 1,
         }}
       ></div>
 
@@ -35,7 +35,7 @@ const Auth = () => {
           position: "relative",
           zIndex: 2,
         }}
-        className="shadow-xl"
+        className="shadow-custom-card"
       >
         <Outlet />
       </div>

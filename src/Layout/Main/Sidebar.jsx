@@ -30,6 +30,7 @@ import { LuClipboardList } from "react-icons/lu";
 import { TbUserCircle } from "react-icons/tb";
 
 import { DeliveryLogo } from "../../assets/assets";
+import { LogOut } from "lucide-react";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -92,11 +93,11 @@ const Sidebar = () => {
       icon: <TbUserCircle size={24} />,
       label: <Link to="/profile">Edit Profile</Link>,
     },
-    // {
-    //   key: "/change-password",
-    //   icon: <TbUserCircle size={24} />,
-    //   label: <Link to="/change-password">Change Password</Link>,
-    // },
+    {
+      key: "/auth/login",
+      icon: <LogOut size={24} />,
+      label: <Link to="auth/login" >Logout</Link>,
+    },
   ];
 
   useEffect(() => {

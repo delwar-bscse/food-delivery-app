@@ -25,18 +25,30 @@ const GeneralStateSection = () => {
 
   const generalState = {
     totalTransections: 252,
-    totalRevenue: 120,
     totalUsers: 545,
-    totalOrders: 320
+    totalOrders: 320,
+    newUsers: 245,
+    newSubscribers: 120,
+    totalRevenue: 120,
+    newTransections: 252,
   };
 
 
   return (
-    <div className="grid md:grid-cols-4 gap-6">
-      <SubComponent title="Total Transections" value={generalState.totalTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
-      <SubComponent title="Total Revenue" value={generalState.totalRevenue} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
-      <SubComponent title="Total Users" value={generalState.totalUsers} icon={<FaUsers size={40} className="text-gray-700" />} />
-      <SubComponent title="Total Orders" value={generalState.totalOrders} icon={<RiShoppingBag2Fill size={40} className="text-gray-700" />} />
+    <div className="grid  grid-cols-4 gap-6">
+      <div className=" col-span-3 grid md:grid-cols-3 gap-6">
+        <SubComponent title="Total Transections" value={generalState.totalTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
+        <SubComponent title="Total Users" value={generalState.totalUsers} icon={<FaUsers size={40} className="text-gray-700" />} />
+        <SubComponent title="Total Orders" value={generalState.totalOrders} icon={<RiShoppingBag2Fill size={40} className="text-gray-700" />} />
+        <SubComponent title="New Users" value={generalState.newUsers} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
+        <SubComponent title="New Subscribers" value={generalState.newSubscribers} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
+        <SubComponent title="New Transactions" value={generalState.newTransections} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
+      </div>
+      <div className="bg-white rounded-2xl py-6 px-8 border-2 border-gray-400">
+        <div className="">
+          <h2 className="text-2xl text-base">Total Revenue</h2>
+        </div>
+      </div>
     </div>
   );
 };

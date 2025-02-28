@@ -1,5 +1,6 @@
 import { Form, Input } from "antd";
 import React from "react";
+import Timer from "../../../components/test/Timer";
 
 const ChangePassword = () => {
   const [form] = Form.useForm();
