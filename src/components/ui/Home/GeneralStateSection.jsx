@@ -2,7 +2,7 @@ import { FaUsers } from "react-icons/fa6";
 import { RiShoppingBag2Fill } from "react-icons/ri";
 import { PiCurrencyCircleDollarFill } from "react-icons/pi";
 import { GiReceiveMoney } from "react-icons/gi";
-import salongoLogo from "../../../assets/salon-go-logo.png";
+import { HiUsers } from "react-icons/hi";
 
 // Sub Component //
 const SubComponent = ({ title, value, icon }) => {
@@ -40,9 +40,9 @@ const GeneralStateSection = () => {
         <SubComponent title="Total Transections" value={generalState.totalTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
         <SubComponent title="Total Users" value={generalState.totalUsers} icon={<FaUsers size={40} className="text-gray-700" />} />
         <SubComponent title="Total Orders" value={generalState.totalOrders} icon={<RiShoppingBag2Fill size={40} className="text-gray-700" />} />
-        <SubComponent title="New Users" value={generalState.newUsers} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
-        <SubComponent title="New Subscribers" value={generalState.newSubscribers} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
-        <SubComponent title="New Transactions" value={generalState.newTransections} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
+        <SubComponent title="New Users" value={generalState.newUsers} icon={<HiUsers size={40} className="text-gray-700" />} />
+        <SubComponent title="New Subscribers" value={generalState.newSubscribers} icon={<HiUsers size={40} className="text-gray-700" />} />
+        <SubComponent title="New Transactions" value={generalState.newTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
       </div>
       <div className="bg-white rounded-2xl py-6 px-8 border-2 border-gray-400">
         <div className="">
