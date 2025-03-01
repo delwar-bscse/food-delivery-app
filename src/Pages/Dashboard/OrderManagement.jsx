@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Table, Tag, Select, Input, Button, Space } from 'antd';
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaCircle } from "react-icons/fa";
 import { LuView } from "react-icons/lu";
 import { ordersManagementData } from '../../datas/ordersManagementData';
 
@@ -21,9 +22,22 @@ const options = [
 ];
 
 const orderStatusColors = {
-    'In-Transit': 'blue',
-    Delivered: 'green',
-    Canceled: 'red',
+    pending: 'red',
+    requested: 'yellow',
+    accepted: 'orange',
+    in_transit: 'blue',
+    delivered: 'green',
+};
+const shippingTypeColors = {
+    truck: 'red',
+    car: 'skyblue',
+    bicycle: 'orange',
+    bike: 'blue',
+    person: 'green',
+};
+const senderTypeColors = {
+    'Non-Professional': 'orange',
+    Professional: 'green',
 };
 
 const columns = [
@@ -56,10 +70,19 @@ const columns = [
         key: 'deliveryperson',
     },
     {
-        title: 'SHIPPING TYPE',
-        dataIndex: 'shippingtype',
-        key: 'shippingtype',
-        render: (shippintype) => <p>${shippintype}</p>,
+        title: 'DELIVERY TYPE',
+        dataIndex: 'deliveryType',
+        key: 'deliveryType',
+        render: (deliveryType) => <p className='flex items-center gap-2'>
+            <span><FaCircle color={shippingTypeColors[deliveryType]} /></span>
+            <span>{deliveryType}</span>
+        </p>,
+    },
+    {
+        title: 'SENDER TYPE',
+        dataIndex: 'senderType',
+        key: 'senderType',
+        render: (senderType) => <Tag color={senderTypeColors[senderType]}>{senderType}</Tag>
     },
     {
         title: 'DATE',
@@ -82,7 +105,7 @@ const columns = [
 ];
 
 const OrderManagement = () => {
-    const [activeTab, setActiveTab] = useState('All');
+    const [activeTab, setActiveTab] = useState('all');
     const [tableData, setTableData] = useState(ordersManagementData);
     const [selectRow, setSelectRow] = useState('orderid');
     const [searchValue, setSearchValue] = useState("");
@@ -93,18 +116,24 @@ const OrderManagement = () => {
     console.log(selectRow);
     return (
         <div className='space-y-6'>
-            <div className='grid grid-cols-4 gap-4 bg-gray-200 rounded-full p-1'>
-                <button onClick={() => setActiveTab('All')} className={`${activeTab === 'All' && 'bg-white'} p-3 rounded-full`}>
+            <div className='grid grid-cols-6 gap-4 bg-gray-200 rounded-full p-1'>
+                <button onClick={() => setActiveTab('all')} className={`${activeTab === 'all' && 'bg-white'} p-3 rounded-full`}>
                     All
                 </button>
-                <button onClick={() => setActiveTab('In-Transit')} className={`${activeTab === 'In-Transit' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('pending')} className={`${activeTab === 'pending' && 'bg-white'} p-3 rounded-full`}>
+                    Pending
+                </button>
+                <button onClick={() => setActiveTab('requested')} className={`${activeTab === 'requested' && 'bg-white'} p-3 rounded-full`}>
+                    Requested
+                </button>
+                <button onClick={() => setActiveTab('accepted')} className={`${activeTab === 'accepted' && 'bg-white'} p-3 rounded-full`}>
+                    Accepted
+                </button>
+                <button onClick={() => setActiveTab('in_transit')} className={`${activeTab === 'in_transit' && 'bg-white'} p-3 rounded-full`}>
                     In-Transit
                 </button>
-                <button onClick={() => setActiveTab('Delivered')} className={`${activeTab === 'Delivered' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('delivered')} className={`${activeTab === 'delivered' && 'bg-white'} p-3 rounded-full`}>
                     Delivered
-                </button>
-                <button onClick={() => setActiveTab('Cancelled')} className={`${activeTab === 'Cancelled' && 'bg-white'} p-3 rounded-full`}>
-                    Cancelled
                 </button>
             </div>
             <>
@@ -127,17 +156,29 @@ const OrderManagement = () => {
                             style={{ width: '200px', height: '50px' }}
                             options={[
                                 {
-                                    value: 'In-Transit',
+                                    value: 'all',
+                                    label: 'All',
+                                },
+                                {
+                                    value: 'pending',
+                                    label: 'Pending',
+                                },
+                                {
+                                    value: 'requested',
+                                    label: 'Requested',
+                                },
+                                {
+                                    value: 'accepted',
+                                    label: 'Accepted',
+                                },
+                                {
+                                    value: 'in_transit',
                                     label: 'In-Transit',
                                 },
                                 {
-                                    value: 'Delivered',
+                                    value: 'delivered',
                                     label: 'Delivered',
-                                },
-                                {
-                                    value: 'Cancelled',
-                                    label: 'Cancelled',
-                                },
+                                }
                             ]}
                         />
                     </div> */}

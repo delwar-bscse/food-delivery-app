@@ -5,14 +5,14 @@ import { Outlet } from "react-router-dom";
 
 const Main = () => {
   return (
-    <div className="grid grid-cols-12">
+    <div className="flex">
       {/* side bar */}
-      <div className="col-span-2 h-screen bg-[#FFFFFF] w-full overflow-y-auto">
+      <div className="w-[300px] h-screen bg-[#FFFFFF] overflow-y-auto">
         <Sidebar />
       </div>
 
       {/* main container with header */}
-      <div className="col-span-10">
+      <div className="flex-1">
         <div className="h-[68px] flex items-center justify-end pr-5">
           <Header />
         </div>
