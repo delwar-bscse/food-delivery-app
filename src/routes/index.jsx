@@ -64,27 +64,26 @@ const router = createBrowserRouter([
         path: "/transactions",
         element: <Transactions />,
       },
-      {
-        path: "/add-banner",
-        element: <AddBanners />,
-      },
-      {
-        path: "/banners",
-        element: <Banners />,
-      },
-      {
-        path: "/update-banner/:id",
-        element: <EditBanners />,
-      },
+      // {
+      //   path: "/add-banner",
+      //   element: <AddBanners />,
+      // },
+      // {
+      //   path: "/banners",
+      //   element: <Banners />,
+      // },
+      // {
+      //   path: "/update-banner/:id",
+      //   element: <EditBanners />,
+      // },
       {
         path: "/user/profile/:id",
         element: <User />,
       },
-      {
-        path: "/barber/profile/:id",
-        element: <Vendor />,
-      },
-
+      // {
+      //   path: "/barber/profile/:id",
+      //   element: <Vendor />,
+      // },
       {
         path: "/users",
         element: <Users />,
@@ -105,27 +104,26 @@ const router = createBrowserRouter([
         path: "/subscriptions",
         element: <Subscriptions />,
       },
-      {
-        path: "/vendors",
-        element: <Vendors />,
-      },
-      {
-        path: "/services",
-        element: <Services />,
-      },
-      {
-        path: "/salon-category",
-        element: <Category />,
-      },
-      {
-        path: "/sub-category",
-        element: <SubCategory />,
-      },
-      {
-        path: "/our-transactions",
-        element: <OurTransactions />,
-      },
-
+      // {
+      //   path: "/vendors",
+      //   element: <Vendors />,
+      // },
+      // {
+      //   path: "/services",
+      //   element: <Services />,
+      // },
+      // {
+      //   path: "/salon-category",
+      //   element: <Category />,
+      // },
+      // {
+      //   path: "/sub-category",
+      //   element: <SubCategory />,
+      // },
+      // {
+      //   path: "/our-transactions",
+      //   element: <OurTransactions />,
+      // },
       // {
       //   path: "/promotion",
       //   element: <Promotion />,
@@ -168,10 +166,10 @@ const router = createBrowserRouter([
       //   element: <Subscription />,
       // },
 
-      {
-        path: "/privacy-policy",
-        element: <PrivacyPolicy />,
-      },
+      // {
+      //   path: "/privacy-policy",
+      //   element: <PrivacyPolicy />,
+      // },
       {
         path: "/terms-and-condition",
         element: <TermsAndCondition />,
@@ -184,12 +182,10 @@ const router = createBrowserRouter([
       //   path: "/press",
       //   element: <Press />,
       // },
-
-      {
-        path: "/change-password",
-        element: <ChangePassword />,
-      },
-
+      // {
+      //   path: "/change-password",
+      //   element: <ChangePassword />,
+      // },
       {
         path: "/profile",
         element: <AdminProfile />,
@@ -216,18 +212,18 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
-      {
-        path: "forgot-password",
-        element: <ForgotPassword />,
-      },
-      {
-        path: "verify-otp",
-        element: <VerifyOtp />,
-      },
-      {
-        path: "reset-password",
-        element: <ResetPassword />,
-      },
+      // {
+      //   path: "forgot-password",
+      //   element: <ForgotPassword />,
+      // },
+      // {
+      //   path: "verify-otp",
+      //   element: <VerifyOtp />,
+      // },
+      // {
+      //   path: "reset-password",
+      //   element: <ResetPassword />,
+      // },
     ],
   },
   {

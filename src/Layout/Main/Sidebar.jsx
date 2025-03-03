@@ -84,9 +84,9 @@ const Sidebar = () => {
       label: <Link to="/subscriptions">Subscriptions</Link>,
     },
     {
-      key: "/terms-conditions",
+      key: "/terms-and-condition",
       icon: <LuClipboardList size={24} />,
-      label: <Link to="/terms-conditions">Terms & Conditions</Link>,
+      label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
     },
     {
       key: "/edit-profile",
