@@ -8,46 +8,49 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
+  // const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
 
   const [login] = useLoginMutation();
 
+  const demoLogInfo = {
+    email: "admin@example.com",
+    password: "SecurePass1234"
+  }
+
   const onFinish = async (values) => {
-    navigate("/");
-    // try {
-    //   console.log(values, "rememberMe: ", rememberMe);
-    //   const response = await login({mobileNumber:'01517166879'}).unwrap();
-    //   console.log(response?.data);
-    //   console.log("Token : ",response?.data?.token);
-    //   const { token } = response?.data;
-    //   // const { refreshToken } = response?.data;
+    try {
+      console.log(values);
+      const response = await login(values).unwrap();
+      const accessToken = response?.data?.token;
+      // const { refreshToken } = response?.data;
+      const refreshToken = response?.data?.token;
 
-    //   if (values) {
-    //     localStorage.setItem("authToken", token);
-    //     // localStorage.setItem("refreshToken", refreshToken);
-    //     // Cookies.set("refreshToken", refreshToken);
-    //   } else {
-    //     // sessionStorage.setItem("authToken", token);
-    //     // localStorage.setItem("refreshToken", token);
-    //     // Cookies.set("refreshToken", refreshToken);
-    //   }
+      if (values) {
+        localStorage.setItem("authToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        Cookies.set("refreshToken", refreshToken);
+      } else {
+        sessionStorage.setItem("authToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        Cookies.set("refreshToken", refreshToken);
+      }
 
-    //   navigate("/");
-    //   toast.success("Login successful!");
-    // } catch (error) {
-    //   toast.error(error || "An error occurred", {
-    //     style: {
-    //       fontSize: "18px",
-    //       padding: "20px",
-    //       maxWidth: "600px",
-    //     },
-    //   });
-    // }
+      navigate("/");
+      toast.success("Login successful!");
+    } catch (error) {
+      toast.error(error || "An error occurred", {
+        style: {
+          fontSize: "18px",
+          padding: "20px",
+          maxWidth: "600px",
+        },
+      });
+    }
   };
 
-  const onCheckboxChange = (e) => {
-    setRememberMe(e.target.checked); // Update checkbox state
-  };
+  // const onCheckboxChange = (e) => {
+  //   setRememberMe(e.target.checked); // Update checkbox state
+  // };
 
   return (
     <div>
@@ -87,24 +90,6 @@ const Login = () => {
               boxShadow: "none",
             }}
           />
-        </Form.Item>
-
-        {/* Remember Me and Forgot Password */}
-        <Form.Item style={{ marginBottom: 0 }}>
-          <div className="flex justify-between items-center">
-            {/* Remember Me Checkbox */}
-            <Checkbox onChange={onCheckboxChange} className="text-sm">
-              Remember Me
-            </Checkbox>
-
-            {/* Forgot Password Link */}
-            <a
-              href="/auth/forgot-password"
-              className="text-sm text-blue-500 hover:text-blue-700"
-            >
-              Forgot Password?
-            </a>
-          </div>
         </Form.Item>
 
         {/* Submit Button */}

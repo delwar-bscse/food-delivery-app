@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-// import {
-//   useFetchAdminProfileQuery,
-//   useUpdateAdminProfileMutation,
-// } from "../../../redux/apiSlices/authSlice";
+import {
+  useFetchAdminProfileQuery,
+  useUpdateAdminProfileMutation,
+} from "../../../redux/apiSlices/authSlice";
 import logo from "../../../assets/randomProfile2.jpg";
 import toast from "react-hot-toast";
 import rentMeLogo from "../../../assets/navLogo.png";
@@ -30,7 +30,7 @@ const PersonalInfo = () => {
   const isLoading = false;
 
   // const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
-  // const [updateAdminProfile] = useUpdateAdminProfileMutation();
+  const [updateAdminProfile] = useUpdateAdminProfileMutation();
 
   const fetchAdminProfile = [];
 
@@ -67,25 +67,28 @@ const PersonalInfo = () => {
   };
 
   const onFinish = async (values) => {
+    console.log("Success:", values);
     try {
       const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("address", values.address);
-      formData.append("contact", contact);
+      formData.append("name", values?.name);
+      formData.append("dob", values?.dob);
+      formData.append("permanentAddress", values?.permanentAddress);
+      formData.append("postalCode", values?.postalCode);
+      formData.append("username", values?.username);
 
       if (file) {
         formData.append("image", file);
       } else {
-        formData.append("imageUrl", imgURL);
+        formData.append("image", imgURL);
       }
 
       const response = await updateAdminProfile(formData);
+      // const response = await updateAdminProfile();
 
-      if (response.data) {
-        toast.success(response?.data?.message);
+      if (response?.data) {
+        toast.success("Success updating form:",response?.data?.message);
       } else {
-        toast.error(response?.data?.message);
+        toast.error("Error updating form:",response?.data?.message);
       }
     } catch (error) {
       console.error("Error updating form:", error);
@@ -136,7 +139,6 @@ const PersonalInfo = () => {
                 <Form.Item
                   name="name"
                   label="Your Name"
-                  rules={[{ required: true, message: "Please enter your name" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
@@ -146,32 +148,28 @@ const PersonalInfo = () => {
                   label="Email"
                   rules={[
                     { type: "email", message: "Please enter a valid email" },
-                    { required: true, message: "Please enter your email" },
                   ]}
                 >
-                  <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
+                  <Input disabled className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
 
                 <Form.Item
-                  name="dateofbirth"
+                  name="dob"
                   label="Date of Birth"
-                  rules={[{ required: true, message: "Date of Birth" }]}
                 >
                   <DatePicker className="py-3 bg-gray-100 w-full rounded-xl" />
                   {/* <DatePicker onChange={onChange} className="py-3 bg-gray-100 rounded-xl" /> */}
                 </Form.Item>
 
                 <Form.Item
-                  name="permanentaddress"
+                  name="permanentAddress"
                   label="Permanent Address"
-                  rules={[{ required: true, message: "Enter your Parmanent Address" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
                 <Form.Item
-                  name="postalcode"
+                  name="postalCode"
                   label="Postal Code"
-                  rules={[{ required: true, message: "Your Postal Code" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
@@ -181,35 +179,31 @@ const PersonalInfo = () => {
                 <Form.Item
                   name="username"
                   label="User Name"
-                  rules={[{ required: true, message: "Please enter your user name" }]}
                 >
-                  <Input disabled placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
+                  <Input placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
 
                 <Form.Item
-                  name="password"
-                  label="password"
+                  name="contact"
+                  label="Contact"
                 >
-                  <Input disabled placeholder="* * * * * *" className="py-3 bg-gray-100 rounded-xl" />
+                  <Input placeholder="Add your phone number" className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
                 <Form.Item
                   name="presentaddress"
                   label="Present Address"
-                  rules={[{ required: true, message: "Enter Your Present Address" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
                 <Form.Item
                   name="city"
                   label="City"
-                  rules={[{ required: true, message: "Please enter your City" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
                 <Form.Item
                   name="country"
                   label="Country"
-                  rules={[{ required: true, message: "Please enter your Country" }]}
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>

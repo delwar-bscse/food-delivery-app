@@ -1,12 +1,20 @@
 import { Form, Input } from "antd";
 import React from "react";
 import Timer from "../../../components/test/Timer";
+import { useChangePasswordMutation } from "../../../redux/apiSlices/authSlice";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ChangePassword = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  const [changePassword] = useChangePasswordMutation();
 
   const handleChangePassword = (values) => {
     console.log(values);
+    changePassword(values);
+    toast.success("Password changed successfully!");
   };
 
   return (
@@ -19,7 +27,7 @@ const ChangePassword = () => {
         className="w-full lg:w-1/2"
       >
         <Form.Item
-          name="current_password"
+          name="currentPassword"
           label={<p className="block">Current Password</p>}
           rules={[
             {
@@ -36,9 +44,9 @@ const ChangePassword = () => {
         </Form.Item>
 
         <Form.Item
-          name="new_password"
+          name="newPassword"
           label={<p className="block">New Password</p>}
-          dependencies={["current_password"]}
+          dependencies={["currentPassword"]}
           hasFeedback
           rules={[
             {
@@ -47,7 +55,7 @@ const ChangePassword = () => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("current_password") === value) {
+                if (!value || getFieldValue("currentPassword") === value) {
                   return Promise.reject(
                     new Error(
                       "The new password and current password do not match!"
@@ -67,9 +75,9 @@ const ChangePassword = () => {
         </Form.Item>
 
         <Form.Item
-          name="confirm_password"
+          name="confirmPassword"
           label={<p className="block">Re-Type Password</p>}
-          dependencies={["new_password"]}
+          dependencies={["newPassword"]}
           hasFeedback
           rules={[
             {
@@ -78,7 +86,7 @@ const ChangePassword = () => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("new_password") === value) {
+                if (!value || getFieldValue("newPassword") === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(

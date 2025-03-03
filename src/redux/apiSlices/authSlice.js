@@ -6,7 +6,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "auth/verify-email",
+          url: "/verify-email",
           body: data,
         };
       },
@@ -15,7 +15,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/auth/login",
+          url: "/login",
           body: data,
         };
       },
@@ -31,7 +31,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "auth/forget-password",
+          url: "/forget-password",
           body: data,
         };
       },
@@ -40,7 +40,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/auth/reset-password",
+          url: "/reset-password",
           body: data,
           headers: {
             Authorization: localStorage.getItem("Authorization"),
@@ -52,8 +52,8 @@ const authSlice = api.injectEndpoints({
     changePassword: builder.mutation({
       query: (value) => {
         return {
-          method: "POST",
-          url: "/auth/change-password",
+          method: "PUT",
+          url: "/change-password",
           body: value,
         };
       },
@@ -63,12 +63,12 @@ const authSlice = api.injectEndpoints({
     updateProfile: builder.mutation({
       query: (data) => {
         return {
-          method: "POST",
-          url: "/auth/update-profile",
+          method: "PUT",
+          url: "/update-profile",
           body: data,
           headers: {
             Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
+              localStorage.getItem("authToken")
             )}`,
           },
         };
@@ -78,14 +78,9 @@ const authSlice = api.injectEndpoints({
     updateAdminProfile: builder.mutation({
       query: (data) => {
         return {
-          method: "PATCH",
-          url: "/admin/profile",
-          body: data,
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
+          method: "PUT",
+          url: "/profile/67c540faea9de704ff1e4034",
+          body: data
         };
       },
       invalidatesTags: ["AdminData"],
@@ -95,7 +90,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/auth/get-profile",
+          url: "/get-profile",
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -113,7 +108,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/admin/profile",
+          url: "/profile",
         };
       },
     }),

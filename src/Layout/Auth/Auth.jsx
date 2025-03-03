@@ -12,22 +12,6 @@ const Auth = () => {
     >
       <div
         style={{
-          // backgroundImage: `url('${backgroundImage}')`,
-          // backgroundPosition: "center",
-          // backgroundRepeat: "no-repeat",
-          // backgroundSize: "cover",
-          // opacity: 0.2,
-          // position: "absolute",
-          // top: 0,
-          // left: 0,
-          // right: 0,
-          // bottom: 0,
-          // zIndex: 1,
-        }}
-      ></div>
-
-      <div
-        style={{
           background: "#ffffff",
           padding: 30,
           borderRadius: 10,
