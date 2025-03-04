@@ -24,13 +24,16 @@ const Login = () => {
       const accessToken = response?.data?.token;
       // const { refreshToken } = response?.data;
       const refreshToken = response?.data?.token;
+      const adminRole = response?.data?.admin?.role;
 
       if (values) {
         localStorage.setItem("authToken", accessToken);
+        localStorage.setItem("adminRole", adminRole);
         localStorage.setItem("refreshToken", refreshToken);
         Cookies.set("refreshToken", refreshToken);
       } else {
         sessionStorage.setItem("authToken", accessToken);
+        localStorage.setItem("adminRole", adminRole);
         localStorage.setItem("refreshToken", refreshToken);
         Cookies.set("refreshToken", refreshToken);
       }

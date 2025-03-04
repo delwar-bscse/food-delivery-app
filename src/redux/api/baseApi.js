@@ -44,9 +44,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       if (refreshResult?.data?.data) {
         // Save the new access token to localStorage
         localStorage.removeItem("authToken");
+        localStorage.removeItem("adminRole");
         localStorage.setItem(
           "authToken",
           refreshResult?.data?.data?.accessToken
+        );
+        localStorage.setItem(
+          "adminRole",
+          refreshResult?.data?.admin?.role
         );
 
         // Retry the original request with the new token
@@ -55,6 +60,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         // Refresh token failed or expired, log out the user
         console.error("Refresh token invalid or expired. Logging out...");
         localStorage.removeItem("authToken");
+        localStorage.removeItem("adminRole");
         localStorage.removeItem("refreshToken");
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("refreshToken");
@@ -82,4 +88,4 @@ export const api = createApi({
 });
 
 // Export the image URL as a constant
-export const imageUrl = "http://206.189.231.81:5000";
+export const imageUrl = "http://10.0.70.208:3000";

@@ -41,6 +41,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("adminRole");
     localStorage.removeItem("refreshToken");
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("refreshToken");
@@ -96,7 +97,7 @@ const Sidebar = () => {
     {
       key: "/auth/login",
       icon: <LogOut size={24} />,
-      label: <Link to="auth/login" >Logout</Link>,
+      label: <button onClick={handleLogout}>Logout</button>,
     },
   ];
 

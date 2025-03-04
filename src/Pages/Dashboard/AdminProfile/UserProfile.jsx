@@ -13,6 +13,8 @@ import logo from "../../../assets/randomProfile2.jpg";
 import toast from "react-hot-toast";
 import rentMeLogo from "../../../assets/navLogo.png";
 import { ProfileImg } from "../../../assets/assets";
+import { imageUrl } from "../../../redux/api/baseApi";
+import moment from "moment/moment";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -27,25 +29,26 @@ const PersonalInfo = () => {
     console.log(date, dateString);
   };
 
-  const isLoading = false;
+  // const isLoading = false;
 
-  // const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
+  const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
   const [updateAdminProfile] = useUpdateAdminProfileMutation();
 
-  const fetchAdminProfile = [];
+  // const fetchAdminProfile = [];
 
   const adminData = fetchAdminProfile?.data;
 
   useEffect(() => {
     if (adminData) {
       form.setFieldsValue({
-        name: adminData?.name,
+        name: adminData?.fullName,
         email: adminData?.email,
-        address: adminData?.address,
-        phone: adminData?.contact,
+        dob: adminData?.dob ? moment(adminData?.dob) : null,
+        permanentAddress: adminData?.permanentAddress,
+        postalCode: adminData?.postalCode,
+        username: adminData?.username,
       });
-      setImgURL(`${baseUrl}${adminData?.profileImg}`);
-      setContact(adminData?.contact);
+      setImgURL(adminData?.profileImage?.startsWith("http") ? adminData?.profileImage : `${imageUrl}${adminData?.profileImage}`);
     }
   }, [form, adminData]);
 
@@ -70,11 +73,11 @@ const PersonalInfo = () => {
     console.log("Success:", values);
     try {
       const formData = new FormData();
-      formData.append("name", values?.name);
-      formData.append("dob", values?.dob);
-      formData.append("permanentAddress", values?.permanentAddress);
-      formData.append("postalCode", values?.postalCode);
-      formData.append("username", values?.username);
+      values?.name && formData.append("name", values?.name);
+      values?.dob && formData.append("dob", values?.dob);
+      values?.permanentAddress && formData.append("permanentAddress", values?.permanentAddress);
+      values?.postalCode && formData.append("postalCode", values?.postalCode);
+      values?.username && formData.append("username", values?.username);
 
       if (file) {
         formData.append("image", file);
@@ -146,9 +149,6 @@ const PersonalInfo = () => {
                 <Form.Item
                   name="email"
                   label="Email"
-                  rules={[
-                    { type: "email", message: "Please enter a valid email" },
-                  ]}
                 >
                   <Input disabled className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
