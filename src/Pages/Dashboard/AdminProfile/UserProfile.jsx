@@ -31,7 +31,7 @@ const PersonalInfo = () => {
 
   // const isLoading = false;
 
-  const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
+  const { data: fetchAdminProfile, isLoading, refetch } = useFetchAdminProfileQuery();
   const [updateAdminProfile] = useUpdateAdminProfileMutation();
 
   // const fetchAdminProfile = [];
@@ -90,6 +90,7 @@ const PersonalInfo = () => {
 
       if (response?.data) {
         toast.success("Success updating form:",response?.data?.message);
+        refetch();
       } else {
         toast.error("Error updating form:",response?.data?.message);
       }

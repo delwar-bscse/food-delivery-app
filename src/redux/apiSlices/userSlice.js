@@ -14,7 +14,16 @@ const userSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/user",
+          url: "/users",
+        };
+      },
+    }),
+    updateStatus: builder.mutation({
+      query: (data) => {
+        return {
+          method: "POST",
+          url: "/users/hold",
+          body: data
         };
       },
     }),
@@ -40,6 +49,7 @@ const userSlice = api.injectEndpoints({
 export const {
   useAdminQuery,
   useUsersQuery,
+  useUpdateStatusMutation,
   useVendorsQuery,
   useUserByIdQuery,
 } = userSlice;
