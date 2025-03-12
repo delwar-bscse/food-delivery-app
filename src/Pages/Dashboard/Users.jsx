@@ -5,18 +5,33 @@ import { LuView } from "react-icons/lu";
 import randomImg from "../../assets/randomProfile2.jpg";
 import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
 
+import { Pagination } from 'antd';
+
 const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [singleUser, setSingleUser] = useState("");
   const [pageSize, setPageSize] = useState(10);
+  const [current, setCurrent] = useState(1);
 
   const [updateStatus] = useUpdateStatusMutation();
-  const { data: allUsers, isLoading, refetch } = useUsersQuery();
-  const dataSource = allUsers?.data?.map((user, index) => ({
+  const { data: usersData, isLoading, refetch } = useUsersQuery({
+    page: current
+  });
+
+
+  const onChange = (page) => {
+    console.log(page);
+    setCurrent(page);
+    refetch({
+      page: page
+    });
+  };
+
+  // console.log("Backend Data", usersData?.data?.users);
+  const dataSource = usersData?.data?.users?.map((user, index) => ({
     ...user,
     key: user.id || index.toString(),  // Use `id` if available, otherwise fallback to index
   }));
-  // console.log("Backend Data", allUsers?.data);
 
   const showModal = (record) => {
     setSingleUser(record);
@@ -29,7 +44,7 @@ const Users = () => {
     setIsModalOpen(false);
   };
 
-  const handleUpdateStatus = async(record) => {
+  const handleUpdateStatus = async (record) => {
     await updateStatus({
       userId: record._id,
       isRestricted: record.isRestricted ? false : true
@@ -121,9 +136,13 @@ const Users = () => {
       <Table
         columns={columns}
         dataSource={dataSource}
-        pagination={{ pageSize, onChange: () => setPageSize() }}
-        scroll={{ x: 1000 }}
+        // pagination={{ pageSize, onChange: () => setPageSize() }}
+        // scroll={{ x: 1000 }}
+        pagination={false}
       />
+      <div className="flex justify-center py-6">
+        <Pagination current={usersData?.data?.currentPage} onChange={onChange} total={usersData?.data?.totalUsers} />
+      </div>
     </>
   );
 };

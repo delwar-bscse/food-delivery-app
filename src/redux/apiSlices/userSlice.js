@@ -11,10 +11,10 @@ const userSlice = api.injectEndpoints({
       },
     }),
     users: builder.query({
-      query: () => {
+      query: ({page}) => {
         return {
           method: "GET",
-          url: "/users",
+          url: `/users?page=${page}`,
         };
       },
     }),

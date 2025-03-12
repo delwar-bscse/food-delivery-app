@@ -76,11 +76,11 @@ const authSlice = api.injectEndpoints({
       invalidatesTags: ["AdminData"],
     }),
     updateAdminProfile: builder.mutation({
-      query: (data) => {
+      query: ({formData, id}) => {
         return {
           method: "PUT",
-          url: "/profile/67c540faea9de704ff1e4034",
-          body: data
+          url: `/profile/${id}`,
+          body: formData
         };
       },
       invalidatesTags: ["AdminData"],

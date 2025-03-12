@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 import { FaRegBell } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import profileImage from "../../assets/randomProfile2.jpg";
 import { ProfileImg } from "../../assets/assets";
 
 const Header = () => {
+  const [imageUrlNew, setImageUrlNew] = useState(null);
   const { data: userData, isLoading } = useFetchAdminProfileQuery();
   if (isLoading) {
     return (
@@ -19,11 +20,12 @@ const Header = () => {
     );
   }
 
-  const imgUrl = imageUrl
-  console.log(imgUrl)
-
   const user = userData?.data;
-  console.log(user?.profileImage);
+  // console.log(user?.profileImage);
+  
+  const imgUrl = user?.profileImage?.startsWith("http") ? user?.profileImage : `${imageUrl}${user?.profileImage}`;
+
+  
   return (
     <div className="flex items-center gap-5 justify-end">
       <Link to="#" className="h-fit mt-[10px] cursor-pointer">
@@ -39,7 +41,7 @@ const Header = () => {
           height: 45,
         }} 
         className="clip" 
-        src={(user?.profileImage?.startsWith("http") ? user?.profileImage : `${imgUrl}${user?.profileImage}` || ProfileImg)} alt="profile" 
+        src={ProfileImg} alt="profile" 
         />
         <div className="flex items-center gap-2">
           <p className="text-xl">{user?.fullName

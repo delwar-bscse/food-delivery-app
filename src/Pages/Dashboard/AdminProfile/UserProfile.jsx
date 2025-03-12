@@ -20,7 +20,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const PersonalInfo = () => {
   const [contact, setContact] = useState("");
-  const [imgURL, setImgURL] = useState();
+  const [imgURL, setImgURL] = useState(null);
   const [file, setFile] = useState(null);
   const [form] = Form.useForm();
 
@@ -37,6 +37,7 @@ const PersonalInfo = () => {
   // const fetchAdminProfile = [];
 
   const adminData = fetchAdminProfile?.data;
+  console.log(adminData?.profileImage);
 
   useEffect(() => {
     if (adminData) {
@@ -48,7 +49,7 @@ const PersonalInfo = () => {
         postalCode: adminData?.postalCode,
         username: adminData?.username,
       });
-      setImgURL(adminData?.profileImage?.startsWith("http") ? adminData?.profileImage : `${imageUrl}${adminData?.profileImage}`);
+      // adminData?.profileImage && setImgURL(adminData?.profileImage?.startsWith("http") ? adminData?.profileImage : `${imageUrl}${adminData?.profileImage}`);
     }
   }, [form, adminData]);
 
@@ -79,13 +80,13 @@ const PersonalInfo = () => {
       values?.postalCode && formData.append("postalCode", values?.postalCode);
       values?.username && formData.append("username", values?.username);
 
-      if (file) {
-        formData.append("image", file);
-      } else {
-        formData.append("image", imgURL);
-      }
+      // if (file) {
+      //   formData.append("image", file);
+      // } else {
+      //   formData.append("image", imgURL);
+      // }
 
-      const response = await updateAdminProfile(formData);
+      const response = await updateAdminProfile({formData, id: adminData?._id});
       // const response = await updateAdminProfile();
 
       if (response?.data) {
