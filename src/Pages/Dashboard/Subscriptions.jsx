@@ -33,7 +33,7 @@ const Subcriptions = () => {
           <div key={item?._id} className='flex flex-col items-center gap-3 py-16 shadow-custom-card rounded-2xl bg-white bg-center bg-cover bg-no-repeat' style={{backgroundImage: `url(${subscriptionPattern})`}}>
             <p className='font-semibold text-xl'>{item?.type}</p>
             <span className='text-gray-400'>Monthly Charge</span>
-            <p className='text-5xl font-semibold text-blue-600'>{item?.price}</p>
+            <p className='text-5xl font-semibold text-blue-600'>${item?.price}</p>
             {/* <ul className='flex flex-col gap-8 items-center my-5 py-5 border-y-2 border-gray-200 text-gray-500'>
               {item?.facilities?.map((feature, index) => (
                 <li key={index}>{feature}</li>

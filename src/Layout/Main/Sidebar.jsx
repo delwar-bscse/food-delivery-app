@@ -28,6 +28,7 @@ import { RiFileList2Line } from "react-icons/ri";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { LuClipboardList } from "react-icons/lu";
 import { TbUserCircle } from "react-icons/tb";
+import { AiOutlineSound } from "react-icons/ai";
 
 import { DeliveryLogo } from "../../assets/assets";
 import { LogOut } from "lucide-react";
@@ -71,7 +72,7 @@ const Sidebar = () => {
     },
     {
       key: "/announcements",
-      icon: <PiUsersThree size={24} />,
+      icon: <AiOutlineSound size={24} />,
       label: <Link to="/announcements">Announcements</Link>,
     },
     {
