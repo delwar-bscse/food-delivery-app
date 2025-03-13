@@ -3,22 +3,14 @@ import { api } from "../api/baseApi";
 const orderSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     orders: builder.query({
-      query: () => {
+      query: ({status,page}) => {
         return {
           method: "GET",
-          url: "/dashboard/orders",
-        };
-      },
-    }),
-    orderProgress: builder.query({
-      query: () => {
-        return {
-          method: "GET",
-          url: "/dashboard/order-progress",
+          url: `/parcel-status?status=${status}&page=${page}`,
         };
       },
     }),
   }),
 });
 
-export const { useOrdersQuery, useOrderProgressQuery } = orderSlice;
+export const { useOrdersQuery } = orderSlice;

@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
-import { Table, Tag, Select, Input, Button, Space } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Table, Tag, Select, Input, Button, Space, Pagination } from 'antd';
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import { LuView } from "react-icons/lu";
 import { ordersManagementData } from '../../datas/ordersManagementData';
+import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
+import { render } from 'react-dom';
 
 const options = [
     {
         value: 'orderid',
         label: 'Order ID',
     },
-    {
-        value: 'customername',
-        label: 'Customer Name',
-    },
-    {
-        value: 'deliveryperson',
-        label: 'Delivery Person',
-    },
+    // {
+    //     value: 'customername',
+    //     label: 'Customer Name',
+    // },
+    // {
+    //     value: 'deliveryperson',
+    //     label: 'Delivery Person',
+    // },
 ];
 
 const orderStatusColors = {
@@ -43,13 +45,14 @@ const senderTypeColors = {
 const columns = [
     {
         title: 'ORDER ID.',
-        dataIndex: 'orderid',
-        key: 'orderid'
+        dataIndex: '_id',
+        key: '_id'
     },
     {
         title: 'CUSTOMER NAME',
-        dataIndex: 'customername',
-        key: 'customername',
+        dataIndex: 'senderId',
+        key: 'senderId',
+        render: (senderId) => senderId?.fullName
     },
     {
         title: 'STATUS',
@@ -91,9 +94,9 @@ const columns = [
     },
     {
         title: 'BILL',
-        dataIndex: 'bill',
-        key: 'bill',
-        render: (bill) => <p>${bill}</p>,
+        dataIndex: 'price',
+        key: 'price',
+        render: (price) => <p>${price}</p>,
     },
     {
         title: 'Details',
@@ -105,19 +108,44 @@ const columns = [
 ];
 
 const OrderManagement = () => {
-    const [activeTab, setActiveTab] = useState('all');
+    const [activeTab, setActiveTab] = useState('');
     const [tableData, setTableData] = useState(ordersManagementData);
     const [selectRow, setSelectRow] = useState('orderid');
     const [searchValue, setSearchValue] = useState("");
+      const [current, setCurrent] = useState(1);
 
-    const filteredData = tableData
-        ?.filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
 
-    console.log(selectRow);
+    const { data: orderData, isLoading, refetch } = useOrdersQuery({
+        status: activeTab,
+        page: 1
+    });
+    console.log(orderData);
+
+    const filteredData = orderData?.data
+        ?.map((item, index) => {
+            return {
+                ...item,
+                key: item?._id,
+                orderid: item?._id,
+                index
+            }
+        })
+        .filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
+
+    useEffect(() => {
+        refetch({
+            status: activeTab,
+            page: 1
+        });
+    }, [activeTab,current]);
+
+
     return (
         <div className='space-y-6'>
+
+            {/* Filter by status */}
             <div className='grid grid-cols-6 gap-4 bg-gray-200 rounded-full p-1'>
-                <button onClick={() => setActiveTab('all')} className={`${activeTab === 'all' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('')} className={`${activeTab === '' && 'bg-white'} p-3 rounded-full`}>
                     All
                 </button>
                 <button onClick={() => setActiveTab('pending')} className={`${activeTab === 'pending' && 'bg-white'} p-3 rounded-full`}>
@@ -136,15 +164,15 @@ const OrderManagement = () => {
                     Delivered
                 </button>
             </div>
-            <>
-                <div className='flex items-center gap-4 pt-4'>
-                    <div className='flex justify-between items-center max-w-[800px]'>
-                        <Space.Compact style={{ height: '50px', minWidth: '600px' }}>
-                            <Select defaultValue={selectRow} onChange={(value) => setSelectRow(value)} options={options} style={{ height: '50px', minWidth: '180px' }} />
-                            <Input onChange={(e) => setSearchValue(e.target.value)} placeholder='Search...' />
-                        </Space.Compact>
-                    </div>
-                    {/* <div>
+            <div className='flex items-center gap-4 pt-4'>
+                <div className='flex justify-between items-center max-w-[800px]'>
+                    <Space.Compact style={{ height: '50px', minWidth: '600px' }}>
+                        <Select defaultValue={selectRow} onChange={(value) => setSelectRow(value)} options={options} style={{ height: '50px', minWidth: '180px' }} />
+                        <Input onChange={(e) => setSearchValue(e.target.value)} placeholder='Search...' />
+                    </Space.Compact>
+                </div>
+                {/* Filter by status */}
+                {/* <div>
                         <Select
                             placeholder="Status"
                             filterOption={(input, option) =>
@@ -182,10 +210,13 @@ const OrderManagement = () => {
                             ]}
                         />
                     </div> */}
-                </div>
-            </>
+            </div>
             <div className="w-full border-2 rounded-lg overflow-hidden">
-                <Table columns={columns} dataSource={filteredData} pagination={{ pageSize: 10 }} />
+                <Table columns={columns} dataSource={filteredData} pagination={false} />
+            </div>
+
+            <div className="flex justify-center py-6">
+                <Pagination current={current} onChange={(e) => setCurrent(e)} total={orderData?.data?.totalParcels} />
             </div>
         </div>
     )
