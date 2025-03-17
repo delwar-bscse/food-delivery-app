@@ -21,7 +21,7 @@ const Header = () => {
   }
 
   const user = userData?.data;
-  // console.log(user?.profileImage);
+  // console.log(user);
   
   const imgUrl = user?.profileImage?.startsWith("http") ? user?.profileImage : `${imageUrl}${user?.profileImage}`;
 
@@ -46,9 +46,9 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <p className="text-xl">{user?.fullName
             || "Anna Watson"}</p>
-          <p>
+          {/* <p>
             <SlArrowDown size={14} className="font-bold" />
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

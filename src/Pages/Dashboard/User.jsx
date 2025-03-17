@@ -1,83 +1,72 @@
 import React from "react";
-import { ConfigProvider, Input, Tabs } from "antd";
+import { ConfigProvider, Input, Rate, Tabs } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import RunningOrderTable from "../../components/ui/Analytics/RunningOrderTable";
+import { ProfileImg } from "../../assets/assets";
 
 const User = () => {
   const { id } = useParams();
 
+  const theme={
+    components: {
+      Rate: {
+        starSize: 16
+      },
+    },
+  }
+
   // Sample user data
   const user = {
-    name: "John Doe",
-    id: "#5568164",
-    email: "johndoe@example.com",
-    address: {
-      street: "123 Main St",
-      city: "Los Angeles",
-      state: "CA",
-      zip: "90001",
-      country: "USA",
-    },
-    phone: "+1 (555) 123-4567",
-    imgUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+    _id: "67d4ee5a2eea3253afe72eba",
+    firstName: "Rifatuzzaman",
+    lastName: "Shanto",
+    email: "asadshanto310@gmail.com",
+    role: "USER",
+    stripeCustomerId: "cus_RweKxQUfNiTzC5",
+    image: "https://i.ibb.co/z5YHLV9/profile.png",
+    status: "active",
+    stripe_account_id: null,
+    verified: true,
+    referCount: 0,
+    readTerms: false,
+    workTerms: false,
+    operationTerms: false,
+    createdAt: "2025-03-15T03:04:58.096Z",
+    updatedAt: "2025-03-15T06:43:16.230Z",
+    __v: 0
   };
+
 
   const imgUrl =
     user?.imgUrl ||
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmtj40PvvTQ1g64pgKZ2oKEk-tqT9rA4CXSA&s";
 
   return (
-    <div>
+    <div className="p-6 bg-white rounded-xl">
       <div className="">
-        <div className="flex gap-3 items-center ">
-          <img
-            className="rounded-full w-16 h-16"
-            src={
-              imgUrl?.startsWith("http")
-                ? imgUrl
-                : `${import.meta.env.VITE_BASE_URL}${imgUrl}`
-            }
-            alt="img"
-          />
-          <div>
-            <h1 className="text-2xl font-bold">{user?.name}</h1>
-            <p className="text-sm text-gray-400">User ID: {user.id} </p>
-          </div>
-        </div>
-        <div className="grid my-5 grid-cols-2 gap-5 w-[70%]">
-          <div className="p-3 bg-white h-20 rounded-2xl shadow-sm">
-            <h1 className="font-semibold text-sm border-b-2 border-dashed">
-              Name
-            </h1>
-            <p className="text-lg my-2">{user?.name}</p>
-          </div>
-          <div className="p-3 bg-white h-20 rounded-2xl shadow-sm">
-            <h1 className="font-semibold text-sm border-b-2 border-dashed">
-              Email
-            </h1>
-            <p className="text-lg my-2">{user?.email}</p>
-          </div>
-          <div className="p-3 bg-white h-20 rounded-2xl shadow-sm">
-            <h1 className="font-semibold text-sm border-b-2 border-dashed">
-              Phone
-            </h1>
-            <p className="text-lg my-2">{user?.phone}</p>
-          </div>
-          <div className="p-3 bg-white h-20 rounded-2xl shadow-sm">
-            <h1 className="font-semibold text-sm border-b-2 border-dashed">
-              Address
-            </h1>
-            <p className="text-lg my-2">
-              {user?.address ? (
-                <>
-                  {user?.address?.street}, {user?.address?.state},{" "}
-                  {user?.address?.city}, {user?.address?.country}
-                </>
-              ) : (
-                "N/A"
-              )}
-            </p>
+        <div className='space-y-8 p-6 pt-6'>
+          <div className="flex items-start gap-4">
+            {/* User Image */}
+            <div>
+              <img src={ProfileImg} alt="" className="rounded-xl" width={200} height={200} />
+            </div>
+            {/* User Details */}
+            <div className="grid gap-4 grid-flow-col grid-rows-6">
+              <p className=""><span className="font-semibold">Name :</span> {user?.firstName} {user?.lastName}</p>
+              <p className=""><span className="font-semibold"> Email : </span>{user?.email || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Number : </span>{user?.mobileNumber || "N/A"}</p>
+              <div className="">
+              <span className="font-semibold">Rating : </span> <ConfigProvider theme={theme}><Rate size="small" disabled allowHalf defaultValue={2.5} /></ConfigProvider> (2.5)
+              </div>
+              <p><span className="font-semibold"> Address : </span>{user?.address || "N/A"}</p>
+              <p><span className="font-semibold"> Stripe Account : </span>{user?.stripe_account_id || "N/A"}</p>
+              <p><span className="font-semibold"> Role : </span>{user?.role}</p>
+              <p><span className="font-semibold"> Subscription : </span>{user?.isSubscribed ? "Subscribed" : "Unsubscribed"}</p>
+              <p><span className="font-semibold"> Status : </span>{user?.status}</p>
+              <p><span className="font-semibold"> Total Refer : </span>{user?.referCount}</p>
+              <p><span className="font-semibold"> Joined : </span>{user?.createdAt}</p>
+            </div>
           </div>
         </div>
       </div>

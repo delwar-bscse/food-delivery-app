@@ -78,7 +78,7 @@ const Sidebar = () => {
     {
       key: "/view-reports",
       icon: <RiFileList2Line size={24} />,
-      label: <Link to="/view-reports">View Reports</Link>,
+      label: <Link to="/view-reports">Reports & Analytics</Link>,
     },
     {
       key: "/subscriptions",
@@ -86,12 +86,12 @@ const Sidebar = () => {
       label: <Link to="/subscriptions">Subscriptions</Link>,
     },
     {
-      key: "/terms-and-condition",
+      key: "/terms-and-conditions",
       icon: <LuClipboardList size={24} />,
       label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
     },
     {
-      key: "/edit-profile",
+      key: "/profile",
       icon: <TbUserCircle size={24} />,
       label: <Link to="/profile">Edit Profile</Link>,
     },

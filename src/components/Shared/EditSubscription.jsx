@@ -23,7 +23,7 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
     <>
       <div className='space-y-8 p-6 pt-16'>
         <div>
-          <h2 className='text-2xl font-semibold text-center'>Edit Subscription Details</h2>
+          <h2 className='text-2xl font-semibold text-center'>Edit Subscription Price</h2>
         </div>
         <div className="w-full mx-auto">
           {/* Input Form */}

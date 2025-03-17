@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Space, Avatar, Select, Input } from "antd";
+import { Table, Button, Space, Avatar, Select, Input, Rate } from "antd";
 import { Modal } from 'antd';
 import { LuView } from "react-icons/lu";
 import randomImg from "../../assets/randomProfile2.jpg";
-import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
-
+import { MdOutlineDeleteForever } from "react-icons/md";
 import { Pagination } from 'antd';
+import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
 import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
+import { ProfileImg } from "../../assets/assets";
+import { Link } from "react-router-dom";
+import { render } from "react-dom";
 
 const Users = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -31,6 +34,7 @@ const Users = () => {
   }));
 
   const showModal = (record) => {
+    console.log(record);
     setSingleUser(record);
     setIsModalOpen(true);
   };
@@ -49,6 +53,9 @@ const Users = () => {
     refetch();
   }
 
+  const handleDeleteUser = async (record) => {
+    console.log(record._id);
+  }
 
   const columns = [
     {
@@ -93,6 +100,17 @@ const Users = () => {
       key: "totalEarning",
     },
     {
+      title: "Subscription",
+      dataIndex: "isSubscribed",
+      key: "isSubscribed",
+      render: (isSubscribed) => {        
+        let color = isSubscribed ? "green" : "red"
+        return <button  style={{ color }}>
+          {isSubscribed ? "Subscribed" : "Unsubscribed"}
+        </button>
+      }
+    },
+    {
       title: "Status",
       dataIndex: "isRestricted",
       key: "isRestricted",
@@ -106,9 +124,8 @@ const Users = () => {
       key: "_id",
       render: (_, record) => (
         <div className='flex justify-start items-center gap-3'>
-          <button onClick={() => showModal(record)} className='text-white bg-yellow-500 p-1 rounded-sm'><LuView size={20} /></button>
-          {/* <button className=' p-1 rounded-sm'>{record?.isRestricted ? "Restricted" : "Active"}</button> */}
-
+          <Link to={`/users/${record._id}`} className='text-white bg-yellow-500 p-1 rounded-sm'><LuView size={20} /></Link>
+          <button onClick={() => handleDeleteUser(record)} className='text-white bg-red-500 p-1 rounded-sm'><MdOutlineDeleteForever size={20} /></button>
         </div>
       ),
     },
@@ -197,7 +214,19 @@ const Users = () => {
         <div className='space-y-8 p-6 pt-16'>
           <div>
             <h2 className='text-2xl font-semibold text-center'>User Details</h2>
-            <p>{singleUser?.fullName}</p>
+          </div>
+          <div className="flex items-start gap-4">
+            {/* User Image */}
+            <div>
+              <img src={ProfileImg} alt="" />
+            </div>
+            {/* User Details */}
+            <div className="space-y-3">
+              <p className="text-xl ">Name : {singleUser?.fullName}</p>
+              <p className="text-xl ">Email : {singleUser?.email}</p>
+              <p className="text-xl ">Number : {singleUser?.mobileNumber}</p>
+              <div className="text-xl ">Ratings : 2.5 <Rate disabled allowHalf defaultValue={2.5} /></div>
+            </div>
           </div>
           <div className='flex justify-end'>
             <button onClick={handleOk} className='bg-gray-800 text-white py-2 px-5 rounded-md'>

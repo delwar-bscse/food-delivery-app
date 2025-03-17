@@ -30,9 +30,9 @@ const Home = () => {
       <div className="md:flex w-full items-center gap-6 mt-6">
         <TotalEarning />
       </div>
-      <div className="md:flex w-full items-center gap-6 mt-6">
+      {/* <div className="md:flex w-full items-center gap-6 mt-6">
         <RunningOrders />
-      </div>
+      </div> */}
     </div>
   );
 };

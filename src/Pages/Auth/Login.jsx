@@ -19,23 +19,20 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
+      // console.log(values);
       const response = await login(values).unwrap();
       const accessToken = response?.data?.token;
       // const { refreshToken } = response?.data;
       const refreshToken = response?.data?.token;
       const adminRole = response?.data?.admin?.role;
 
-      if (values) {
+      if (adminRole === "admin") {
         localStorage.setItem("authToken", accessToken);
         localStorage.setItem("adminRole", adminRole);
         localStorage.setItem("refreshToken", refreshToken);
         Cookies.set("refreshToken", refreshToken);
       } else {
-        sessionStorage.setItem("authToken", accessToken);
-        localStorage.setItem("adminRole", adminRole);
-        localStorage.setItem("refreshToken", refreshToken);
-        Cookies.set("refreshToken", refreshToken);
+        navigate("/auth/login");
       }
 
       navigate("/");

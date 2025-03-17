@@ -76,10 +76,10 @@ const router = createBrowserRouter([
       //   path: "/update-banner/:id",
       //   element: <EditBanners />,
       // },
-      {
-        path: "/user/profile/:id",
-        element: <User />,
-      },
+      // {
+      //   path: "/user/profile/:id",
+      //   element: <User />,
+      // },
       // {
       //   path: "/barber/profile/:id",
       //   element: <Vendor />,
@@ -87,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/users/:id",
+        element: <User />,
       },
       {
         path: "/order-management",
@@ -171,7 +175,7 @@ const router = createBrowserRouter([
       //   element: <PrivacyPolicy />,
       // },
       {
-        path: "/terms-and-condition",
+        path: "/terms-and-conditions",
         element: <TermsAndCondition />,
       },
       // {

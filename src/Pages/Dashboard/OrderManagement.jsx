@@ -112,14 +112,14 @@ const OrderManagement = () => {
     const [tableData, setTableData] = useState(ordersManagementData);
     const [selectRow, setSelectRow] = useState('orderid');
     const [searchValue, setSearchValue] = useState("");
-      const [current, setCurrent] = useState(1);
+    const [current, setCurrent] = useState(1);
 
 
     const { data: orderData, isLoading, refetch } = useOrdersQuery({
         status: activeTab,
-        page: 1
+        page: current
     });
-    console.log(orderData);
+    // console.log(orderData);
 
     const filteredData = orderData?.data
         ?.map((item, index) => {
@@ -135,9 +135,9 @@ const OrderManagement = () => {
     useEffect(() => {
         refetch({
             status: activeTab,
-            page: 1
+            page: current
         });
-    }, [activeTab,current]);
+    }, [activeTab, current]);
 
 
     return (
@@ -214,9 +214,9 @@ const OrderManagement = () => {
             <div className="w-full border-2 rounded-lg overflow-hidden">
                 <Table columns={columns} dataSource={filteredData} pagination={false} />
             </div>
-
+            {/* {console.log("orderData: ", orderData?.data)} */}
             <div className="flex justify-center py-6">
-                <Pagination current={current} onChange={(e) => setCurrent(e)} total={orderData?.data?.totalParcels} />
+                <Pagination current={orderData?.pagination?.currentPage} onChange={(e) => setCurrent(e)} total={orderData?.pagination?.totalParcels} />
             </div>
         </div>
     )

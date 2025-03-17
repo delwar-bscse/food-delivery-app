@@ -3,6 +3,8 @@ import { RiShoppingBag2Fill } from "react-icons/ri";
 import { PiCurrencyCircleDollarFill } from "react-icons/pi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { HiUsers } from "react-icons/hi";
+import { Select } from "antd";
+import { useState } from "react";
 
 // Sub Component //
 const SubComponent = ({ title, value, icon }) => {
@@ -22,32 +24,63 @@ const SubComponent = ({ title, value, icon }) => {
 };
 
 const GeneralStateSection = () => {
+  const [duration, setDuration] = useState("all");
 
   const generalState = {
-    totalTransections: 252,
+    totalRevenue: 120,
     totalUsers: 545,
     totalOrders: 320,
-    newUsers: 245,
-    newSubscribers: 120,
-    totalRevenue: 120,
-    newTransections: 252,
+    totalSubscribers: 120
+  };
+
+  const options = [
+    {
+      value: 'all',
+      label: 'Default',
+    },
+    {
+      value: 'daily',
+      label: 'daily',
+    },
+    {
+      value: 'weekly',
+      label: 'Weekly',
+    },
+    {
+      value: 'monthly',
+      label: 'Monthly',
+    },
+    {
+      value: 'yearly',
+      label: 'Yearly',
+    },
+  ]
+
+  const handleChange = (value) => {
+    // console.log(`selected ${value}`);
+    setDuration(value);
   };
 
 
   return (
-    <div className="grid  grid-cols-4 gap-6">
-      <div className=" col-span-3 grid md:grid-cols-3 gap-6">
-        <SubComponent title="Total Transections" value={generalState.totalTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
+    <div>
+      <div className="flex justify-between items-center py-2">
+        <h2 className="text-3xl font-semibold text-gray-700">Dashboard</h2>
+        <Select
+          defaultValue={duration}
+          style={{
+            width: 120,
+          }}
+          onChange={handleChange}
+          options={options}
+          size="large"
+        />
+      </div>
+      <div className="grid  grid-cols-4 gap-6">
+        <SubComponent title="Total Revenue" value={generalState.totalRevenue} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />
         <SubComponent title="Total Users" value={generalState.totalUsers} icon={<FaUsers size={40} className="text-gray-700" />} />
         <SubComponent title="Total Orders" value={generalState.totalOrders} icon={<RiShoppingBag2Fill size={40} className="text-gray-700" />} />
-        <SubComponent title="New Users" value={generalState.newUsers} icon={<HiUsers size={40} className="text-gray-700" />} />
-        <SubComponent title="New Subscribers" value={generalState.newSubscribers} icon={<HiUsers size={40} className="text-gray-700" />} />
-        <SubComponent title="New Transactions" value={generalState.newTransections} icon={<PiCurrencyCircleDollarFill size={40} className="text-gray-700" />} />
-      </div>
-      <div className="bg-white rounded-2xl py-6 px-8 border-2 border-gray-400">
-        <div className="">
-          <h2 className="text-2xl text-base">Total Revenue</h2>
-        </div>
+        <SubComponent title="Total Subscribers" value={generalState.totalSubscribers} icon={<HiUsers size={40} className="text-gray-700" />} />
       </div>
     </div>
   );

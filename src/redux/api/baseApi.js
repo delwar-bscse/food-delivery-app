@@ -17,55 +17,45 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     },
   });
 
-  const refreshToken = Cookies.get("refreshToken");
-
+  
   // Make the original request
   let result = await baseQuery(args, api, extraOptions);
-
+  
   // Log the result to debug
-  // console.log("In baseApi:API request result:", result);
-
+  console.log("In baseApi:API request result:", result);
+  
   // If the access token is expired, handle token refresh
+  const refreshToken = Cookies.get("refreshToken");
   if (result.error) {
-    if (result.error.status === 500) {
+    if (result.error.status === 401) {
       // Call the refresh token API
       const refreshResult = await baseQuery(
         {
-          url: "/refresh-token",
-          method: "POST",
-          body: { refreshToken: refreshToken },
+          url: "/profile",
+          method: "GET",
+          // body: { refreshToken: refreshToken },
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("refreshToken")
+            )}`,
+          },
         }, // No body needed
         api,
         extraOptions
       );
 
-      // console.log("Refresh token API result:", refreshResult);
+      console.log("Refresh token API result:", refreshResult);
 
-      if (refreshResult?.data?.data) {
-        // Save the new access token to localStorage
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("adminRole");
-        localStorage.setItem(
-          "authToken",
-          refreshResult?.data?.data?.accessToken
-        );
-        localStorage.setItem(
-          "adminRole",
-          refreshResult?.data?.admin?.role
-        );
-
-        // Retry the original request with the new token
-        result = await baseQuery(args, api, extraOptions);
-      } else {
-        // Refresh token failed or expired, log out the user
+      if (!refreshResult?.data) {
         console.error("Refresh token invalid or expired. Logging out...");
         localStorage.removeItem("authToken");
         localStorage.removeItem("adminRole");
         localStorage.removeItem("refreshToken");
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("refreshToken");
+        Cookies.remove("refreshToken");
         toast("Access token has expired, Please login again.");
-        // window.location.replace("/auth/login");
+        window.location.replace("/auth/login");
       }
     } else if (result.error.status === 400) {
       // Handle bad request errors
