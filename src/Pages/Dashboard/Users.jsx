@@ -209,32 +209,6 @@ const Users = () => {
           </div>
         </div>
       </div>
-      {/* User Details Modal */}
-      <Modal footer={null} open={isModalOpen} onCancel={handleCancel} width={800} centered>
-        <div className='space-y-8 p-6 pt-16'>
-          <div>
-            <h2 className='text-2xl font-semibold text-center'>User Details</h2>
-          </div>
-          <div className="flex items-start gap-4">
-            {/* User Image */}
-            <div>
-              <img src={ProfileImg} alt="" />
-            </div>
-            {/* User Details */}
-            <div className="space-y-3">
-              <p className="text-xl ">Name : {singleUser?.fullName}</p>
-              <p className="text-xl ">Email : {singleUser?.email}</p>
-              <p className="text-xl ">Number : {singleUser?.mobileNumber}</p>
-              <div className="text-xl ">Ratings : 2.5 <Rate disabled allowHalf defaultValue={2.5} /></div>
-            </div>
-          </div>
-          <div className='flex justify-end'>
-            <button onClick={handleOk} className='bg-gray-800 text-white py-2 px-5 rounded-md'>
-              Close
-            </button>
-          </div>
-        </div>
-      </Modal>
       {/* Users Table */}
       <Table
         columns={columns}

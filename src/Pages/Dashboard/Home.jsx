@@ -7,6 +7,8 @@ import GeneralStateSection from "../../components/ui/Home/GeneralStateSection";
 import Professionals from "../../components/ui/Home/Professionals";
 import TotalEarning from "../../components/ui/Analytics/TotalEarning1";
 import RunningOrders from "../../components/ui/Analytics/RunningOrders";
+import OrderStatistics from "../../components/Shared/OrderStatistics";
+import RatingStatics from "../../components/ui/Analytics/RatingStatics";
 
 const Home = () => {
   const orderSummary = {
@@ -28,7 +30,13 @@ const Home = () => {
     <div className="p-6 bg-white rounded-xl">
       <GeneralStateSection />
       <div className="md:flex w-full items-center gap-6 mt-6">
-        <TotalEarning />
+      </div>
+          <TotalEarning />
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <OrderStatistics />
+          <RatingStatics />
+        </div>
       </div>
       {/* <div className="md:flex w-full items-center gap-6 mt-6">
         <RunningOrders />

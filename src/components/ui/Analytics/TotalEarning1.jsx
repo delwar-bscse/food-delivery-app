@@ -84,7 +84,7 @@ const TotalEarning = () => {
   return (
     <div className="w-full border-2 border-gray-300 rounded-2xl p-3">
       <div className="flex items-center justify-between px-8">
-        <h4 className="text-2xl font-semibold text-gray-800 py-4">Total Earning</h4>
+        <h4 className="text-2xl font-semibold text-gray-800 py-4">Total Revenue</h4>
         <div className="flex justify-end py-2">
           <Select
             value={duration}
