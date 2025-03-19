@@ -78,7 +78,12 @@ const Sidebar = () => {
     {
       key: "/view-reports",
       icon: <RiFileList2Line size={24} />,
-      label: <Link to="/view-reports">Reports & Analytics</Link>,
+      label: <Link to="/view-reports">Reports</Link>,
+    },
+    {
+      key: "/analytics",
+      icon: <RiFileList2Line size={24} />,
+      label: <Link to="/analytics">Analytics</Link>,
     },
     {
       key: "/subscriptions",

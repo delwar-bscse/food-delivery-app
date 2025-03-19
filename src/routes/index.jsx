@@ -45,6 +45,8 @@ import ViewRequest from "../Pages/Dashboard/ViewRequest";
 import Subscriptions from "../Pages/Dashboard/Subscriptions";
 import Announcements from "../Pages/Dashboard/Announcements";
 import OrderManagement from "../Pages/Dashboard/OrderManagement";
+import Analytics from "../Pages/Dashboard/Analytics";
+// import Analytics from "../Pages/Dashboard/Transactions";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: "/view-reports",
         element: <ViewRequest />,
+      },
+      {
+        path: "/analytics",
+        element: <Analytics />,
       },
       {
         path: "/announcements",
