@@ -46,6 +46,7 @@ import Subscriptions from "../Pages/Dashboard/Subscriptions";
 import Announcements from "../Pages/Dashboard/Announcements";
 import OrderManagement from "../Pages/Dashboard/OrderManagement";
 import Analytics from "../Pages/Dashboard/Analytics";
+import OrderDetails from "../Pages/Dashboard/OrderDetails";
 // import Analytics from "../Pages/Dashboard/Transactions";
 
 const router = createBrowserRouter([
@@ -95,8 +96,12 @@ const router = createBrowserRouter([
         element: <User />,
       },
       {
-        path: "/order-management",
+        path: "/orders",
         element: <OrderManagement />,
+      },
+      {
+        path: "/orders/:orderId",
+        element: <OrderDetails />,
       },
       {
         path: "/view-reports",
@@ -161,10 +166,6 @@ const router = createBrowserRouter([
       {
         path: "offer-list",
         element: <OfferList />,
-      },
-      {
-        path: "orders",
-        element: <Orders />,
       },
       {
         path: "/admin",

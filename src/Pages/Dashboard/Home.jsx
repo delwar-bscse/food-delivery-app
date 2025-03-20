@@ -1,43 +1,15 @@
-import React from "react";
-import SalesTrackingChart from "../../components/ui/Home/SalesTrackingChart";
-import RunningOrdersTable from "../../components/ui/Home/RunningOrdersTable";
-import rentMeLogo from "../../assets/navLogo.png";
-import UserEngagement from "../../components/ui/Home/UserEngagement";
+import React, { useState } from "react";
 import GeneralStateSection from "../../components/ui/Home/GeneralStateSection";
-import Professionals from "../../components/ui/Home/Professionals";
-import TotalEarning from "../../components/ui/Analytics/TotalRevenue";
-import RunningOrders from "../../components/ui/Analytics/RunningOrders";
-import OrderStatistics from "../../components/Shared/OrderStatistics";
-import RatingStatics from "../../components/ui/Analytics/RatingStatics";
 import TotalRevenue from "../../components/ui/Analytics/TotalRevenue";
 
 const Home = () => {
-  const orderSummary = {
-    doneByProfessionals: 65,
-    doneByFreelancers: 35,
-  };
-
-  const isLoading = false;
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <img src={rentMeLogo} alt="" />
-      </div>
-    );
-  }
+  const [duration, setDuration] = useState("month");
+  const [selectState, setSelectState] = useState("Total Revenue");
 
   return (
-    <div className="p-6 bg-white rounded-xl">
-      <GeneralStateSection />
-      <div className="md:flex w-full items-center gap-6 mt-6">
-      </div>
-          <TotalRevenue />
-      <div>
-      </div>
-      {/* <div className="md:flex w-full items-center gap-6 mt-6">
-        <RunningOrders />
-      </div> */}
+    <div className="p-6 bg-white rounded-xl space-y-6">
+      <GeneralStateSection selectState={selectState} setSelectState={setSelectState} />
+      <TotalRevenue selectState={selectState} duration={duration} setDuration={setDuration} />
     </div>
   );
 };

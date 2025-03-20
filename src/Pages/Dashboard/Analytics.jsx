@@ -46,7 +46,7 @@ const Analytics = () => {
       <div className="md:flex w-full items-center gap-6 mt-6">
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <div className="basis-1/4">
           <RatingStatics />
         </div>

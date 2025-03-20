@@ -18,6 +18,14 @@ const userSlice = api.injectEndpoints({
         };
       },
     }),
+    totalUsers: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: `/totalUsers?year=2025&month=02`,
+        };
+      },
+    }),
     updateStatus: builder.mutation({
       query: (data) => {
         return {
@@ -49,6 +57,7 @@ const userSlice = api.injectEndpoints({
 export const {
   useAdminQuery,
   useUsersQuery,
+  useTotalUsersQuery,
   useUpdateStatusMutation,
   useVendorsQuery,
   useUserByIdQuery,

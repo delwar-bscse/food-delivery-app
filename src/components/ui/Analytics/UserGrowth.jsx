@@ -84,7 +84,7 @@ const UserGrowth = () => {
   return (
     <div className="w-full border border-gray-200 p-3">
       <div className="flex items-center justify-between px-8">
-        <h4 className="text-2xl font-semibold text-gray-800 py-4">User Grouwth</h4>
+        <h4 className="text-2xl font-semibold text-gray-800 py-4">User Growth</h4>
         <div className="flex justify-end py-2">
           <Select
             value={duration}

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Select } from "antd"; // Assuming Select is from Ant Design
+import { useEffect, useState } from "react";
+import { DatePicker, Select } from "antd"; // Assuming Select is from Ant Design
 import {
   XAxis,
   YAxis,
@@ -9,30 +9,131 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
+import { useTotalUsersQuery } from "../../../redux/apiSlices/userSlice";
 
-const data = [
-  { month: "Jan", earns: 30 },
-  { month: "Feb", earns: 70 },
-  { month: "Mar", earns: 20 },
-  { month: "Apr", earns: 40 },
-  { month: "May", earns: 15 },
-  { month: "Jun", earns: 70 },
-  { month: "Jul", earns: 50 },
-  { month: "Aug", earns: 60 },
-  { month: "Sep", earns: 90 },
-  { month: "Oct", earns: 80 },
-  { month: "Nov", earns: 90 },
-  { month: "Dec", earns: 70 },
+const monthConverter = (no) => {
+  switch (no) {
+    case 1:
+      return "Jan";
+    case 2:
+      return "Feb";
+    case 3:
+      return "Mar";
+    case 4:
+      return "Apr";
+    case 5:
+      return "May";
+    case 6:
+      return "Jun";
+    case 7:
+      return "Jul";
+    case 8:
+      return "Aug";
+    case 9:
+      return "Sep";
+    case 10:
+      return "Oct";
+    case 11:
+      return "Nov";
+    case 12:
+      return "Dec";
+    default:
+      return "Jan";
+  }
+}
+
+// Dummy data for Chart - Year
+const dataYear = [
+  { chart_x: "Jan", chart_y: 30 },
+  { chart_x: "Feb", chart_y: 70 },
+  { chart_x: "Mar", chart_y: 20 },
+  { chart_x: "Apr", chart_y: 40 },
+  { chart_x: "May", chart_y: 15 },
+  { chart_x: "Jun", chart_y: 70 },
+  { chart_x: "Jul", chart_y: 60 },
+  { chart_x: "Aug", chart_y: 90 },
+  { chart_x: "Sep", chart_y: 80 },
+  { chart_x: "Oct", chart_y: 50 },
+  { chart_x: "Nov", chart_y: 90 },
+  { chart_x: "Dec", chart_y: 70 },
+];
+// Dummy data for Chart - Month
+const dataMonth = [
+  { chart_x: 1, chart_y: 30 },
+  { chart_x: 2, chart_y: 70 },
+  { chart_x: 3, chart_y: 20 },
+  { chart_x: 4, chart_y: 40 },
+  { chart_x: 5, chart_y: 15 },
+  { chart_x: 6, chart_y: 70 },
+  { chart_x: 7, chart_y: 60 },
+  { chart_x: 8, chart_y: 90 },
+  { chart_x: 9, chart_y: 80 },
+  { chart_x: 10, chart_y: 50 },
+  { chart_x: 11, chart_y: 90 },
+  { chart_x: 12, chart_y: 70 },
+  { chart_x: 13, chart_y: 30 },
+  { chart_x: 14, chart_y: 70 },
+  { chart_x: 15, chart_y: 20 },
+  { chart_x: 16, chart_y: 40 },
+  { chart_x: 17, chart_y: 15 },
+  { chart_x: 18, chart_y: 70 },
+  { chart_x: 19, chart_y: 60 },
+  { chart_x: 20, chart_y: 90 },
+  { chart_x: 21, chart_y: 80 },
+  { chart_x: 22, chart_y: 50 },
+  { chart_x: 23, chart_y: 90 },
+  { chart_x: 24, chart_y: 70 },
+  { chart_x: 25, chart_y: 30 },
+  { chart_x: 26, chart_y: 70 },
+  { chart_x: 27, chart_y: 20 },
+  { chart_x: 28, chart_y: 40 },
+  { chart_x: 29, chart_y: 15 },
+  { chart_x: 30, chart_y: 70 },
 ];
 
 
-const TotalRevenue = () => {
-  const [duration, setDuration] = useState("all");
+const options = [
+  {
+    value: 'month',
+    label: 'Month',
+  },
+  {
+    value: 'year',
+    label: 'Year',
+  },
+]
+
+
+const TotalRevenue = ({ selectState }) => {
+  const [data, setData] = useState(dataMonth);
+  const [duration, setDuration] = useState("year");
+  const [selectedDate, setSelectedDate] = useState(
+    `${new Date().getFullYear()}`
+  );
+
+  const { data: totalUsers } = useTotalUsersQuery();
+  console.log(totalUsers);
+
+  const getChartData = () => {
+    if (selectState === "Total Revenue") {
+      //Revenue api call
+    } else if (selectState === "Total Orders") {
+      //Orders api call
+    } else if (selectState === "Total Subscribers") {
+      //Subscribers api call
+    } else if (selectState === "Total Users") {
+      //Users api call
+    }
+  }
+
+  useEffect(() => {
+    getChartData();
+  }, [duration]);
 
   // Custom Tooltip Function
   const renderCustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const { month, earns } = payload[0].payload; // Access the specific data point
+      const { chart_x, chart_y } = payload[0].payload; // Access the specific data point
       return (
         <div
           style={{
@@ -45,54 +146,51 @@ const TotalRevenue = () => {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Adds a subtle shadow
           }}
         >
-          <p><strong>${earns}k</strong> Earning</p>
-          <p><strong>{month}, 2024</strong></p>
+          <p><strong>${chart_y}k</strong></p>
+          {duration === "month" ? (
+            <p><strong> {selectedDate} - {chart_x}</strong></p>
+          ) : (
+            <p><strong>{chart_x} - {selectedDate}</strong></p>
+          )}
         </div>
       );
     }
     return null;
   };
 
-  const options = [
-    {
-      value: 'all',
-      label: 'Default',
-    },
-    {
-      value: 'daily',
-      label: 'daily',
-    },
-    {
-      value: 'weekly',
-      label: 'Weekly',
-    },
-    {
-      value: 'monthly',
-      label: 'Monthly',
-    },
-    {
-      value: 'yearly',
-      label: 'Yearly',
-    },
-  ]
+
+
+  const onChange = (date, dateString) => {
+    console.log(dateString);
+    setSelectedDate(dateString);
+    setData(duration === "month" ? dataMonth : dataYear);
+  };
 
   const handleChange = (value) => {
-    // console.log(`selected ${value}`);
+    console.log(value);
     setDuration(value);
   };
 
   return (
-    <div className="w-full border border-gray-200 p-3">
-      <div className="flex items-center justify-between px-8">
-        <h4 className="text-2xl font-semibold text-gray-800 py-4">Total Revenue</h4>
-        <div className="flex justify-end py-2">
-          <Select
-            value={duration}
-            style={{ width: 120 }}
-            onChange={handleChange}
-            options={options}
-            size="large"
-          />
+    <div className="w-full border-2 border-gray-200 p-3 rounded-xl">
+      <div className="flex items-center justify-between px-8 py-6">
+        <h4 className="text-2xl font-semibold text-gray-800">{selectState}</h4>
+        <div className="flex items-center justify-end gap-1">
+          <div>
+            <Select
+              placeholder="Year"
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              options={options}
+            />
+          </div>
+          <div className="">
+            {duration === "month" ?
+              <DatePicker onChange={onChange} picker="month" allowClear={false} /> :
+              <DatePicker onChange={onChange} picker="year" allowClear={false} />}
+          </div>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={353}>
@@ -107,8 +205,8 @@ const TotalRevenue = () => {
           }}
         >
           <CartesianGrid strokeDasharray="0 4" />
-          <XAxis dataKey="month" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
-          <YAxis tickLine={false} axisLine={false} tickMargin={20}/>
+          <XAxis dataKey="chart_x" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
+          <YAxis tickLine={false} axisLine={false} tickMargin={20} />
           <Tooltip content={renderCustomTooltip} />
 
           {/* Gradient fill definition */}
@@ -122,7 +220,7 @@ const TotalRevenue = () => {
           {/* Area with gradient fill */}
           <Area
             type="monotone"
-            dataKey="earns"
+            dataKey="chart_y"
             stroke="#2D9CDB"
             strokeWidth={2}
             fill="url(#gradientColor)" // Apply gradient by referencing its ID

@@ -66,9 +66,9 @@ const Sidebar = () => {
       label: <Link to="/users">Users</Link>,
     },
     {
-      key: "/order-management",
+      key: "/orders",
       icon: <IoCubeOutline size={24} />,
-      label: <Link to="/order-management">Order Management</Link>,
+      label: <Link to="/orders">Order Management</Link>,
     },
     {
       key: "/announcements",
