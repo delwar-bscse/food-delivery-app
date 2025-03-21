@@ -1,10 +1,7 @@
 import { FaUsers } from "react-icons/fa6";
 import { RiShoppingBag2Fill } from "react-icons/ri";
-import { PiCurrencyCircleDollarFill } from "react-icons/pi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { HiUsers } from "react-icons/hi";
-import { Select } from "antd";
-import { useState } from "react";
 
 // Sub Component //
 const SubComponent = ({ title, value, icon, setSelectState, selectState }) => {
@@ -36,15 +33,6 @@ const GeneralStateSection = ({selectState, setSelectState}) => {
     <div>
       <div className="flex justify-between items-center py-3">
         <h2 className="text-3xl font-semibold text-gray-700 pb-1">Dashboard</h2>
-        {/* <Select
-          placeholder="Month"
-          style={{
-            width: 120,
-          }}
-          onChange={handleChange}
-          options={options}
-          size="large"
-        /> */}
       </div>
       <div className="grid  grid-cols-4 gap-6">
         <SubComponent setSelectState={setSelectState} selectState={selectState} title="Total Revenue" value={generalState.totalRevenue} icon={<GiReceiveMoney size={40} className="text-gray-700" />} />

@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Space, Avatar, Select, Input, Rate } from "antd";
-import { Modal } from 'antd';
+import { Table, Space, Avatar, Select, Button, Popconfirm } from "antd";
 import { LuView } from "react-icons/lu";
 import randomImg from "../../assets/randomProfile2.jpg";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import { GoStarFill } from "react-icons/go";
 import { Pagination } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
 import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
-import { ProfileImg } from "../../assets/assets";
 import { Link } from "react-router-dom";
-import { render } from "react-dom";
 
 const Users = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [freeDelivery, setFreeDelivery] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [singleUser, setSingleUser] = useState("");
-  const [current, setCurrent] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
   const [filterType, setFilterType] = useState("");
+  const [isSorting, setIsSorting] = useState(true);
 
   const [updateStatus] = useUpdateStatusMutation();
   const { data: usersData, isLoading, refetch } = useUsersQuery({
-    page: current,
+    page: pageNumber,
     filterType: filterType
   });
   const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
@@ -32,18 +30,6 @@ const Users = () => {
     key: user._id,
     id: index + 1,
   }));
-
-  const showModal = (record) => {
-    console.log(record);
-    setSingleUser(record);
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   const handleUpdateStatus = async (record) => {
     await updateStatus({
@@ -64,7 +50,7 @@ const Users = () => {
       key: "id"
     },
     {
-      title: "Name",
+      title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
       render: (fullName, record) => {
@@ -75,15 +61,26 @@ const Users = () => {
           : `${import.meta.env.VITE_BASE_URL}${imgUrl}`);
 
         return (
-          <Space>
+          <div className="flex items-center gap-2">
             <Avatar src={randomImg} alt={name} size="large" />
             <span>{name}</span>
-          </Space>
+          </div>
         );
       },
     },
     {
-      title: "Email & Number",
+      title: "Rating",
+      dataIndex: "mobileNumber",
+      key: "mobileNumber",
+      render: (_, record) => (
+        <div className="flex items-center rounded-full gap-1 bg-yellow-500 text-white px-3 py-1 max-w-16">
+          <span><GoStarFill /></span>
+          <span>4.5</span>
+        </div>
+      )
+    },
+    {
+      title: "Number",
       dataIndex: "mobileNumber",
       key: "mobileNumber",
       render: (_, record) => `${record?.email ? record?.email : record?.mobileNumber}`,
@@ -103,9 +100,9 @@ const Users = () => {
       title: "Subscription",
       dataIndex: "isSubscribed",
       key: "isSubscribed",
-      render: (isSubscribed) => {        
+      render: (isSubscribed) => {
         let color = isSubscribed ? "green" : "red"
-        return <button  style={{ color }}>
+        return <button style={{ color }}>
           {isSubscribed ? "Subscribed" : "Unsubscribed"}
         </button>
       }
@@ -125,7 +122,22 @@ const Users = () => {
       render: (_, record) => (
         <div className='flex justify-start items-center gap-3'>
           <Link to={`/users/${record._id}`} className='text-white bg-yellow-500 p-1 rounded-sm'><LuView size={20} /></Link>
-          <button onClick={() => handleDeleteUser(record)} className='text-white bg-red-500 p-1 rounded-sm'><MdOutlineDeleteForever size={20} /></button>
+          <Popconfirm
+            title= {<h2 className="text-red-600">Delete the User</h2>}
+            description="Are you sure to delete this User?"
+            onConfirm={() => handleDeleteUser(record)}
+            placement="topLeft"
+            okText="Delete"
+            icon={
+              <QuestionCircleOutlined
+                style={{
+                  color: 'red',
+                }}
+              />
+            }
+          >
+            <button className='text-white bg-red-500 p-1 rounded-sm'><MdOutlineDeleteForever size={20} /></button>
+          </Popconfirm>
         </div>
       ),
     },
@@ -136,12 +148,12 @@ const Users = () => {
   // };
 
   useEffect(() => {
-    console.log(filterType, current);
+    console.log(filterType, pageNumber);
     refetch({
-      page: current,
+      page: pageNumber,
       filterType: filterType
     });
-  }, [filterType, current]);
+  }, [filterType, pageNumber]);
 
   const onSelectChange = (newSelectedRowKeys) => {
     // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -168,17 +180,9 @@ const Users = () => {
       <div className="w-full flex items-center justify-between">
         <h1 className="text-2xl font-semibold  my-5">Users</h1>
         <div className="flex gap-3 justify-end">
-          {/* Assign Free Delivery */}
-          <div className="flex border border-gray-300 bg-white rounded-md overflow-hidden">
-            <input
-              className="max-w-[80px] px-2 border-none outline-none bg-transparent text-center"
-              type="number"
-              onChange={(e) => setFreeDelivery(e.target.value)}
-            />
-            <button onClick={handleFreeDelivery} className="border-l bg-transparent border-gray-300 text-gray-600 px-3 py-1">
-              Assign Free Delivery
-            </button>
-          </div>
+          {filterType !== '' && <div>
+            <Button onClick={() => setIsSorting(!isSorting)} size="large">{isSorting ? 'Ascending' : 'Descending'}</Button>
+          </div>}
           {/* Filter by email or number */}
           <div className="w-[200px]">
             <Select
@@ -189,7 +193,7 @@ const Users = () => {
               }}
               onChange={(e) => {
                 setFilterType(e);
-                setCurrent(1);
+                setPageNumber(1);
               }}
               options={[
                 {
@@ -197,12 +201,12 @@ const Users = () => {
                   label: 'All',
                 },
                 {
-                  value: 'email',
-                  label: 'Email',
+                  value: 'rating',
+                  label: 'Rating',
                 },
                 {
-                  value: 'mobile',
-                  label: 'Number',
+                  value: 'earning',
+                  label: 'Earning',
                 }
               ]}
             />
@@ -213,13 +217,12 @@ const Users = () => {
       <Table
         columns={columns}
         dataSource={dataSource}
-        rowSelection={rowSelection}
-        // pagination={{ pageSize, onChange: () => setPageSize() }}
+        // rowSelection={rowSelection}
         scroll={{ x: 1000 }}
         pagination={false}
       />
       <div className="flex justify-center py-6">
-        <Pagination current={usersData?.data?.currentPage} onChange={(e) => setCurrent(e)} total={usersData?.data?.totalUsers} />
+        <Pagination current={usersData?.data?.currentPage} onChange={(e) => setPageNumber(e)} total={usersData?.data?.totalUsers} />
       </div>
     </>
   );

@@ -173,7 +173,7 @@ const TotalRevenue = ({ selectState }) => {
 
   return (
     <div className="w-full border-2 border-gray-200 p-3 rounded-xl">
-      <div className="flex items-center justify-between px-8 py-6">
+      <div className="flex items-center justify-between px-8 pb-3">
         <h4 className="text-2xl font-semibold text-gray-800">{selectState}</h4>
         <div className="flex items-center justify-end gap-1">
           <div>

@@ -147,7 +147,7 @@ const OrderManagement = () => {
         <div className='space-y-6'>
 
             {/* Filter by status */}
-            <div className='grid grid-cols-6 gap-4 bg-gray-200 rounded-full p-1'>
+            <div className='grid grid-cols-5 gap-4 bg-gray-200 rounded-full p-1'>
                 <button onClick={() => setActiveTab('')} className={`${activeTab === '' && 'bg-white'} p-3 rounded-full`}>
                     All
                 </button>
@@ -157,9 +157,6 @@ const OrderManagement = () => {
                 <button onClick={() => setActiveTab('requested')} className={`${activeTab === 'requested' && 'bg-white'} p-3 rounded-full`}>
                     Requested
                 </button>
-                <button onClick={() => setActiveTab('accepted')} className={`${activeTab === 'accepted' && 'bg-white'} p-3 rounded-full`}>
-                    Accepted
-                </button>
                 <button onClick={() => setActiveTab('in_transit')} className={`${activeTab === 'in_transit' && 'bg-white'} p-3 rounded-full`}>
                     In-Transit
                 </button>
@@ -167,58 +164,11 @@ const OrderManagement = () => {
                     Delivered
                 </button>
             </div>
-            <div className='flex items-center gap-4 pt-4'>
-                <div className='flex justify-between items-center max-w-[800px]'>
-                    <Space.Compact style={{ height: '50px', minWidth: '600px' }}>
-                        <Select defaultValue={selectRow} onChange={(value) => setSelectRow(value)} options={options} style={{ height: '50px', minWidth: '180px' }} />
-                        <Input onChange={(e) => setSearchValue(e.target.value)} placeholder='Search...' />
-                    </Space.Compact>
-                </div>
-                {/* Filter by status */}
-                {/* <div>
-                        <Select
-                            placeholder="Status"
-                            filterOption={(input, option) =>
-                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                            }
-                            value={activeTab}
-                            onChange={(value) => setActiveTab(value)}
-                            size='large'
-                            style={{ width: '200px', height: '50px' }}
-                            options={[
-                                {
-                                    value: 'all',
-                                    label: 'All',
-                                },
-                                {
-                                    value: 'pending',
-                                    label: 'Pending',
-                                },
-                                {
-                                    value: 'requested',
-                                    label: 'Requested',
-                                },
-                                {
-                                    value: 'accepted',
-                                    label: 'Accepted',
-                                },
-                                {
-                                    value: 'in_transit',
-                                    label: 'In-Transit',
-                                },
-                                {
-                                    value: 'delivered',
-                                    label: 'Delivered',
-                                }
-                            ]}
-                        />
-                    </div> */}
-            </div>
             <div className="w-full border-2 rounded-lg overflow-hidden">
                 <Table columns={columns} dataSource={filteredData} pagination={false} />
             </div>
             {/* {console.log("orderData: ", orderData?.data)} */}
-            <div className="flex justify-center py-6">
+            <div className="flex justify-center">
                 <Pagination current={orderData?.pagination?.currentPage} onChange={(e) => setCurrent(e)} total={orderData?.pagination?.totalParcels} />
             </div>
         </div>
