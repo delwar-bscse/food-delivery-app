@@ -9,7 +9,7 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
-import { useTotalUsersQuery } from "../../../redux/apiSlices/userSlice";
+import { useTotalUsersQuery } from "../../redux/apiSlices/userSlice";
 
 const monthConverter = (no) => {
   switch (no) {

@@ -2,8 +2,9 @@ import React from "react";
 import { ConfigProvider, Input, Rate, Tabs } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { BiLeftArrowAlt } from "react-icons/bi";
-import RunningOrderTable from "../../components/ui/Analytics/RunningOrderTable";
+// import RunningOrderTable from "../../components/ui/Analytics/RunningOrderTable";
 import { ProfileImg } from "../../assets/assets";
+import UserOrder from "./UserOrder";
 
 const User = () => {
   const { id } = useParams();
@@ -52,7 +53,7 @@ const User = () => {
               <img src={ProfileImg} alt="" className="rounded-xl" width={200} height={200} />
             </div>
             {/* User Details */}
-            <div className="grid gap-4 grid-flow-col grid-rows-6">
+            <div className="grid gap-4 grid-flow-col grid-rows-5">
               <p className=""><span className="font-semibold">Name :</span> {user?.firstName} {user?.lastName}</p>
               <p className=""><span className="font-semibold"> Email : </span>{user?.email || "N/A"}</p>
               <p className=""><span className="font-semibold"> Number : </span>{user?.mobileNumber || "N/A"}</p>
@@ -60,7 +61,6 @@ const User = () => {
               <span className="font-semibold">Rating : </span> <ConfigProvider theme={theme}><Rate size="small" disabled allowHalf defaultValue={2.5} /></ConfigProvider> (2.5)
               </div>
               <p><span className="font-semibold"> Address : </span>{user?.address || "N/A"}</p>
-              <p><span className="font-semibold"> Stripe Account : </span>{user?.stripe_account_id || "N/A"}</p>
               <p><span className="font-semibold"> Role : </span>{user?.role}</p>
               <p><span className="font-semibold"> Subscription : </span>{user?.isSubscribed ? "Subscribed" : "Unsubscribed"}</p>
               <p><span className="font-semibold"> Status : </span>{user?.status}</p>
@@ -71,11 +71,7 @@ const User = () => {
         </div>
       </div>
       <div>
-        <RunningOrderTable
-          filterProps={
-            user?.vendor?.name || user?.admin?.name || user?.customer?.name
-          }
-        />
+        <UserOrder />
       </div>
     </div>
   );

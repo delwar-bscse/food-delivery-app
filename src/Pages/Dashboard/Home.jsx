@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import GeneralStateSection from "../../components/ui/Home/GeneralStateSection";
-import TotalRevenue from "../../components/ui/Analytics/TotalRevenue";
+import TotalRevenue from "../../components/Analytics/TotalRevenue";
+import GeneralStateSection from "../../components/Shared/GeneralStateSection";
 
 const Home = () => {
   const [duration, setDuration] = useState("month");

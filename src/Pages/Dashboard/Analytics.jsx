@@ -1,20 +1,9 @@
 import React from "react";
-import SalesTrackingChart from "../../components/ui/Home/SalesTrackingChart";
-import RunningOrdersTable from "../../components/ui/Home/RunningOrdersTable";
-import rentMeLogo from "../../assets/navLogo.png";
-import UserEngagement from "../../components/ui/Home/UserEngagement";
-import GeneralStateSection from "../../components/ui/Home/GeneralStateSection";
-import Professionals from "../../components/ui/Home/Professionals";
-import TotalEarning from "../../components/ui/Analytics/TotalRevenue";
-import RunningOrders from "../../components/ui/Analytics/RunningOrders";
-import OrderStatistics from "../../components/Shared/OrderStatistics";
-import RatingStatics from "../../components/ui/Analytics/RatingStatics";
-import ActivityPerformance from "../../components/ui/Analytics/AvarageDelivery";
-import UserStatistics from "../../components/Shared/UserStatistics";
-import OrderUserStatistics from "../../components/ui/Analytics/OrderUserStatistics";
-import AvarageDelivery from "../../components/ui/Analytics/AvarageDelivery";
+import RatingStatics from "../../components/Analytics/RatingStatics";
+import OrderUserStatistics from "../../components/Analytics/OrderUserStatistics";
+import AvarageDelivery from "../../components/Analytics/AvarageDelivery";
 import ActiveRatedUsers from "./ActiveRatedUsers";
-import UserGrowth from "../../components/ui/Analytics/UserGrowth";
+import UserGrowth from "../../components/Analytics/UserGrowth";
 
 const Analytics = () => {
   const orderSummary = {

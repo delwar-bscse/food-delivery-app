@@ -1,5 +1,4 @@
-import { Checkbox, Form, Input } from "antd";
-import React, { useState } from "react";
+import {  Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import FormItem from "../../components/common/FormItem";
 import { useLoginMutation } from "../../redux/apiSlices/authSlice";
@@ -8,21 +7,15 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
 
   const [login] = useLoginMutation();
-
-  const demoLogInfo = {
-    email: "admin@example.com",
-    password: "SecurePass1234"
-  }
 
   const onFinish = async (values) => {
     try {
       // console.log(values);
       const response = await login(values).unwrap();
+
       const accessToken = response?.data?.token;
-      // const { refreshToken } = response?.data;
       const refreshToken = response?.data?.token;
       const adminRole = response?.data?.admin?.role;
 
@@ -47,10 +40,6 @@ const Login = () => {
       });
     }
   };
-
-  // const onCheckboxChange = (e) => {
-  //   setRememberMe(e.target.checked); // Update checkbox state
-  // };
 
   return (
     <div>
@@ -103,7 +92,7 @@ const Login = () => {
               fontSize: 18,
               marginTop: 20,
             }}
-            className={`flex items-center justify-center bg-primary text-white rounded-lg`}
+            className={`flex items-center justify-center bg-gray-600 text-white rounded-lg`}
           >
             Sign in
           </button>

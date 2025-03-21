@@ -8,8 +8,8 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     const editSubscription = {
-      type:singleSubscription?.type,
-      price:values.price
+      type: singleSubscription?.type,
+      price: values.price
     }
     // console.log("Success:", editSubscription);
     updateSubscription(editSubscription);
@@ -32,6 +32,9 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
             layout="vertical"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            initialValues={{
+              remember: false, // Default state for the checkbox
+            }}
           >
             <div>
               {/* <Form.Item
@@ -47,7 +50,7 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
               >
                 <Input className="py-3 bg-gray-100 rounded-md" />
               </Form.Item>
-{/* 
+              {/* 
               <Form.Item
                 name="des01"
                 label="Description 01"

@@ -1,34 +1,17 @@
 import { ConfigProvider, Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-  MdCancelPresentation,
-  MdCategory,
-  MdFeaturedPlayList,
-  MdMiscellaneousServices,
-} from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { TbUserScreen } from "react-icons/tb";
-import { IoIosLogOut } from "react-icons/io";
-import { IoSettingsOutline } from "react-icons/io5";
-
-import { PiUserPlus } from "react-icons/pi";
 import { LuLayoutDashboard } from "react-icons/lu";
 import Cookies from "js-cookie";
-import logo from "../../assets/barberMeLogo.png";
-import { DiGoogleAnalytics } from "react-icons/di";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import { FaMoneyBillTransfer, FaScissors } from "react-icons/fa6";
-import { FaBorderStyle } from "react-icons/fa";
-// import { LuUserRound } from "react-icons/lu";
 import { LuUser } from "react-icons/lu";
-import { IoCubeOutline } from "react-icons/io5";
-import { PiUsersThree } from "react-icons/pi";
 import { RiFileList2Line } from "react-icons/ri";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { LuClipboardList } from "react-icons/lu";
 import { TbUserCircle } from "react-icons/tb";
 import { AiOutlineSound } from "react-icons/ai";
+import { RiLineChartLine } from "react-icons/ri";
+import { CgShoppingBag } from "react-icons/cg";
 
 import { DeliveryLogo } from "../../assets/assets";
 import { LogOut } from "lucide-react";
@@ -67,13 +50,8 @@ const Sidebar = () => {
     },
     {
       key: "/orders",
-      icon: <IoCubeOutline size={24} />,
+      icon: <CgShoppingBag size={24} />,
       label: <Link to="/orders">Order Management</Link>,
-    },
-    {
-      key: "/announcements",
-      icon: <AiOutlineSound size={24} />,
-      label: <Link to="/announcements">Announcements</Link>,
     },
     {
       key: "/view-reports",
@@ -82,13 +60,18 @@ const Sidebar = () => {
     },
     {
       key: "/analytics",
-      icon: <RiFileList2Line size={24} />,
+      icon: <RiLineChartLine size={24} />,
       label: <Link to="/analytics">Analytics</Link>,
     },
     {
       key: "/subscriptions",
       icon: <RiDiscountPercentLine size={24} />,
       label: <Link to="/subscriptions">Subscriptions</Link>,
+    },
+    {
+      key: "/announcements",
+      icon: <AiOutlineSound size={24} />,
+      label: <Link to="/announcements">Announcements</Link>,
     },
     {
       key: "/terms-and-conditions",

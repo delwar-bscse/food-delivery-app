@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Input, DatePicker } from "antd";
-import { BiLeftArrowAlt } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {
   useFetchAdminProfileQuery,
   useUpdateAdminProfileMutation,
 } from "../../../redux/apiSlices/authSlice";
-import logo from "../../../assets/randomProfile2.jpg";
 import toast from "react-hot-toast";
-import rentMeLogo from "../../../assets/navLogo.png";
 import { ProfileImg } from "../../../assets/assets";
-import { imageUrl } from "../../../redux/api/baseApi";
 import moment from "moment/moment";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -29,15 +23,13 @@ const PersonalInfo = () => {
     console.log(date, dateString);
   };
 
-  // const isLoading = false;
 
   const { data: fetchAdminProfile, isLoading, refetch } = useFetchAdminProfileQuery();
   const [updateAdminProfile] = useUpdateAdminProfileMutation();
 
-  // const fetchAdminProfile = [];
 
   const adminData = fetchAdminProfile?.data;
-  console.log(adminData?.profileImage);
+  // console.log(adminData?.profileImage);
 
   useEffect(() => {
     if (adminData) {
@@ -53,13 +45,7 @@ const PersonalInfo = () => {
     }
   }, [form, adminData]);
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <img src={rentMeLogo} alt="" />
-      </div>
-    );
-  }
+ 
 
   const onChangeImage = (e) => {
     const selectedFile = e.target.files[0];

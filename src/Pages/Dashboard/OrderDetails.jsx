@@ -1,4 +1,5 @@
 import React from 'react';
+import { product01 } from '../../assets/assets';
 
 const OrderDetails = () => {
   const orderDetails = {
@@ -13,46 +14,25 @@ const OrderDetails = () => {
     description: "This is a high-quality product designed to meet all your needs. It is made with durable materials and offers great functionality. Ideal for daily use, it is both stylish and practical, making it a must-have for everyone."
   };
 
-  // Function to render the rating stars
-  const renderRatings = (rating) => {
-    const stars = Math.round(rating);
-    let starElements = [];
-    for (let i = 0; i < stars; i++) {
-      starElements.push('⭐');
-    }
-    if (stars < 5) {
-      starElements.push(` (${rating})`);
-    }
-    return starElements;
-  };
-
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', margin: '0', padding: '0', backgroundColor: '#f4f4f4' }}>
-      <div style={{
-        maxWidth: '900px', margin: '20px auto', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
-      }}>
-        {/* Product Header */}
-        <div style={{ textAlign: 'center' }}>
-          <h1>Product Details</h1>
-          <img src={orderDetails.productImages} alt="Product" style={{ maxWidth: '150px', borderRadius: '8px' }} />
-        </div>
-
-        {/* Product Info */}
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ width: '48%' }}>
-            <p><strong>Sender's Name:</strong> {orderDetails.senderName}</p>
-            <p><strong>Receiver's Name:</strong> {orderDetails.receiverName}</p>
-            <p><strong>Delivery Man:</strong> {orderDetails.deliveryMan}</p>
-            <p><strong>Delivery Time:</strong> {orderDetails.deliveryTime}</p>
-            <p><strong>Current Location:</strong> {orderDetails.currentLocation}</p>
-            <p><strong>Price:</strong> ${orderDetails.price}</p>
+    <div className='bg-white p-4 rounded-xl flex justify-center'>
+      <div className=' p-4  max-w-[1000px]'>
+        <h1 className='text-2xl font-bold pb-4 border-b-2 mb-4'>Order Details</h1>
+        <div className='flex gap-4'>
+          {/* Product Image */}
+          <div>
+            <img src={product01} alt="Product" className='w-[300px]' />
           </div>
-          <div style={{ width: '48%' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <p><strong>Ratings:</strong></p>
-              <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>
-                {renderRatings(orderDetails.ratings)}
-              </span>
+
+          {/* Product Info */}
+          <div>
+            <div>
+              <p><strong>Sender's Name:</strong> {orderDetails.senderName}</p>
+              <p><strong>Receiver's Name:</strong> {orderDetails.receiverName}</p>
+              <p><strong>Delivery Man:</strong> {orderDetails.deliveryMan}</p>
+              <p><strong>Delivery Time:</strong> {orderDetails.deliveryTime}</p>
+              <p><strong>Current Location:</strong> {orderDetails.currentLocation}</p>
+              <p><strong>Price:</strong> ${orderDetails.price}</p>
             </div>
           </div>
         </div>
@@ -61,6 +41,27 @@ const OrderDetails = () => {
         <div style={{ marginTop: '20px', fontSize: '16px', lineHeight: '1.6' }}>
           <p><strong>Description:</strong></p>
           <p>{orderDetails.description}</p>
+        </div>
+
+        <div className='grid grid-cols-2 border rounded-xl p-4 gap-4 mt-4'>
+          <div>
+            <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Sender</h2>
+            <div className="grid gap-2 grid-flow-col grid-rows-5">
+              <p className=""><span className="font-semibold">Name :</span> {"Ivan" || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Email : </span>{"example@gmail.com" || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Number : </span>{"0123456789" || "N/A"}</p>
+              <p><span className="font-semibold"> Address : </span>{"Dhaka, Bangladesh" || "N/A"}</p>
+            </div>
+          </div>
+          <div>
+            <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Delivery Man</h2>
+            <div className="grid gap-2 grid-flow-col grid-rows-5">
+              <p className=""><span className="font-semibold">Name :</span> {"Ivan" || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Email : </span>{"example@gmail.com" || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Number : </span>{"0123456789" || "N/A"}</p>
+              <p><span className="font-semibold"> Address : </span>{"Dhaka, Bangladesh" || "N/A"}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

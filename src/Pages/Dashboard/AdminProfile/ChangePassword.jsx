@@ -1,18 +1,15 @@
 import { Form, Input } from "antd";
 import React from "react";
-import Timer from "../../../components/test/Timer";
 import { useChangePasswordMutation } from "../../../redux/apiSlices/authSlice";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const ChangePassword = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
 
   const [changePassword] = useChangePasswordMutation();
 
   const handleChangePassword = (values) => {
-    console.log(values);
+    // console.log(values);
     changePassword(values);
     toast.success("Password changed successfully!");
   };

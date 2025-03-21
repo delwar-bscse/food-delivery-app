@@ -2,7 +2,6 @@ import { ConfigProvider, Tabs } from 'antd';
 import React from 'react';
 import UserProfile from './UserProfile';
 import ChangePassword from './ChangePassword';
-import Title from '../../../components/common/Title';
 
 const AdminProfile = () => {
 
@@ -20,9 +19,7 @@ const AdminProfile = () => {
   ];
 
   return (
-    <div>
-      <Title className="mb-4">Profile</Title>
-      
+    <div>      
       <div  className=" bg-white p-5 px-10 rounded-xl"  >
         <ConfigProvider
           theme={{
