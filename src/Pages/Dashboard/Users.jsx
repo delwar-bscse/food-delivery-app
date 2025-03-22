@@ -7,8 +7,9 @@ import { GoStarFill } from "react-icons/go";
 import { Pagination } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
-import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
+// import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Users = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -22,7 +23,7 @@ const Users = () => {
     page: pageNumber,
     filterType: filterType
   });
-  const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
+  // const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
 
   // console.log("Backend Data", usersData?.data?.users);
   const dataSource = usersData?.data?.users?.map((user, index) => ({
@@ -41,6 +42,7 @@ const Users = () => {
 
   const handleDeleteUser = async (record) => {
     console.log(record._id);
+    toast.success("User deleted successfully!");
   }
 
   const columns = [
@@ -143,10 +145,6 @@ const Users = () => {
     },
   ];
 
-  // const handleChange = (value) => {
-  //   console.log(`selected ${value}`);
-  // };
-
   useEffect(() => {
     console.log(filterType, pageNumber);
     refetch({
@@ -155,25 +153,7 @@ const Users = () => {
     });
   }, [filterType, pageNumber]);
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
 
-  const handleFreeDelivery = () => {
-    console.log({
-      userIds: selectedRowKeys,
-      freeDeliveries: freeDelivery
-    });
-    freeDeliveryAssign({
-      userIds: selectedRowKeys,
-      freeDeliveries: freeDelivery
-    });
-  }
 
   return (
     isLoading ? <p>Loading....</p> : <>
@@ -217,7 +197,6 @@ const Users = () => {
       <Table
         columns={columns}
         dataSource={dataSource}
-        // rowSelection={rowSelection}
         scroll={{ x: 1000 }}
         pagination={false}
       />

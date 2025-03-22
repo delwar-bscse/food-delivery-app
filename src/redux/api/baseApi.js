@@ -22,7 +22,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
   
   // Log the result to debug
-  console.log("In baseApi:API request result:", result);
+  // console.log("In baseApi:API request result:", result);
   
   // If the access token is expired, handle token refresh
   const refreshToken = Cookies.get("refreshToken");

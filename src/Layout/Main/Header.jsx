@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-
 import { Link } from "react-router-dom";
 import { FaRegBell } from "react-icons/fa6";
-import { SlArrowDown } from "react-icons/sl";
 import { Badge } from "antd";
-import { useFetchAdminProfileQuery } from "../../redux/apiSlices/authSlice";
 import { imageUrl } from "../../redux/api/baseApi";
-import profileImage from "../../assets/randomProfile2.jpg";
 import { ProfileImg } from "../../assets/assets";
+import { useFetchAdminProfileQuery } from "../../redux/apiSlices/authSlice";
 
 const Header = () => {
   const [imageUrlNew, setImageUrlNew] = useState(null);

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import App from "../../demo";
 
 const OrderUserStatistics = () => {
   const [timeRangeOrder, setTimeRangeOrder] = useState("All");
@@ -28,22 +29,13 @@ const OrderUserStatistics = () => {
 
   return (
     <div className="overflow-x-auto">
+
       <table className="min-w-full table-auto border-collapse">
         <tbody>
           <tr className="">
-            <th className="px-4 py-2 border text-gray-700">Orders Statistic</th>
-            <th className="px-4 py-2 border text-gray-700">
-              <select
-                value={timeRangeOrder}
-                onChange={handleOrderState}
-                className=" border-none ring-0 outline-none rounded px-2 w-[90%] focus:border-none focus:ring-0 focus:outline-none"
-              >
-                <option value="All">All</option>
-                <option value="Day">Day</option>
-                <option value="Week">Week</option>
-                <option value="Month">Month</option>
-                <option value="Year">Year</option>
-              </select>
+            <th className="px-4 py-2 border text-gray-700 space-x-4" colSpan={2}>
+              <span className="text-xl font-semibold">Orders Statistics</span>
+              <App />
             </th>
           </tr>
           <tr>
@@ -67,19 +59,9 @@ const OrderUserStatistics = () => {
             <td className="px-4 py-2 border">{orderState.canceledOrders}</td>
           </tr>
           <tr className="">
-            <th className="px-4 py-2 border text-gray-700">Users Analytics</th>
-            <th className="px-4 py-2 border text-gray-700">
-              <select
-                value={timeRangeUser}
-                onChange={handleUserState}
-                className=" border-none ring-0 outline-none rounded px-2 w-[90%] focus:border-none focus:ring-0 focus:outline-none"
-              >
-                <option value="All">All</option>
-                <option value="Day">Day</option>
-                <option value="Week">Week</option>
-                <option value="Month">Month</option>
-                <option value="Year">Year</option>
-              </select>
+            <th className="px-4 py-2 border text-gray-700 space-x-4" colSpan={2}>
+              <span className="text-xl font-semibold">Users Analytics</span>
+              <App />
             </th>
           </tr>
           <tr>

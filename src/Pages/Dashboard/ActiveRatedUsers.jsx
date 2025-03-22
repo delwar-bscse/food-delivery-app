@@ -3,7 +3,7 @@ import { Table, Space, Avatar, Select } from "antd";
 import randomImg from "../../assets/randomProfile2.jpg";
 import { Pagination } from 'antd';
 import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
-import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
+// import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
 
 const ActiveRatedUsers = () => {
   const [current, setCurrent] = useState(1);
@@ -12,7 +12,7 @@ const ActiveRatedUsers = () => {
     page: current,
     // filterType: filterType
   });
-  const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
+  // const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
 
   // console.log("Backend Data", usersData?.data?.users);
   const dataSource = usersData?.data?.users?.map((user, index) => ({

@@ -9,7 +9,8 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
-import { useTotalUsersQuery } from "../../redux/apiSlices/userSlice";
+// import { useTotalUsersQuery } from "../../redux/apiSlices/userSlice";
+import { useGeneralStatesQuery } from "../../redux/apiSlices/dashboardSlice";
 
 const monthConverter = (no) => {
   switch (no) {
@@ -44,51 +45,51 @@ const monthConverter = (no) => {
 
 // Dummy data for Chart - Year
 const dataYear = [
-  { chart_x: "Jan", chart_y: 30 },
-  { chart_x: "Feb", chart_y: 70 },
-  { chart_x: "Mar", chart_y: 20 },
-  { chart_x: "Apr", chart_y: 40 },
-  { chart_x: "May", chart_y: 15 },
-  { chart_x: "Jun", chart_y: 70 },
-  { chart_x: "Jul", chart_y: 60 },
-  { chart_x: "Aug", chart_y: 90 },
-  { chart_x: "Sep", chart_y: 80 },
-  { chart_x: "Oct", chart_y: 50 },
-  { chart_x: "Nov", chart_y: 90 },
-  { chart_x: "Dec", chart_y: 70 },
+  { x: "Jan", y: 30 },
+  { x: "Feb", y: 70 },
+  { x: "Mar", y: 20 },
+  { x: "Apr", y: 40 },
+  { x: "May", y: 15 },
+  { x: "Jun", y: 70 },
+  { x: "Jul", y: 60 },
+  { x: "Aug", y: 90 },
+  { x: "Sep", y: 80 },
+  { x: "Oct", y: 50 },
+  { x: "Nov", y: 90 },
+  { x: "Dec", y: 70 },
 ];
 // Dummy data for Chart - Month
 const dataMonth = [
-  { chart_x: 1, chart_y: 30 },
-  { chart_x: 2, chart_y: 70 },
-  { chart_x: 3, chart_y: 20 },
-  { chart_x: 4, chart_y: 40 },
-  { chart_x: 5, chart_y: 15 },
-  { chart_x: 6, chart_y: 70 },
-  { chart_x: 7, chart_y: 60 },
-  { chart_x: 8, chart_y: 90 },
-  { chart_x: 9, chart_y: 80 },
-  { chart_x: 10, chart_y: 50 },
-  { chart_x: 11, chart_y: 90 },
-  { chart_x: 12, chart_y: 70 },
-  { chart_x: 13, chart_y: 30 },
-  { chart_x: 14, chart_y: 70 },
-  { chart_x: 15, chart_y: 20 },
-  { chart_x: 16, chart_y: 40 },
-  { chart_x: 17, chart_y: 15 },
-  { chart_x: 18, chart_y: 70 },
-  { chart_x: 19, chart_y: 60 },
-  { chart_x: 20, chart_y: 90 },
-  { chart_x: 21, chart_y: 80 },
-  { chart_x: 22, chart_y: 50 },
-  { chart_x: 23, chart_y: 90 },
-  { chart_x: 24, chart_y: 70 },
-  { chart_x: 25, chart_y: 30 },
-  { chart_x: 26, chart_y: 70 },
-  { chart_x: 27, chart_y: 20 },
-  { chart_x: 28, chart_y: 40 },
-  { chart_x: 29, chart_y: 15 },
-  { chart_x: 30, chart_y: 70 },
+  { x: 1, y: 30 },
+  { x: 2, y: 70 },
+  { x: 3, y: 20 },
+  { x: 4, y: 40 },
+  { x: 5, y: 15 },
+  { x: 6, y: 70 },
+  { x: 7, y: 60 },
+  { x: 8, y: 90 },
+  { x: 9, y: 80 },
+  { x: 10, y: 50 },
+  { x: 11, y: 90 },
+  { x: 12, y: 70 },
+  { x: 13, y: 30 },
+  { x: 14, y: 70 },
+  { x: 15, y: 20 },
+  { x: 16, y: 40 },
+  { x: 17, y: 15 },
+  { x: 18, y: 70 },
+  { x: 19, y: 60 },
+  { x: 20, y: 90 },
+  { x: 21, y: 80 },
+  { x: 22, y: 50 },
+  { x: 23, y: 90 },
+  { x: 24, y: 70 },
+  { x: 25, y: 30 },
+  { x: 26, y: 70 },
+  { x: 27, y: 20 },
+  { x: 28, y: 40 },
+  { x: 29, y: 15 },
+  { x: 30, y: 70 },
 ];
 
 
@@ -103,37 +104,54 @@ const options = [
   },
 ]
 
-
+//---------------------------------------- Total Revenue Component ----------------------------------------//
 const TotalRevenue = ({ selectState }) => {
-  const [data, setData] = useState(dataMonth);
+  const [data, setData] = useState(dataYear);
   const [duration, setDuration] = useState("year");
   const [selectedDate, setSelectedDate] = useState(
     `${new Date().getFullYear()}`
   );
 
-  const { data: totalUsers } = useTotalUsersQuery();
-  console.log(totalUsers);
+  // Get general states data.
+  const { data: generalState, isLoading, refetch } = useGeneralStatesQuery({
+    defaultPath: "totalRevenue",
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1
+  });
+
+  // Get general states data.
+  // const { data: totalUsers } = useTotalUsersQuery();
+
+  console.log("General State :", generalState?.data);
+
+  // console.log(totalUsers);
+  // console.log("Date :", new Date().getFullYear(), new Date().getMonth() + 1);
 
   const getChartData = () => {
     if (selectState === "Total Revenue") {
-      //Revenue api call
+      return "totalRevenue";
     } else if (selectState === "Total Orders") {
-      //Orders api call
+      return "totalOrders";
     } else if (selectState === "Total Subscribers") {
-      //Subscribers api call
+      return "totalSubscribers";
     } else if (selectState === "Total Users") {
-      //Users api call
+      return "totalUsers";
     }
   }
+  // console.log(getChartData());
 
-  useEffect(() => {
-    getChartData();
-  }, [duration]);
+  // useEffect(() => {
+  //   refetch({
+  //     defaultPath: getChartData(),
+  //     year: duration === 'month' ?  selectedDate.split("-")[0] : selectedDate,
+  //     month: duration === 'month' ? selectedDate.split("-")[1] : new Date().getMonth() + 1
+  //   });
+  // }, [selectedDate]);
 
   // Custom Tooltip Function
   const renderCustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const { chart_x, chart_y } = payload[0].payload; // Access the specific data point
+      const { x, y } = payload[0].payload; // Access the specific data point
       return (
         <div
           style={{
@@ -146,11 +164,11 @@ const TotalRevenue = ({ selectState }) => {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Adds a subtle shadow
           }}
         >
-          <p><strong>${chart_y}k</strong></p>
+          <p><strong>${y}k</strong></p>
           {duration === "month" ? (
-            <p><strong> {selectedDate} - {chart_x}</strong></p>
+            <p><strong> {selectedDate} - {x}</strong></p>
           ) : (
-            <p><strong>{chart_x} - {selectedDate}</strong></p>
+            <p><strong>{x} - {selectedDate}</strong></p>
           )}
         </div>
       );
@@ -161,13 +179,19 @@ const TotalRevenue = ({ selectState }) => {
 
 
   const onChange = (date, dateString) => {
-    console.log(dateString);
+    // console.log(dateString);
     setSelectedDate(dateString);
+    // console.log(dateString.split("-")[0]);
     setData(duration === "month" ? dataMonth : dataYear);
+    refetch({
+      defaultPath: getChartData(),
+      year: duration === 'month' ?  dateString.split("-")[0] : dateString,
+      month: duration === 'month' ? dateString.split("-")[1] : new Date().getMonth() + 1
+    });
   };
 
   const handleChange = (value) => {
-    console.log(value);
+    // console.log(value);
     setDuration(value);
   };
 
@@ -205,7 +229,7 @@ const TotalRevenue = ({ selectState }) => {
           }}
         >
           <CartesianGrid strokeDasharray="0 4" />
-          <XAxis dataKey="chart_x" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
+          <XAxis dataKey="x" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
           <YAxis tickLine={false} axisLine={false} tickMargin={20} />
           <Tooltip content={renderCustomTooltip} />
 
@@ -220,7 +244,7 @@ const TotalRevenue = ({ selectState }) => {
           {/* Area with gradient fill */}
           <Area
             type="monotone"
-            dataKey="chart_y"
+            dataKey="y"
             stroke="#2D9CDB"
             strokeWidth={2}
             fill="url(#gradientColor)" // Apply gradient by referencing its ID

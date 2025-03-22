@@ -5,6 +5,7 @@ import GeneralStateSection from "../../components/Shared/GeneralStateSection";
 const Home = () => {
   const [duration, setDuration] = useState("month");
   const [selectState, setSelectState] = useState("Total Revenue");
+  
 
   return (
     <div className="p-6 bg-white rounded-xl space-y-6">
