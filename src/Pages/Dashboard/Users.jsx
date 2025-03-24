@@ -6,7 +6,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { GoStarFill } from "react-icons/go";
 import { Pagination } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { useUpdateStatusMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
+import { useUpdateStatusMutation, useUserDeleteByIdMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
 // import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -19,11 +19,11 @@ const Users = () => {
   const [isSorting, setIsSorting] = useState(true);
 
   const [updateStatus] = useUpdateStatusMutation();
+  const [userDeleteById] = useUserDeleteByIdMutation();
   const { data: usersData, isLoading, refetch } = useUsersQuery({
     page: pageNumber,
     filterType: filterType
   });
-  // const [freeDeliveryAssign] = useFreeDeliveryAssignMutation();
 
   // console.log("Backend Data", usersData?.data?.users);
   const dataSource = usersData?.data?.users?.map((user, index) => ({
@@ -42,6 +42,8 @@ const Users = () => {
 
   const handleDeleteUser = async (record) => {
     console.log(record._id);
+    await userDeleteById(record._id);
+    refetch();
     toast.success("User deleted successfully!");
   }
 
@@ -146,7 +148,7 @@ const Users = () => {
   ];
 
   useEffect(() => {
-    console.log(filterType, pageNumber);
+    // console.log(filterType, pageNumber);
     refetch({
       page: pageNumber,
       filterType: filterType

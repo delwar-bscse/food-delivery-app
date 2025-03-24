@@ -9,8 +9,12 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
-import { useTotalUsersQuery } from "../../redux/apiSlices/userSlice";
+import { useGeneralStatesQuery } from "../../redux/apiSlices/dashboardSlice";
+// import moment from "moment/moment";
+// import { set } from "jodit/types/core/helpers";
 
+
+// Function to convert month number to month name
 const monthConverter = (no) => {
   switch (no) {
     case 1:
@@ -44,54 +48,53 @@ const monthConverter = (no) => {
 
 // Dummy data for Chart - Year
 const dataYear = [
-  { chart_x: "Jan", chart_y: 30 },
-  { chart_x: "Feb", chart_y: 70 },
-  { chart_x: "Mar", chart_y: 20 },
-  { chart_x: "Apr", chart_y: 40 },
-  { chart_x: "May", chart_y: 15 },
-  { chart_x: "Jun", chart_y: 70 },
-  { chart_x: "Jul", chart_y: 60 },
-  { chart_x: "Aug", chart_y: 90 },
-  { chart_x: "Sep", chart_y: 80 },
-  { chart_x: "Oct", chart_y: 50 },
-  { chart_x: "Nov", chart_y: 90 },
-  { chart_x: "Dec", chart_y: 70 },
+  { x: "Jan", y: 30 },
+  { x: "Feb", y: 70 },
+  { x: "Mar", y: 20 },
+  { x: "Apr", y: 40 },
+  { x: "May", y: 15 },
+  { x: "Jun", y: 70 },
+  { x: "Jul", y: 60 },
+  { x: "Aug", y: 90 },
+  { x: "Sep", y: 80 },
+  { x: "Oct", y: 50 },
+  { x: "Nov", y: 90 },
+  { x: "Dec", y: 70 },
 ];
 // Dummy data for Chart - Month
 const dataMonth = [
-  { chart_x: 1, chart_y: 30 },
-  { chart_x: 2, chart_y: 70 },
-  { chart_x: 3, chart_y: 20 },
-  { chart_x: 4, chart_y: 40 },
-  { chart_x: 5, chart_y: 15 },
-  { chart_x: 6, chart_y: 70 },
-  { chart_x: 7, chart_y: 60 },
-  { chart_x: 8, chart_y: 90 },
-  { chart_x: 9, chart_y: 80 },
-  { chart_x: 10, chart_y: 50 },
-  { chart_x: 11, chart_y: 90 },
-  { chart_x: 12, chart_y: 70 },
-  { chart_x: 13, chart_y: 30 },
-  { chart_x: 14, chart_y: 70 },
-  { chart_x: 15, chart_y: 20 },
-  { chart_x: 16, chart_y: 40 },
-  { chart_x: 17, chart_y: 15 },
-  { chart_x: 18, chart_y: 70 },
-  { chart_x: 19, chart_y: 60 },
-  { chart_x: 20, chart_y: 90 },
-  { chart_x: 21, chart_y: 80 },
-  { chart_x: 22, chart_y: 50 },
-  { chart_x: 23, chart_y: 90 },
-  { chart_x: 24, chart_y: 70 },
-  { chart_x: 25, chart_y: 30 },
-  { chart_x: 26, chart_y: 70 },
-  { chart_x: 27, chart_y: 20 },
-  { chart_x: 28, chart_y: 40 },
-  { chart_x: 29, chart_y: 15 },
-  { chart_x: 30, chart_y: 70 },
+  { x: 1, y: 30 },
+  { x: 2, y: 70 },
+  { x: 3, y: 20 },
+  { x: 4, y: 40 },
+  { x: 5, y: 15 },
+  { x: 6, y: 70 },
+  { x: 7, y: 60 },
+  { x: 8, y: 90 },
+  { x: 9, y: 80 },
+  { x: 10, y: 50 },
+  { x: 11, y: 90 },
+  { x: 12, y: 70 },
+  { x: 13, y: 30 },
+  { x: 14, y: 70 },
+  { x: 15, y: 20 },
+  { x: 16, y: 40 },
+  { x: 17, y: 15 },
+  { x: 18, y: 70 },
+  { x: 19, y: 60 },
+  { x: 20, y: 90 },
+  { x: 21, y: 80 },
+  { x: 22, y: 50 },
+  { x: 23, y: 90 },
+  { x: 24, y: 70 },
+  { x: 25, y: 30 },
+  { x: 26, y: 70 },
+  { x: 27, y: 20 },
+  { x: 28, y: 40 },
+  { x: 29, y: 15 },
+  { x: 30, y: 70 },
 ];
-
-
+// Dropdown Options for Duration
 const options = [
   {
     value: 'month',
@@ -103,25 +106,59 @@ const options = [
   },
 ]
 
-
+//---------------------------------------- Total Revenue Component ----------------------------------------//
 const UserGrowth = () => {
-  const [data, setData] = useState(dataMonth);
-  const [duration, setDuration] = useState("year");
-  const [selectedDate, setSelectedDate] = useState(
-    `${new Date().getFullYear()}`
-  );
+  const [durationType, setDurationType] = useState("year");
+  const [isYear, setIsYear] = useState(new Date().getFullYear());
+  const [isMonth, setIsMonth] = useState(null);
 
-  // const { data: totalUsers } = useTotalUsersQuery();
-  // console.log(totalUsers);
+  // Get general states data.
+  const { data: data, isLoading, refetch } = useGeneralStatesQuery({
+    defaultPath: "newUsers",
+    year: isYear,
+    month: isMonth
+  });
 
-  // useEffect(() => {
-  //   getChartData();
-  // }, [duration]);
+  // console.log("General State :", data?.data);
+
+
+  useEffect(() => {
+    refetch();
+  }, [isMonth, isYear]);
+
+
+  const handleDateChange = (date, dateString) => {
+    if (durationType === 'month') {
+      const year = dateString.split("-")[0];
+      const month = dateString.split("-")[1] || null;
+      setIsYear(year);
+      setIsMonth(month);
+    } else {
+      const year = dateString;
+      const month = null;
+      setIsYear(year);
+      setIsMonth(month);
+    }
+  };
+
+  const handleDurationTypeChange = (value) => {
+    // console.log(value);
+    setDurationType(value);
+    if(value === "month") {
+      setIsYear(new Date().getFullYear());
+      setIsMonth(new Date().getMonth() + 1);
+    }else{
+      setIsYear(new Date().getFullYear());
+      setIsMonth(null);
+    }
+  };
+
+  isLoading ? <div className="flex justify-center items-center my-20 text-lg text-secondary">Loading...</div> : null
 
   // Custom Tooltip Function
   const renderCustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const { chart_x, chart_y } = payload[0].payload; // Access the specific data point
+      const { x, y } = payload[0].payload; // Access the specific data point
       return (
         <div
           style={{
@@ -134,11 +171,11 @@ const UserGrowth = () => {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Adds a subtle shadow
           }}
         >
-          <p><strong>${chart_y}k</strong></p>
-          {duration === "month" ? (
-            <p><strong> {selectedDate} - {chart_x}</strong></p>
+          <p><strong>New Users: {y}</strong></p>
+          {durationType === "month" ? (
+            <p><strong>{x} - {monthConverter(isMonth)} - {isYear}</strong></p>
           ) : (
-            <p><strong>{chart_x} - {selectedDate}</strong></p>
+            <p><strong>{monthConverter(x)}  - {isYear}</strong></p>
           )}
         </div>
       );
@@ -146,23 +183,10 @@ const UserGrowth = () => {
     return null;
   };
 
-
-
-  const onChange = (date, dateString) => {
-    console.log(dateString);
-    setSelectedDate(dateString);
-    setData(duration === "month" ? dataMonth : dataYear);
-  };
-
-  const handleChange = (value) => {
-    console.log(value);
-    setDuration(value);
-  };
-
   return (
-    <div className="w-full border border-gray-200 p-3">
-      <div className="flex items-center justify-between px-8 py-3">
-        <h4 className="text-2xl font-semibold text-gray-800">New User Growth</h4>
+    <div className="w-full border-2 border-gray-200 p-3 rounded-xl">
+      <div className="flex items-center justify-between px-8 pb-3">
+        <h4 className="text-2xl font-semibold text-gray-800">New Users Growth</h4>
         <div className="flex items-center justify-end gap-1">
           <div>
             <Select
@@ -170,20 +194,20 @@ const UserGrowth = () => {
               style={{
                 width: 120,
               }}
-              onChange={handleChange}
+              onChange={handleDurationTypeChange}
               options={options}
             />
           </div>
           <div className="">
-            {duration === "month" ?
-              <DatePicker onChange={onChange} picker="month" allowClear={false} /> :
-              <DatePicker onChange={onChange} picker="year" allowClear={false} />}
+            {durationType === "month" ?
+              <DatePicker onChange={handleDateChange} picker="month" allowClear={true} /> :
+              <DatePicker onChange={handleDateChange} picker="year" allowClear={true}/>}
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={363}>
+      <ResponsiveContainer width="100%" height={353}>
         <AreaChart
-          data={data}
+          data={data?.data}
           syncId="anyId"
           margin={{
             top: 20,
@@ -193,7 +217,7 @@ const UserGrowth = () => {
           }}
         >
           <CartesianGrid strokeDasharray="0 4" />
-          <XAxis dataKey="chart_x" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
+          <XAxis dataKey="x" tick={{ fontSize: 14 }} tickLine={false} axisLine={false} tickMargin={10} />
           <YAxis tickLine={false} axisLine={false} tickMargin={20} />
           <Tooltip content={renderCustomTooltip} />
 
@@ -208,7 +232,7 @@ const UserGrowth = () => {
           {/* Area with gradient fill */}
           <Area
             type="monotone"
-            dataKey="chart_y"
+            dataKey="y"
             stroke="#2D9CDB"
             strokeWidth={2}
             fill="url(#gradientColor)" // Apply gradient by referencing its ID

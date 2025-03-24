@@ -22,7 +22,7 @@ const userSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: `/totalUsers?year=2025&month=02`,
+          url: '/users'
         };
       },
     }),
@@ -35,19 +35,19 @@ const userSlice = api.injectEndpoints({
         };
       },
     }),
-    vendors: builder.query({
-      query: () => {
-        return {
-          method: "GET",
-          url: "/user?role=VENDOR",
-        };
-      },
-    }),
     userById: builder.query({
       query: (id) => {
         return {
           method: "GET",
           url: `/user/profile/${id}`,
+        };
+      },
+    }),
+    userDeleteById: builder.mutation({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/user/${id}`,
         };
       },
     }),
@@ -59,6 +59,6 @@ export const {
   useUsersQuery,
   useTotalUsersQuery,
   useUpdateStatusMutation,
-  useVendorsQuery,
   useUserByIdQuery,
+  useUserDeleteByIdMutation
 } = userSlice;

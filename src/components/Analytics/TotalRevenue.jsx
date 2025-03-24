@@ -9,9 +9,12 @@ import {
   Area,
   ResponsiveContainer,
 } from "recharts";
-// import { useTotalUsersQuery } from "../../redux/apiSlices/userSlice";
 import { useGeneralStatesQuery } from "../../redux/apiSlices/dashboardSlice";
+// import moment from "moment/moment";
+// import { set } from "jodit/types/core/helpers";
 
+
+// Function to convert month number to month name
 const monthConverter = (no) => {
   switch (no) {
     case 1:
@@ -91,8 +94,7 @@ const dataMonth = [
   { x: 29, y: 15 },
   { x: 30, y: 70 },
 ];
-
-
+// Dropdown Options for Duration
 const options = [
   {
     value: 'month',
@@ -105,48 +107,56 @@ const options = [
 ]
 
 //---------------------------------------- Total Revenue Component ----------------------------------------//
-const TotalRevenue = ({ selectState }) => {
-  const [data, setData] = useState(dataYear);
-  const [duration, setDuration] = useState("year");
-  const [selectedDate, setSelectedDate] = useState(
-    `${new Date().getFullYear()}`
-  );
+const TotalRevenue = ({ selectState, selectPath }) => {
+  const [durationType, setDurationType] = useState("year");
+  const [isYear, setIsYear] = useState(new Date().getFullYear());
+  const [isMonth, setIsMonth] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   // Get general states data.
-  const { data: generalState, isLoading, refetch } = useGeneralStatesQuery({
-    defaultPath: "totalRevenue",
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1
+  const { data: data, isLoading, refetch } = useGeneralStatesQuery({
+    defaultPath: selectPath,
+    year: isYear,
+    month: isMonth
   });
 
-  // Get general states data.
-  // const { data: totalUsers } = useTotalUsersQuery();
+  // console.log("General State :", data?.data);
 
-  console.log("General State :", generalState?.data);
 
-  // console.log(totalUsers);
-  // console.log("Date :", new Date().getFullYear(), new Date().getMonth() + 1);
+  useEffect(() => {
+    refetch();
+  }, [isMonth, isYear]);
 
-  const getChartData = () => {
-    if (selectState === "Total Revenue") {
-      return "totalRevenue";
-    } else if (selectState === "Total Orders") {
-      return "totalOrders";
-    } else if (selectState === "Total Subscribers") {
-      return "totalSubscribers";
-    } else if (selectState === "Total Users") {
-      return "totalUsers";
+
+  const handleDateChange = (date, dateString) => {
+    // console.log(dateString);
+    setSelectedDate(dateString);
+    if (durationType === 'month') {
+      const year = dateString.split("-")[0];
+      const month = dateString.split("-")[1] || null;
+      setIsYear(year);
+      setIsMonth(month);
+    } else {
+      const year = dateString;
+      const month = null;
+      setIsYear(year);
+      setIsMonth(month);
     }
-  }
-  // console.log(getChartData());
+  };
 
-  // useEffect(() => {
-  //   refetch({
-  //     defaultPath: getChartData(),
-  //     year: duration === 'month' ?  selectedDate.split("-")[0] : selectedDate,
-  //     month: duration === 'month' ? selectedDate.split("-")[1] : new Date().getMonth() + 1
-  //   });
-  // }, [selectedDate]);
+  const handleDurationTypeChange = (value) => {
+    // console.log(value);
+    setDurationType(value);
+    if(value === "month") {
+      setIsYear(new Date().getFullYear());
+      setIsMonth(new Date().getMonth() + 1);
+    }else{
+      setIsYear(new Date().getFullYear());
+      setIsMonth(null);
+    }
+  };
+
+  isLoading ? <div className="flex justify-center items-center my-20 text-lg text-secondary">Loading...</div> : null
 
   // Custom Tooltip Function
   const renderCustomTooltip = ({ active, payload }) => {
@@ -165,34 +175,15 @@ const TotalRevenue = ({ selectState }) => {
           }}
         >
           <p><strong>${y}k</strong></p>
-          {duration === "month" ? (
-            <p><strong> {selectedDate} - {x}</strong></p>
+          {durationType === "month" ? (
+            <p><strong> {isYear} - {x}</strong></p>
           ) : (
-            <p><strong>{x} - {selectedDate}</strong></p>
+            <p><strong>{x} - {isMonth}</strong></p>
           )}
         </div>
       );
     }
     return null;
-  };
-
-
-
-  const onChange = (date, dateString) => {
-    // console.log(dateString);
-    setSelectedDate(dateString);
-    // console.log(dateString.split("-")[0]);
-    setData(duration === "month" ? dataMonth : dataYear);
-    refetch({
-      defaultPath: getChartData(),
-      year: duration === 'month' ?  dateString.split("-")[0] : dateString,
-      month: duration === 'month' ? dateString.split("-")[1] : new Date().getMonth() + 1
-    });
-  };
-
-  const handleChange = (value) => {
-    // console.log(value);
-    setDuration(value);
   };
 
   return (
@@ -206,20 +197,20 @@ const TotalRevenue = ({ selectState }) => {
               style={{
                 width: 120,
               }}
-              onChange={handleChange}
+              onChange={handleDurationTypeChange}
               options={options}
             />
           </div>
           <div className="">
-            {duration === "month" ?
-              <DatePicker onChange={onChange} picker="month" allowClear={false} /> :
-              <DatePicker onChange={onChange} picker="year" allowClear={false} />}
+            {durationType === "month" ?
+              <DatePicker onChange={handleDateChange} picker="month" allowClear={true} /> :
+              <DatePicker onChange={handleDateChange} picker="year" allowClear={true}/>}
           </div>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={353}>
         <AreaChart
-          data={data}
+          data={data?.data}
           syncId="anyId"
           margin={{
             top: 20,
