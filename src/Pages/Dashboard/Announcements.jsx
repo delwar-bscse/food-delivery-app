@@ -63,8 +63,8 @@ const Announcements = () => {
                             <div className='py-1'>
                                 <RxSpeakerLoud className='text-xl' />
                             </div>
-                            <div className='space-y-3'>
-                                <p className='flex flex-col border-b border-gray-300 pb-3'>
+                            <div className='space-y-3 flex-1'>
+                                <p className='flex flex-col border-b border-gray-200 pb-3'>
                                     <span className='font-semibold text-gray-800 text-lg'>
                                         Ivan
                                         <span className='font-light text-gray-600'> Published : </span>

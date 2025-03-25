@@ -10,7 +10,18 @@ const orderSlice = api.injectEndpoints({
         };
       },
     }),
+    orderDetails: builder.query({
+      query: (id) => {
+        return {
+          method: "GET",
+          url: `/admin/parcel-status/${id}`,
+        };
+      },
+    }),
   }),
 });
 
-export const { useOrdersQuery } = orderSlice;
+export const { 
+  useOrdersQuery,
+  useOrderDetailsQuery 
+} = orderSlice;

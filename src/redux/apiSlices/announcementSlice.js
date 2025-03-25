@@ -27,6 +27,7 @@ const announcementSlice = api.injectEndpoints({
 
 export const { 
   useCreateNewAnnouncmentMutation,
+  useLazyGetAllAnnouncmentQuery,
   useGetAllAnnouncmentQuery
  } =
   announcementSlice;

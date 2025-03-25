@@ -39,7 +39,7 @@ const userSlice = api.injectEndpoints({
       query: (id) => {
         return {
           method: "GET",
-          url: `/admin/user/profile/${id}`,
+          url: `/activity/all/${id}`,
         };
       },
     }),

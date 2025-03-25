@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { ConfigProvider, Input, Rate, Tabs } from "antd";
-import { Link, useParams } from "react-router-dom";
-import { BiLeftArrowAlt } from "react-icons/bi";
+import {  useParams } from "react-router-dom";
 import { GoStarFill } from "react-icons/go";
-// import RunningOrderTable from "../../components/ui/Analytics/RunningOrderTable";
 import { ProfileImg } from "../../assets/assets";
 import UserOrder from "./UserOrder";
+import { useUserByIdQuery } from "../../redux/apiSlices/userSlice";
 
 const reviews = [
   {
@@ -193,6 +192,10 @@ const User = () => {
     updatedAt: "2025-03-15T06:43:16.230Z",
     __v: 0
   };
+  
+  const { data: singleUser, isLoading, isSuccess, isError, error, refetch} = useUserByIdQuery(id);
+  // console.log( singleUser );
+  const {fullName, mobileNumber, profileImage, freeDeliveries, totalOrders, subscriptionType, isVerified, stats} = isSuccess && singleUser?.profile;
 
 
   const imgUrl =
@@ -210,12 +213,12 @@ const User = () => {
             </div>
             {/* User Details */}
             <div className="grid gap-6 grid-flow-col grid-rows-5">
-              <p className=""><span className="font-semibold">Name :</span> {user?.firstName} {user?.lastName}</p>
+              <p className=""><span className="font-semibold">Name :</span> {fullName || "N/A"}</p>
               <p className=""><span className="font-semibold"> Email : </span>{user?.email || "N/A"}</p>
-              <p className=""><span className="font-semibold"> Number : </span>{user?.mobileNumber || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Number : </span>{mobileNumber || "N/A"}</p>
               <div className="flex items-center gap-4">
                 <div>
-                <span className="font-semibold">Rating : </span> <ConfigProvider theme={theme}><Rate size="small" disabled allowHalf defaultValue={2.5} /></ConfigProvider> (2.5)
+                <span className="font-semibold">Rating : </span> <ConfigProvider theme={theme}><Rate size="small" disabled allowHalf defaultValue={stats?.avgRating} /></ConfigProvider> ( {stats?.avgRating} )
                 </div>
                 <button onClick={() => setIsShowReview(!isShowReview)} className={`text-white ${isShowReview ? "bg-green-400" : "bg-red-400"} px-4 py-1 rounded-full`}>Reviews</button>
               </div>

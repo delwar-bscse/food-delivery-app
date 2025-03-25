@@ -16,6 +16,7 @@ import ViewRequest from "../Pages/Dashboard/ViewRequest";
 import Announcements from "../Pages/Dashboard/Announcements";
 import TermsAndCondition from "../Pages/Dashboard/TermsAndCondition";
 import NotFound from "../NotFound";
+import CreateSubscription from "../Pages/Dashboard/CreateSubscription";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/subscriptions",
         element: <Subscriptions />,
+      },
+      {
+        path: "/subscriptions/create",
+        element: <CreateSubscription />,
       },
       {
         path: "/terms-and-conditions",

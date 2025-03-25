@@ -1,24 +1,32 @@
 import { Form, Button, Input, InputNumber } from "antd";
 const { TextArea } = Input;
-import { useUpdateSubscriptionMutation } from "../../redux/apiSlices/subscriptionSlice";
+import { useCreateSubscriptionMutation, useUpdateSubscriptionMutation } from "../../redux/apiSlices/subscriptionSlice";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function EditSubscription({ handleOk, singleSubscription, setSingleSubscription }) {
-  const [updateSubscription] = useUpdateSubscriptionMutation();
+export default function CreateSubscription() {
+  const navigation = useNavigate();
+  const [createSubscription] = useCreateSubscriptionMutation()
+  
+  
 
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     console.log("Edit Subscription : ", values);
-    await updateSubscription(values);
-    form.resetFields();
-    handleOk();
+    const res = await createSubscription({...values,version:"1.1"});
+    
+    if(res.data){
+      form.resetFields();
+      navigation("/subscriptions");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <>
-      <div className='space-y-8 p-6 pt-16'>
+    <div className="">
+      <div className='space-y-8 p-6 pt-16 w-full max-w-[800px] mx-auto mt-8 bg-white rounded-xl shadow-custom-card'>
         <div>
           <h2 className='text-2xl font-semibold text-center'>Edit Subscription Price</h2>
         </div>
@@ -34,7 +42,6 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
               <Form.Item
                 name="type"
                 label="Subscription Type"
-                initialValue={singleSubscription?.type}
               >
                 <Input className="py-3 bg-gray-100 rounded-xl" />
               </Form.Item>
@@ -44,7 +51,6 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
                   <Form.Item
                     name="price"
                     label="Price"
-                    initialValue={singleSubscription?.price}
                   >
                     <InputNumber size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
@@ -53,7 +59,6 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
                   <Form.Item
                     name="deliveryLimit"
                     label="Delivery Limit"
-                    initialValue={singleSubscription?.deliveryLimit}
                   >
                     <InputNumber size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
@@ -63,7 +68,6 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
               <Form.Item
                 name="description"
                 label="Subscription Description"
-                initialValue={singleSubscription?.description}
               >
                 <TextArea placeholder="Autosize height based on content lines" className="py-2 bg-gray-100 rounded-xl"  autoSize={{ minRows: 4, maxRows: 12 }} />
               </Form.Item>
@@ -83,13 +87,13 @@ export default function EditSubscription({ handleOk, singleSubscription, setSing
                   }}
                   className="roboto-medium text-sm leading-4"
                 >
-                  Save and Change
+                  Submit
                 </Button>
               </Form.Item>
             </div>
           </Form>
         </div>
       </div>
-    </>
+    </div>
   )
 }

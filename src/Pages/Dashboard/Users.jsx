@@ -74,12 +74,12 @@ const Users = () => {
     },
     {
       title: "Rating",
-      dataIndex: "mobileNumber",
-      key: "mobileNumber",
-      render: (_, record) => (
+      dataIndex: "avgRating",
+      key: "avgRating",
+      render: (avgRating) => (
         <div className="flex items-center rounded-full gap-1 bg-yellow-500 text-white px-3 py-1 max-w-16">
           <span><GoStarFill /></span>
-          <span>4.5</span>
+          <span>{avgRating}</span>
         </div>
       )
     },

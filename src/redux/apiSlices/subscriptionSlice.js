@@ -13,6 +13,16 @@ const subscriptionSlice = api.injectEndpoints({
       providesTags: ["AdminData"]
     }),
 
+    createSubscription: builder.mutation({
+      query: (data) => {
+        return {
+          method: "POST",
+          url: "/admin/subscriptions/createsubscription",
+          body: data,
+        };
+      },
+    }),
+
     updateSubscription: builder.mutation({
       query: (data) => {
         return {
@@ -28,5 +38,6 @@ const subscriptionSlice = api.injectEndpoints({
 
 export const {
   useUpdateSubscriptionMutation,
+  useCreateSubscriptionMutation,
   useGlobalSubscriptionQuery,
 } = subscriptionSlice;
