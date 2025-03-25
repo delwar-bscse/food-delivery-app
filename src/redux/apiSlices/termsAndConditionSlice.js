@@ -5,7 +5,7 @@ const termsAndConditionSlice = api.injectEndpoints({
     updateTermsAndConditions: builder.mutation({
       query: (data) => {
         return {
-          url: `/others/terms-and-condition`,
+          url: `/admin/others/terms-and-condition`,
           method: "POST",
           body: data,
           headers: {
@@ -19,7 +19,7 @@ const termsAndConditionSlice = api.injectEndpoints({
     termsAndCondition: builder.query({
       query: (userType) => {
         return {
-          url: `/others/terms-and-conditions/${userType}`,
+          url: `/admin/others/terms-and-conditions/${userType}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${JSON.parse(

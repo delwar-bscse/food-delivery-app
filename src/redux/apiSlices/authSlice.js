@@ -6,7 +6,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/login",
+          url: "/admin/login",
           body: data,
         };
       },
@@ -22,7 +22,7 @@ const authSlice = api.injectEndpoints({
       query: (value) => {
         return {
           method: "PUT",
-          url: "/change-password",
+          url: "/admin/change-password",
           body: value,
         };
       },
@@ -32,7 +32,7 @@ const authSlice = api.injectEndpoints({
       query: ({formData, id}) => {
         return {
           method: "PUT",
-          url: `/profile/${id}`,
+          url: `/admin/profile/${id}`,
           body: formData
         };
       },
@@ -42,7 +42,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/profile",
+          url: "/admin/profile",
         };
       },
     }),

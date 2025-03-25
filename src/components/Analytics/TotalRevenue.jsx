@@ -120,7 +120,21 @@ const TotalRevenue = ({ selectState, selectPath }) => {
     month: isMonth
   });
 
-  // console.log("General State :", data?.data);
+  const modifyData = (data) => {
+    if (data) {
+      if (durationType === 'year') {
+        const modifiedData = data.map((item) => ({
+          ...item,
+          x: monthConverter(item.x),
+        }));
+        return modifiedData;
+      } else {
+        return data;
+      }
+    }
+  };
+  const chartData = modifyData(data?.data);
+  console.log("General State :", chartData);
 
 
   useEffect(() => {
@@ -174,11 +188,11 @@ const TotalRevenue = ({ selectState, selectPath }) => {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Adds a subtle shadow
           }}
         >
-          <p><strong>${y}k</strong></p>
+          <p><strong>{selectState.split(" ")[1]} : {y}</strong></p>
           {durationType === "month" ? (
-            <p><strong> {isYear} - {x}</strong></p>
+            <p><strong>{x} - {monthConverter(isMonth)} - {isYear}</strong></p>
           ) : (
-            <p><strong>{x} - {isMonth}</strong></p>
+            <p><strong>{x}  - {isYear}</strong></p>
           )}
         </div>
       );
@@ -210,7 +224,7 @@ const TotalRevenue = ({ selectState, selectPath }) => {
       </div>
       <ResponsiveContainer width="100%" height={353}>
         <AreaChart
-          data={data?.data}
+          data={chartData}
           syncId="anyId"
           margin={{
             top: 20,

@@ -7,7 +7,7 @@ const subscriptionSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/subscriptions/globalsubscription",
+          url: "/admin/subscriptions/globalsubscription",
         };
       },
       providesTags: ["AdminData"]
@@ -17,7 +17,7 @@ const subscriptionSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "PUT",
-          url: "/subscriptions/update-price",
+          url: "/admin/subscriptions/update-price",
           body: data,
         };
       },

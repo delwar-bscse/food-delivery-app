@@ -6,7 +6,7 @@ const orderSlice = api.injectEndpoints({
       query: ({status,page}) => {
         return {
           method: "GET",
-          url: `/parcel-status?status=${status}&page=${page}`,
+          url: `/admin/parcel-status?status=${status}&page=${page}`,
         };
       },
     }),

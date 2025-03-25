@@ -6,7 +6,7 @@ const userSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/user?role=ADMIN",
+          url: "/admin/user?role=ADMIN",
         };
       },
     }),
@@ -14,7 +14,7 @@ const userSlice = api.injectEndpoints({
       query: ({page,filterType}) => {
         return {
           method: "GET",
-          url: `/users?page=${page}&filterType=${filterType}`,
+          url: `/admin/users?page=${page}&filterType=${filterType}`,
         };
       },
     }),
@@ -22,7 +22,7 @@ const userSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: '/users'
+          url: '/admin/users'
         };
       },
     }),
@@ -30,7 +30,7 @@ const userSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/users/hold",
+          url: "/admin/users/hold",
           body: data
         };
       },
@@ -39,7 +39,7 @@ const userSlice = api.injectEndpoints({
       query: (id) => {
         return {
           method: "GET",
-          url: `/user/profile/${id}`,
+          url: `/admin/user/profile/${id}`,
         };
       },
     }),
@@ -47,7 +47,7 @@ const userSlice = api.injectEndpoints({
       query: (id) => {
         return {
           method: "DELETE",
-          url: `/user/${id}`,
+          url: `/admin/user/${id}`,
         };
       },
     }),

@@ -6,7 +6,7 @@ const dashboardSlice = api.injectEndpoints({
       query: ({defaultPath,year,month}) => {
         return {
           method: "GET",
-          url: `/${defaultPath}?year=${year}&month=${month}`,
+          url: `/admin/${defaultPath}?year=${year}&month=${month}`,
         };
       },
     }),
@@ -14,7 +14,7 @@ const dashboardSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: '/users'
+          url: '/admin/users'
         };
       },
     }),
@@ -22,7 +22,7 @@ const dashboardSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: '/totalRevenue/number',
+          url: '/admin/totalRevenue/number',
         };
       },
     }),
@@ -30,7 +30,7 @@ const dashboardSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: '/totalSubscribers/total',
+          url: '/admin/totalSubscribers/total',
         };
       },
     }),
@@ -38,7 +38,7 @@ const dashboardSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: '/totalOrders/number',
+          url: '/admin/totalOrders/number',
         };
       },
     }),

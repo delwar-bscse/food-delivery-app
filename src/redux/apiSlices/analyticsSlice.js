@@ -6,7 +6,7 @@ const userSlice = api.injectEndpoints({
       query: ({year,month}) => {
         return {
           method: "GET",
-          url: `/newUsers?year=${year}&month=${month}`,
+          url: `/admin/newUsers?year=${year}&month=${month}`,
         };
       },
     }),

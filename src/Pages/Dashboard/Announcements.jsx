@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { RxSpeakerLoud } from "react-icons/rx";
-import { announcementData } from '../../datas/announcementDatas';
+import { useCreateNewAnnouncmentMutation, useGetAllAnnouncmentQuery } from '../../redux/apiSlices/announcementSlice';
+import moment from 'moment/moment';
 
 const Announcements = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [singleAnnouncement, setSingleAnnouncement] = useState({
-        agenda: '',
-        message: '',
+        title: '',
+        description: '',
     });
+    
+    const [createNewAnnouncment] = useCreateNewAnnouncmentMutation();
+    const { data, isLoading, refetch } = useGetAllAnnouncmentQuery();
+    // console.log("Announcement data:", data);
 
     const handleOpenChange = (e) => {
         setSingleAnnouncement({ ...singleAnnouncement, [e.target.name]: e.target.value });
@@ -18,12 +23,14 @@ const Announcements = () => {
         setIsModalOpen(true);
     };
     const handleOk = () => {
-        if (singleAnnouncement?.agenda && singleAnnouncement?.message){
+        if (singleAnnouncement?.title && singleAnnouncement?.description) {
+            createNewAnnouncment(singleAnnouncement);
+            refetch();
             console.log(singleAnnouncement);
         };
         setSingleAnnouncement({
-            agenda: '',
-            message: '',
+            title: '',
+            description: '',
         })
         setIsModalOpen(false);
     };
@@ -38,31 +45,34 @@ const Announcements = () => {
                 <Modal footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={800} centered>
                     <div className='space-y-8 p-6 pt-16'>
                         <h2 className='text-2xl font-semibold text-center'>Write Announcements</h2>
-                        <input onChange={handleOpenChange} name='agenda' value={singleAnnouncement?.agenda} type="text" placeholder='Announcement Title' className='w-full border border-gray-400 p-3 rounded-md focus:outline-none focus:border-gray-500 bg-gray-50 focus:bg-white' />
-                        <textarea onChange={handleOpenChange} name='message' value={singleAnnouncement?.message} type='text' className='w-full h-72 border border-gray-400 p-3 rounded-md focus:outline-none focus:border-gray-500 bg-gray-50 focus:bg-white' placeholder='Announcement Description...'></textarea>
+                        
+                        <input onChange={handleOpenChange} name='title' value={singleAnnouncement?.title} type="text" placeholder='Announcement Title' className='w-full border border-gray-400 p-3 rounded-md focus:outline-none focus:border-gray-500 bg-gray-50 focus:bg-white' />
+                        
+                        <textarea onChange={handleOpenChange} name='description' value={singleAnnouncement?.description} type='text' className='w-full h-72 border border-gray-400 p-3 rounded-md focus:outline-none focus:border-gray-500 bg-gray-50 focus:bg-white' placeholder='Announcement Description...'></textarea>
+                        
                         <div className='flex justify-end'>
-                        <button onClick={handleOk} className='bg-gray-800 text-white py-2 px-5 rounded-md'>
-                            Publish Announcements
-                        </button>
+                            <button onClick={handleOk} className='bg-gray-800 text-white py-2 px-5 rounded-md'>
+                                Publish Announcements
+                            </button>
                         </div>
                     </div>
                 </Modal>
                 <div className='space-y-4'>
-                    {announcementData?.map((data, index) => (
-                        <div key={data?.id} className='flex items-start gap-2 border border-gray-400 p-5 rounded-xl'>
+                    {data?.map((data, index) => (
+                        <div key={index} className='flex items-start gap-2 border border-gray-400 p-5 rounded-xl'>
                             <div className='py-1'>
                                 <RxSpeakerLoud className='text-xl' />
                             </div>
                             <div className='space-y-3'>
                                 <p className='flex flex-col border-b border-gray-300 pb-3'>
-                                    <span className='font-semibold text-gray-800'>
-                                        {data?.name}
-                                        <span className='font-light text-gray-600'> commented on </span>
-                                        {data?.agenda}
+                                    <span className='font-semibold text-gray-800 text-lg'>
+                                        Ivan
+                                        <span className='font-light text-gray-600'> Published : </span>
+                                        {data?.title}
                                     </span>
-                                    <span className='text-gray-500 text-xs'>{data?.date} at {data?.time}</span>
+                                    <span className='text-gray-500 text-xs'>{moment(data?.createdAt).format('YYYY-MM-DD HH:mm:ss')}</span>
                                 </p>
-                                <p className='text-gray-600 text-sm'>{data?.message}</p>
+                                <p className='text-gray-600 text-sm'>{data?.description}</p>
                             </div>
                         </div>
                     ))}
