@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Space, Avatar, Select, Button, Popconfirm } from "antd";
+import { Table, Avatar, Select, Button, Popconfirm } from "antd";
 import { LuView } from "react-icons/lu";
 import randomImg from "../../assets/randomProfile2.jpg";
 import { MdOutlineDeleteForever } from "react-icons/md";
@@ -7,13 +7,10 @@ import { GoStarFill } from "react-icons/go";
 import { Pagination } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useUpdateStatusMutation, useUserDeleteByIdMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
-// import { useFreeDeliveryAssignMutation } from "../../redux/apiSlices/freeDeliverySlice";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Users = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [freeDelivery, setFreeDelivery] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [filterType, setFilterType] = useState("");
   const [isSorting, setIsSorting] = useState(true);
@@ -22,7 +19,9 @@ const Users = () => {
   const [userDeleteById] = useUserDeleteByIdMutation();
   const { data: usersData, isLoading, refetch } = useUsersQuery({
     page: pageNumber,
-    filterType: filterType
+    filterType: filterType,
+    sortBy: filterType,
+    sortOrder: isSorting ? "asc" : "desc"
   });
 
   // console.log("Backend Data", usersData?.data?.users);
@@ -42,11 +41,16 @@ const Users = () => {
 
   const handleDeleteUser = async (record) => {
     console.log(record._id);
-    await userDeleteById(record._id);
+    await userDeleteById(record._id).unwrap();
     refetch();
     toast.success("User deleted successfully!");
   }
 
+  useEffect(() => {
+    refetch();
+  }, [filterType, pageNumber, isSorting]);
+
+  //Table Columns
   const columns = [
     {
       title: "Id",
@@ -127,7 +131,7 @@ const Users = () => {
         <div className='flex justify-start items-center gap-3'>
           <Link to={`/users/${record._id}`} className='text-white bg-yellow-500 p-1 rounded-sm'><LuView size={20} /></Link>
           <Popconfirm
-            title= {<h2 className="text-red-600">Delete the User</h2>}
+            title={<h2 className="text-red-600">Delete the User</h2>}
             description="Are you sure to delete this User?"
             onConfirm={() => handleDeleteUser(record)}
             placement="topLeft"
@@ -147,14 +151,21 @@ const Users = () => {
     },
   ];
 
-  useEffect(() => {
-    // console.log(filterType, pageNumber);
-    refetch({
-      page: pageNumber,
-      filterType: filterType
-    });
-  }, [filterType, pageNumber]);
-
+  // Filter Options
+  const options = [
+    {
+      value: '',
+      label: 'All',
+    },
+    {
+      value: 'rating',
+      label: 'Rating',
+    },
+    {
+      value: 'earning',
+      label: 'Earning',
+    }
+  ]
 
 
   return (
@@ -177,20 +188,7 @@ const Users = () => {
                 setFilterType(e);
                 setPageNumber(1);
               }}
-              options={[
-                {
-                  value: '',
-                  label: 'All',
-                },
-                {
-                  value: 'rating',
-                  label: 'Rating',
-                },
-                {
-                  value: 'earning',
-                  label: 'Earning',
-                }
-              ]}
+              options={options}
             />
           </div>
         </div>

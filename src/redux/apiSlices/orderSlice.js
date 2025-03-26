@@ -12,9 +12,10 @@ const orderSlice = api.injectEndpoints({
     }),
     orderDetails: builder.query({
       query: (id) => {
+        console.log(id);
         return {
           method: "GET",
-          url: `/admin/parcel-status/${id}`,
+          url: `/admin/parcel/${id}`,
         };
       },
     }),

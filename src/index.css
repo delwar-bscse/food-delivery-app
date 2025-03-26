@@ -12,6 +12,7 @@
   margin: 0;
 }
 
+
 /* ant design modal footer top margin remove */
 .ant-modal-footer {
   margin-top: 0 !important;

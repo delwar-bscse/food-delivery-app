@@ -24,11 +24,21 @@ const subscriptionSlice = api.injectEndpoints({
     }),
 
     updateSubscription: builder.mutation({
-      query: (data) => {
+      query: ({id,data}) => {
+        console.log("Update subscription : ", id, data);
         return {
           method: "PUT",
-          url: "/admin/subscriptions/update-price",
+          url: `/admin/subscriptions/update-plan/${id}`,
           body: data,
+        };
+      },
+    }),
+
+    deleteSubscription: builder.mutation({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/admin/subscriptions/delete/${id}`,
         };
       },
     }),
@@ -37,7 +47,8 @@ const subscriptionSlice = api.injectEndpoints({
 });
 
 export const {
+  useGlobalSubscriptionQuery,
   useUpdateSubscriptionMutation,
   useCreateSubscriptionMutation,
-  useGlobalSubscriptionQuery,
+  useDeleteSubscriptionMutation
 } = subscriptionSlice;

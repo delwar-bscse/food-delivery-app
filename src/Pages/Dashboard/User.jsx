@@ -194,7 +194,7 @@ const User = () => {
   };
   
   const { data: singleUser, isLoading, isSuccess, isError, error, refetch} = useUserByIdQuery(id);
-  // console.log( singleUser );
+  console.log( singleUser );
   const {fullName, mobileNumber, profileImage, freeDeliveries, totalOrders, subscriptionType, isVerified, stats} = isSuccess && singleUser?.profile;
 
 
