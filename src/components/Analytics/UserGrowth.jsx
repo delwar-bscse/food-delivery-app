@@ -118,8 +118,23 @@ const UserGrowth = () => {
     year: isYear,
     month: isMonth
   });
+  // console.log("General State :", data);
 
-  // console.log("General State :", data?.data);
+  const modifyData = (data) => {
+    if (data) {
+      if (durationType === 'year') {
+        const modifiedData = data?.data?.map((item) => ({
+          ...item,
+          x: monthConverter(item.x),
+        }));
+        return modifiedData;
+      } else {
+        return data?.data;
+      }
+    }
+  };
+  const chartData = modifyData(data);
+  // console.log("General State :", chartData);
 
 
   useEffect(() => {
@@ -184,7 +199,7 @@ const UserGrowth = () => {
   };
 
   return (
-    <div className="w-full border-2 border-gray-200 p-3 rounded-xl">
+    <div className="w-full border border-gray-200 p-3">
       <div className="flex items-center justify-between px-8 pb-3">
         <h4 className="text-2xl font-semibold text-gray-800">New Users Growth</h4>
         <div className="flex items-center justify-end gap-1">
@@ -205,9 +220,9 @@ const UserGrowth = () => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={353}>
+      <ResponsiveContainer width="100%" height={375}>
         <AreaChart
-          data={data?.data}
+          data={chartData}
           syncId="anyId"
           margin={{
             top: 20,

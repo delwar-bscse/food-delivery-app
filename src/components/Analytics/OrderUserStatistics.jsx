@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import App from "../../demo";
+import { useUserAnalyticsQuery } from "../../redux/apiSlices/analyticsSlice";
 
 const OrderUserStatistics = () => {
   const [timeRangeOrder, setTimeRangeOrder] = useState("All");
@@ -13,11 +14,14 @@ const OrderUserStatistics = () => {
     canceledOrders: "10%"
   };
 
-  const userState = {
-    registeredUsers: 2000,
-    activeUsers: 1959,
-    newUsers: 50
-  };
+  const { data: userStates , isLoading: isUserLoading, isSuccess: isUserSuccess} = useUserAnalyticsQuery({
+    year: 2021,
+    month: 11,
+    day: 15
+  });
+  // console.log("User Analytics", userStates);
+
+  
   const handleUserState = (e) => {
     setTimeRangeUser(e.target.value);
     console.log(e.target.value);
@@ -66,15 +70,15 @@ const OrderUserStatistics = () => {
           </tr>
           <tr>
             <td className="px-4 py-2 border">Registered Users</td>
-            <td className="px-4 py-2 border">{userState.registeredUsers}</td>
+            <td className="px-4 py-2 border">{userStates?.totalUsers}</td>
           </tr>
           <tr>
             <td className="px-4 py-2 border">Active Users</td>
-            <td className="px-4 py-2 border">{userState.activeUsers}</td>
+            <td className="px-4 py-2 border">{userStates?.activeUsers}</td>
           </tr>
           <tr>
             <td className="px-4 py-2 border">New Users</td>
-            <td className="px-4 py-2 border">{userState.newUsers}</td>
+            <td className="px-4 py-2 border">{userStates?.newUsers}</td>
           </tr>
         </tbody>
       </table>

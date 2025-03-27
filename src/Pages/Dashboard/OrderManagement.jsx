@@ -7,6 +7,7 @@ import { LuView } from "react-icons/lu";
 import { ordersManagementData } from '../../datas/ordersManagementData';
 import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
 import { render } from 'react-dom';
+import { BiShekel } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
 const options = [
@@ -97,7 +98,7 @@ const columns = [
         title: 'BILL',
         dataIndex: 'price',
         key: 'price',
-        render: (price) => <p>${price}</p>,
+        render: (price) => <p className='flex items-center gap-1'><BiShekel size={16}/>{price}</p>,
     },
     {
         title: 'Details',

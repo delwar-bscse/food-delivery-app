@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Tag, Select, Input, Button, Space, Pagination } from 'antd';
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
 import { LuView } from "react-icons/lu";
+import { BiShekel } from "react-icons/bi";
 import { ordersManagementData } from '../../datas/ordersManagementData';
 import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
-import { render } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useUserByIdQuery } from '../../redux/apiSlices/userSlice';
 
 const options = [
     {
@@ -97,7 +96,7 @@ const columns = [
         title: 'BILL',
         dataIndex: 'price',
         key: 'price',
-        render: (price) => <p>${price}</p>,
+        render: (price) => <p className='flex items-center gap-1'><BiShekel /><span>{price}</span></p>,
     },
     {
         title: 'Details',
@@ -111,46 +110,26 @@ const columns = [
 ];
 
 const UserOrder = () => {
-    const [activeTab, setActiveTab] = useState('');
-    const [tableData, setTableData] = useState(ordersManagementData);
-    const [selectRow, setSelectRow] = useState('orderid');
-    const [searchValue, setSearchValue] = useState("");
-    const [current, setCurrent] = useState(1);
+    const { id } = useParams();
+
+    const { data: singleUser, isLoading, isSuccess, refetch } = useUserByIdQuery(id);
+    // console.log(singleUser);
+
+    const parcelsData = isSuccess && singleUser?.parcels?.map((item, index) => {
+        return {
+            ...item,
+            key:index
+        }
+    })
 
 
-    const { data: orderData, isLoading, refetch } = useOrdersQuery({
-        status: activeTab,
-        page: current
-    });
-    // console.log(orderData);
-
-    const filteredData = orderData?.data
-        ?.map((item, index) => {
-            return {
-                ...item,
-                key: item?._id,
-                orderid: item?._id,
-                index
-            }
-        })
-        .filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
-
-    useEffect(() => {
-        refetch({
-            status: activeTab,
-            page: current
-        });
-    }, [activeTab, current]);
-
+    isLoading && <p>Loading...</p>
 
     return (
         <div className='space-y-6'>
             <h2 className='font-semibold text-2xl pt-3'>User's Activity</h2>
             <div className="w-full border-2 rounded-lg overflow-hidden">
-                <Table columns={columns} dataSource={filteredData} pagination={false} />
-            </div>
-            <div className="flex justify-center py-6">
-                <Pagination current={orderData?.pagination?.currentPage} onChange={(e) => setCurrent(e)} total={orderData?.pagination?.totalParcels} />
+                <Table columns={columns} dataSource={parcelsData} pagination={false} />
             </div>
         </div>
     )

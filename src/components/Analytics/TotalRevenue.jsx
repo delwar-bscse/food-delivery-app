@@ -133,6 +133,7 @@ const TotalRevenue = ({ selectState, selectPath }) => {
       }
     }
   };
+  
   const chartData = modifyData(data?.data);
   // console.log("General State :", chartData);
 

@@ -91,11 +91,7 @@ const ActiveRatedUsers = () => {
   ];
 
   useEffect(() => {
-    console.log(filterType, current);
-    refetch({
-      page: current,
-      // filterType: filterType
-    });
+    refetch();
   }, [filterType, current]);
 
   
@@ -104,10 +100,11 @@ const ActiveRatedUsers = () => {
   return (
     isLoading ? <p>Loading....</p> : <>
       <div className="w-full flex items-center gap-5 pt-4">
-        <h1 className="text-2xl font-semibold  my-5">Activity & Performance</h1>
-        <div className="flex gap-3 justify-end">
+        <h1 className="text-2xl font-semibold  my-5">Most Active Users</h1>
+        {/* <h1 className="text-2xl font-semibold  my-5">Activity & Performance</h1> */}
+        {/* <div className="flex gap-3 justify-end"> */}
           {/* Filter by email or number */}
-          <div className="w-[240px]">
+          {/* <div className="w-[240px]">
             <Select
               size="large"
               placeholder="Most Active Users"
@@ -129,8 +126,8 @@ const ActiveRatedUsers = () => {
                 }
               ]}
             />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
       {/* Users Table */}
       <Table

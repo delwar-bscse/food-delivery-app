@@ -1,7 +1,8 @@
 import React from 'react';
 import { product01 } from '../../assets/assets';
 import { useOrderDetailsQuery } from '../../redux/apiSlices/orderSlice';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { BiShekel } from "react-icons/bi";
 import moment from 'moment/moment';
 
 const OrderDetails = () => {
@@ -49,7 +50,7 @@ const OrderDetails = () => {
               <p><strong>Destination Location : </strong> {deliveryLocation || "N/A"}</p>
               <p><strong>Pickup Time : </strong> {moment(deliveryStartTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
               <p><strong>Delivered Time : </strong> {moment(deliveryEndTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
-              <p><strong>Price : </strong> { price ? ("$ " + price) : "N/A"}</p>
+              <div><strong>Price : </strong> { price ? <p className='flex items-center gap-1'><BiShekel size={16}/><span>{price}</span></p> : "N/A"}</div>
             </div>
           </div>
         </div>
@@ -63,7 +64,7 @@ const OrderDetails = () => {
         <div className='grid grid-cols-2 border rounded-xl p-4 gap-4 mt-4'>
           <div>
             <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Sender</h2>
-            <div className="grid gap-2 grid-flow-col grid-rows-5">
+            <div className="grid gap-2 grid-flow-col grid-rows-3">
               <p className=""><span className="font-semibold">Name :</span> {senderId?.fullName || "N/A"}</p>
               <p className=""><span className="font-semibold"> Email : </span>{ senderId?.email || "N/A"}</p>
               <p className=""><span className="font-semibold"> Number : </span>{ senderId?.mobileNumber || "N/A"}</p>
@@ -72,7 +73,7 @@ const OrderDetails = () => {
           </div>
           <div>
             <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Delivery Man</h2>
-            <div className="grid gap-2 grid-flow-col grid-rows-5">
+            <div className="grid gap-2 grid-flow-col grid-rows-3">
               <p className=""><span className="font-semibold">Name :</span> {assignedDelivererId?.fullName|| "N/A"}</p>
               <p className=""><span className="font-semibold"> Email : </span>{assignedDelivererId?.email || "N/A"}</p>
               <p className=""><span className="font-semibold"> Number : </span>{assignedDelivererId?.mobileNumber || "N/A"}</p>

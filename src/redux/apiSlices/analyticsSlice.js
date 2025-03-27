@@ -10,9 +10,40 @@ const userSlice = api.injectEndpoints({
         };
       },
     }),
+
+    userAnalytics: builder.query({
+      query: ({year,month,day}) => {
+        return {
+          method: "GET",
+          url: `/admin/user-satistics?year=${year}&month=${month}&day={day}`,
+        };
+      },
+    }),
+
+    mostActiveUsers: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: `/admin/user-satistics`,
+        };
+      },
+    }),
+
+    averageDeliveryTime: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: `/admin/order-details`,
+        };
+      },
+    }),
+
   }),
 });
 
 export const {
   useNewUserGrowthQuery,
+  useUserAnalyticsQuery,
+  useMostActiveUsersQuery,
+  useAverageDeliveryTimeQuery
 } = userSlice;

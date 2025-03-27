@@ -14,6 +14,7 @@ const starsData = {
   stars_2: 1190,
   stars_1: 1100
 }
+
 const RatingStatics = () => (
   <div className='border border-gray-200 p-3'>
     <h2 className='font-semibold text-2xl py-4 text-center'>Customer & Courier Ratings</h2>
@@ -23,19 +24,19 @@ const RatingStatics = () => (
         <Progress percent={generatePercent(starsData.star_total, starsData.stars_5)} size={["100%", 20]} strokeColor={"#FFC107"} />
       </div>
       <div className='flex flex-col gap-2'>
-        <div>5 Stars - {starsData.stars_4} users</div>
+        <div>4 Stars - {starsData.stars_4} users</div>
         <Progress percent={generatePercent(starsData.star_total, starsData.stars_4)} size={["100%", 20]} strokeColor={"#FFC107"} />
       </div>
       <div className='flex flex-col gap-2'>
-        <div>5 Stars - {starsData.stars_3} users</div>
+        <div>3 Stars - {starsData.stars_3} users</div>
         <Progress percent={generatePercent(starsData.star_total, starsData.stars_3)} size={["100%", 20]} strokeColor={"#FFC107"} />
       </div>
       <div className='flex flex-col gap-2'>
-        <div>5 Stars - {starsData.stars_2} users</div>
+        <div>2 Stars - {starsData.stars_2} users</div>
         <Progress percent={generatePercent(starsData.star_total, starsData.stars_2)} size={["100%", 20]} strokeColor={"#FFC107"} />
       </div>
       <div className='flex flex-col gap-2'>
-        <div>5 Stars - {starsData.stars_1} users</div>
+        <div>1 Stars - {starsData.stars_1} users</div>
         <Progress percent={generatePercent(starsData.star_total, starsData.stars_1)} size={["100%", 20]} strokeColor={"#FFC107"} />
       </div>
     </div>
