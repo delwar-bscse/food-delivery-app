@@ -103,4 +103,13 @@
   list-style-type: decimal;
   padding-left: 40px;
 }
+.jodit_preview ul {
+  list-style-type: disc;
+  padding-left: 40px;
+}
+
+.jodit_preview ol {
+  list-style-type: decimal;
+  padding-left: 40px;
+}
 
