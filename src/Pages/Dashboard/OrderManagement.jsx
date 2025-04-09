@@ -149,16 +149,16 @@ const OrderManagement = () => {
                 <button onClick={() => setActiveTab('')} className={`${activeTab === '' && 'bg-white'} p-3 rounded-full`}>
                     All
                 </button>
-                <button onClick={() => setActiveTab('pending')} className={`${activeTab === 'pending' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('PENDING')} className={`${activeTab === 'PENDING' && 'bg-white'} p-3 rounded-full`}>
                     Pending
                 </button>
-                <button onClick={() => setActiveTab('requested')} className={`${activeTab === 'requested' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('REQUESTED')} className={`${activeTab === 'REQUESTED' && 'bg-white'} p-3 rounded-full`}>
                     Requested
                 </button>
-                <button onClick={() => setActiveTab('in_transit')} className={`${activeTab === 'in_transit' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('IN_TRANSIT')} className={`${activeTab === 'IN_TRANSIT' && 'bg-white'} p-3 rounded-full`}>
                     In-Transit
                 </button>
-                <button onClick={() => setActiveTab('delivered')} className={`${activeTab === 'delivered' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => setActiveTab('DELIVERED')} className={`${activeTab === 'DELIVERED' && 'bg-white'} p-3 rounded-full`}>
                     Delivered
                 </button>
             </div>

@@ -6,13 +6,14 @@ import { BiShekel } from "react-icons/bi";
 import moment from 'moment/moment';
 
 const OrderDetails = () => {
-  const {id} = useParams();
+  const { id } = useParams();
 
-  const {data:data, isLoading, isSuccess} =useOrderDetailsQuery(id);
+  const { data: data, isLoading, isSuccess } = useOrderDetailsQuery(id);
   console.log(data?.data);
 
-  const { _id, senderId, description, pickupLocation, deliveryLocation, title, deliveryStartTime, deliveryEndTime, deliveryType, price, images, status, deliveryRequests,
+  const { _id, senderId, description, pickupLocation, deliveryLocation, title, deliveryStartTime, deliveryEndTime, deliveryType, price, images, deliveryRequests,
     assignedDelivererId } = isSuccess ? data?.data : {};
+  console.log("Order Details : ", data?.data);
 
   const orderDetails = {
     productImages: "https://via.placeholder.com/150",
@@ -26,8 +27,8 @@ const OrderDetails = () => {
     description: "This is a high-quality product designed to meet all your needs. It is made with durable materials and offers great functionality. Ideal for daily use, it is both stylish and practical, making it a must-have for everyone."
   };
 
-  if(isLoading) return <div>Loading...</div>
-  if(!isSuccess) return <div>Failed to load data</div>
+  if (isLoading) return <div>Loading...</div>
+  if (!isSuccess) return <div>Failed to load data</div>
 
   return (
     <div className='bg-white p-4 rounded-xl flex justify-center'>
@@ -45,12 +46,14 @@ const OrderDetails = () => {
               <p><strong>Sender's Name : </strong> {senderId?.fullName || "N/A"}</p>
               <p><strong>Delivery Man : </strong> {assignedDelivererId?.fullName || "N/A"}</p>
               <p><strong>Delivery Type : </strong> {deliveryType || "N/A"}</p>
-              <p><strong>Receiver's Name : </strong> {status || "N/A"}</p>
-              <p><strong>Pickup Location : </strong> {pickupLocation || "N/A"}</p>
-              <p><strong>Destination Location : </strong> {deliveryLocation || "N/A"}</p>
+              {/* <p><strong>Receiver's Name : </strong> {status || "N/A"}</p> */}
+              {/* <p><strong>Pickup Location : </strong> {pickupLocation || "N/A"}</p> */}
+              {/* <p><strong>Destination Location : </strong> {deliveryLocation || "N/A"}</p> */}
               <p><strong>Pickup Time : </strong> {moment(deliveryStartTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
               <p><strong>Delivered Time : </strong> {moment(deliveryEndTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
-              <div><strong>Price : </strong> { price ? <p className='flex items-center gap-1'><BiShekel size={16}/><span>{price}</span></p> : "N/A"}</div>
+              <div className='flex items-center gap-1'>
+              <strong>Price : </strong> {price ? <p className='flex items-center gap-1'><BiShekel size={16} /><span>{price}</span></p> : "N/A"}
+              </div>
             </div>
           </div>
         </div>
@@ -66,15 +69,15 @@ const OrderDetails = () => {
             <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Sender</h2>
             <div className="grid gap-2 grid-flow-col grid-rows-3">
               <p className=""><span className="font-semibold">Name :</span> {senderId?.fullName || "N/A"}</p>
-              <p className=""><span className="font-semibold"> Email : </span>{ senderId?.email || "N/A"}</p>
-              <p className=""><span className="font-semibold"> Number : </span>{ senderId?.mobileNumber || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Email : </span>{senderId?.email || "N/A"}</p>
+              <p className=""><span className="font-semibold"> Number : </span>{senderId?.mobileNumber || "N/A"}</p>
               {/* <p><span className="font-semibold"> Address : </span>{"Dhaka, Bangladesh" || "N/A"}</p> */}
             </div>
           </div>
           <div>
             <h2 className='font-semibold text-2xl border-b mb-3 pb-1'>Delivery Man</h2>
             <div className="grid gap-2 grid-flow-col grid-rows-3">
-              <p className=""><span className="font-semibold">Name :</span> {assignedDelivererId?.fullName|| "N/A"}</p>
+              <p className=""><span className="font-semibold">Name :</span> {assignedDelivererId?.fullName || "N/A"}</p>
               <p className=""><span className="font-semibold"> Email : </span>{assignedDelivererId?.email || "N/A"}</p>
               <p className=""><span className="font-semibold"> Number : </span>{assignedDelivererId?.mobileNumber || "N/A"}</p>
               {/* <p><span className="font-semibold"> Address : </span>{"Dhaka, Bangladesh" || "N/A"}</p> */}
