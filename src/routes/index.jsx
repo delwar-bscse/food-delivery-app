@@ -47,10 +47,10 @@ const router = createBrowserRouter([
         path: "/orders/:id",
         element: <OrderDetails />,
       },
-      {
-        path: "/view-reports",
-        element: <ViewRequest />,
-      },
+      // {
+      //   path: "/view-reports",
+      //   element: <ViewRequest />,
+      // },
       {
         path: "/analytics",
         element: <Analytics />,
@@ -67,10 +67,10 @@ const router = createBrowserRouter([
         path: "/subscriptions/create",
         element: <CreateSubscription />,
       },
-      {
-        path: "/terms-and-conditions",
-        element: <TermsAndCondition />,
-      },
+      // {
+      //   path: "/terms-and-conditions",
+      //   element: <TermsAndCondition />,
+      // },
       {
         path: "/profile",
         element: <AdminProfile />,

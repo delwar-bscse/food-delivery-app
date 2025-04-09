@@ -4,6 +4,7 @@ import { subscriptionPattern } from '../../assets/assets'
 import { useDeleteSubscriptionMutation, useGlobalSubscriptionQuery } from '../../redux/apiSlices/subscriptionSlice'
 import EditSubscription from '../../components/Shared/EditSubscription';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { BiShekel } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
 const Subcriptions = () => {
@@ -47,8 +48,8 @@ const Subcriptions = () => {
         {subscriptionDatas?.map((item) => (
           <div key={item?._id} className='flex flex-col items-center gap-3 py-16 shadow-custom-card rounded-2xl bg-white bg-center bg-cover bg-no-repeat p-3' style={{ backgroundImage: `url(${subscriptionPattern})` }}>
             <p className='font-semibold text-4xl text-gray-700 pb-5'>{item?.type}</p>
-            {/* <span className='text-gray-400'>Monthly Charge</span> */}
-            <p className='text-3xl font-semibold text-blue-600'>${item?.price}</p>
+            <span className='text-gray-400'>Monthly Charge</span>
+            <p className='text-3xl font-semibold text-blue-600 flex items-center'><BiShekel size={32}/>{item?.price}</p>
             <p className='text-lg font-semibold text-gray-600'>Delivery Limit {item?.deliveryLimit}</p>
             <p className='font-semibold text-gray-400 text-center py-4'>{item?.description}</p>
             <div className='flex items-center justify-center gap-3'>

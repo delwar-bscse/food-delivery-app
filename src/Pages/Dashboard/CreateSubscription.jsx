@@ -2,6 +2,7 @@ import { Form, Button, Input, InputNumber, Select } from "antd";
 const { TextArea } = Input;
 import { useCreateSubscriptionMutation } from "../../redux/apiSlices/subscriptionSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 // Subscription type will be Basic, Enterprise or Premium.
@@ -20,6 +21,7 @@ export default function CreateSubscription() {
 
     if (res?.data) {
       form.resetFields();
+      toast.success("Subscription Created Successfully");
       navigation("/subscriptions");
     }
   };
@@ -37,7 +39,7 @@ export default function CreateSubscription() {
     <div className="">
       <div className='space-y-8 p-6 pt-16 w-full max-w-[800px] mx-auto mt-8 bg-white rounded-xl shadow-custom-card'>
         <div>
-          <h2 className='text-2xl font-semibold text-center'>Edit Subscription Price</h2>
+          <h2 className='text-2xl font-semibold text-center'>New Subscription</h2>
         </div>
         <div className="w-full mx-auto">
           {/* Input Form */}
@@ -52,12 +54,12 @@ export default function CreateSubscription() {
                 name="type"
                 label="Subscription Type"
               >
-                {/* <Input className="py-3 bg-gray-100 rounded-xl" /> */}
-                <Select
+                <Input className="py-3 bg-gray-100 rounded-xl" />
+                {/* <Select
                   placeholder="Select a type"
                   style={{ width: '100%', height: 44 }}
                   options={OPTIONS}
-                />
+                /> */}
               </Form.Item>
 
               <div className="flex items-center gap-1 w-full">

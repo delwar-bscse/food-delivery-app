@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Tag, Select, Input, Button, Space, Pagination } from 'antd';
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin5Line } from "react-icons/ri";
+import { Table, Tag, Pagination } from 'antd';
 import { FaCircle } from "react-icons/fa";
 import { LuView } from "react-icons/lu";
 import { ordersManagementData } from '../../datas/ordersManagementData';
 import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
-import { render } from 'react-dom';
 import { BiShekel } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 

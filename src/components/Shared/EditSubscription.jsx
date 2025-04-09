@@ -67,7 +67,7 @@ export default function EditSubscription({ isEditModalOpen, closeEditModal, sing
                 name="type"
                 label="Subscription Type"
               >
-                <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
+                <Input className="py-3 bg-gray-100 rounded-xl" />
               </Form.Item>
 
               <div className="flex items-center gap-1 w-full">

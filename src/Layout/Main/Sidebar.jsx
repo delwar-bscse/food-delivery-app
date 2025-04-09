@@ -53,11 +53,11 @@ const Sidebar = () => {
       icon: <CgShoppingBag size={24} />,
       label: <Link to="/orders">Order Management</Link>,
     },
-    {
-      key: "/view-reports",
-      icon: <RiFileList2Line size={24} />,
-      label: <Link to="/view-reports">Reports</Link>,
-    },
+    // {
+    //   key: "/view-reports",
+    //   icon: <RiFileList2Line size={24} />,
+    //   label: <Link to="/view-reports">Reports</Link>,
+    // },
     {
       key: "/analytics",
       icon: <RiLineChartLine size={24} />,
@@ -73,11 +73,11 @@ const Sidebar = () => {
       icon: <AiOutlineSound size={24} />,
       label: <Link to="/announcements">Announcements</Link>,
     },
-    {
-      key: "/terms-and-conditions",
-      icon: <LuClipboardList size={24} />,
-      label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
-    },
+    // {
+    //   key: "/terms-and-conditions",
+    //   icon: <LuClipboardList size={24} />,
+    //   label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
+    // },
     {
       key: "/profile",
       icon: <TbUserCircle size={24} />,
