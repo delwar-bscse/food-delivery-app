@@ -51,7 +51,7 @@ const Sidebar = () => {
     {
       key: "/orders",
       icon: <CgShoppingBag size={24} />,
-      label: <Link to="/orders">Order Management</Link>,
+      label: <Link to="/orders">Parcel Management</Link>,
     },
     // {
     //   key: "/view-reports",

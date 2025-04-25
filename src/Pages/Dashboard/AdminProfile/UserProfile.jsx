@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Form, Input, DatePicker } from "antd";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import "react-phone-input-2/lib/style.css";
@@ -17,6 +17,7 @@ const PersonalInfo = () => {
   const [imgURL, setImgURL] = useState(null);
   const [file, setFile] = useState(null);
   const [form] = Form.useForm();
+  const imageInputRef = useRef(null);
 
 
   const onChange = (date, dateString) => {
@@ -52,7 +53,7 @@ const PersonalInfo = () => {
     if (selectedFile) {
       const imgUrl = URL.createObjectURL(selectedFile);
       setImgURL(imgUrl);
-      setFile(selectedFile);
+      setFile(selectedFile);  
     }
   };
 
@@ -64,7 +65,7 @@ const PersonalInfo = () => {
       values?.dob && formData.append("dob", values?.dob);
       values?.permanentAddress && formData.append("permanentAddress", values?.permanentAddress);
       values?.postalCode && formData.append("postalCode", values?.postalCode);
-      values?.username && formData.append("username", values?.username);
+      // values?.username && formData.append("username", values?.username);
 
       // if (file) {
       //   formData.append("image", file);
@@ -95,15 +96,15 @@ const PersonalInfo = () => {
       <div className="flex bg-white p-10 mt-10 rounded-2xl border gap-10 w-full">
         {/* Profile Picture */}
         <div>
-          <div className="flex flex-col items-center gap-10 px-20 py-12 rounded-xl justify-center">
+          <div  className="flex flex-col items-center gap-10 px-20 py-12 rounded-xl justify-center">
             <input
               onChange={onChangeImage}
               type="file"
-              id="img"
-              className="hidden"
+              className=""
+              ref={imageInputRef}
             />
-            <label
-              htmlFor="img"
+            <div
+              onClick={() => imageInputRef.current.click()}
               className="relative w-48 h-48 cursor-pointer rounded-full border border-gray-700 bg-white bg-cover bg-center"
               style={{ backgroundImage: `url(${imgURL ? imgURL : ProfileImg})` }}
             >
@@ -113,7 +114,7 @@ const PersonalInfo = () => {
                   className="text-gray-700"
                 />
               </div>
-            </label>
+            </div>
           </div>
         </div>
         <div className="w-8/12">
@@ -138,7 +139,7 @@ const PersonalInfo = () => {
                   name="email"
                   label="Email"
                 >
-                  <Input disabled className="py-3 bg-gray-100 rounded-xl" />
+                  <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
 
                 <Form.Item
@@ -168,7 +169,7 @@ const PersonalInfo = () => {
                   name="username"
                   label="User Name"
                 >
-                  <Input placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
+                  <Input readOnly placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item>
 
                 <Form.Item
