@@ -6,11 +6,9 @@ import Cookies from "js-cookie";
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
     // baseUrl: "http://10.0.70.208:3000/api/",
-    baseUrl: "https://azizul3000.binarybards.online/api",
+    baseUrl: "https://azizul3000.binarybards.online/api/",
     prepareHeaders: (headers) => {
-      const token =
-        localStorage.getItem("authToken") ||
-        sessionStorage.getItem("authToken");
+      const token = localStorage.getItem("ivan_authToken");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -26,7 +24,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   // console.log("In baseApi:API request result:", result);
   
   // If the access token is expired, handle token refresh
-  const refreshToken = Cookies.get("refreshToken");
+  const refreshToken = Cookies.get("ivan_refreshToken");
+
   if (result.error) {
     if (result.error.status === 401) {
       // Call the refresh token API
@@ -36,27 +35,19 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
           method: "GET",
           // body: { refreshToken: refreshToken },
           headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("refreshToken")
-            )}`,
+            Authorization: `Bearer ${refreshToken}`,
           },
         }, // No body needed
         api,
         extraOptions
       );
 
-      console.log("Refresh token API result:", refreshResult);
+      // console.log("Refresh token API result:", refreshResult);
 
       if (!refreshResult?.data) {
-        console.error("Refresh token invalid or expired. Logging out...");
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("adminRole");
-        localStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("authToken");
-        sessionStorage.removeItem("refreshToken");
-        Cookies.remove("refreshToken");
-        toast("Access token has expired, Please login again.");
-        window.location.replace("/auth/login");
+        localStorage.removeItem("ivan_authToken");
+        Cookies.remove("ivan_refreshToken");
+        toast.error("Access token has expired, Please login again.");
       }
     } else if (result.error.status === 400) {
       // Handle bad request errors
@@ -79,4 +70,5 @@ export const api = createApi({
 });
 
 // Export the image URL as a constant
-export const imageUrl = "http://10.0.70.208:3000/api";
+export const imageUrl = "https://azizul3000.binarybards.online/"
+// export const imageUrl = "http://10.0.70.208:3000/api";

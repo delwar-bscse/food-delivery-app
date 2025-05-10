@@ -9,6 +9,7 @@ import {
 import toast from "react-hot-toast";
 import { ProfileImg } from "../../../assets/assets";
 import moment from "moment/moment";
+import { refactorFileUrl } from "../../../lib/filePathUrl";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -37,23 +38,25 @@ const PersonalInfo = () => {
       form.setFieldsValue({
         name: adminData?.fullName,
         email: adminData?.email,
-        dob: adminData?.dob ? moment(adminData?.dob) : null,
-        permanentAddress: adminData?.permanentAddress,
-        postalCode: adminData?.postalCode,
-        username: adminData?.username,
+        dob: adminData?.dob && moment(adminData?.dob),
+        contact: adminData?.contact,
+        // permanentAddress: adminData?.permanentAddress,
+        // postalCode: adminData?.postalCode,
+        // username: adminData?.username,
       });
+      adminData?.profileImage && setImgURL(refactorFileUrl(adminData?.profileImage));
       // adminData?.profileImage && setImgURL(adminData?.profileImage?.startsWith("http") ? adminData?.profileImage : `${imageUrl}${adminData?.profileImage}`);
     }
   }, [form, adminData]);
 
- 
+
 
   const onChangeImage = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       const imgUrl = URL.createObjectURL(selectedFile);
       setImgURL(imgUrl);
-      setFile(selectedFile);  
+      setFile(selectedFile);
     }
   };
 
@@ -73,14 +76,14 @@ const PersonalInfo = () => {
       //   formData.append("image", imgURL);
       // }
 
-      const response = await updateAdminProfile({formData, id: adminData?._id});
+      const response = await updateAdminProfile({ formData, id: adminData?._id });
       // const response = await updateAdminProfile();
 
       if (response?.data) {
-        toast.success("Success updating form:",response?.data?.message);
+        toast.success("Success updating form:", response?.data?.message);
         refetch();
       } else {
-        toast.error("Error updating form:",response?.data?.message);
+        toast.error("Error updating form:", response?.data?.message);
       }
     } catch (error) {
       console.error("Error updating form:", error);
@@ -96,11 +99,11 @@ const PersonalInfo = () => {
       <div className="flex bg-white p-10 mt-10 rounded-2xl border gap-10 w-full">
         {/* Profile Picture */}
         <div>
-          <div  className="flex flex-col items-center gap-10 px-20 py-12 rounded-xl justify-center">
+          <div className="gap-10 px-20 py-1 rounded-xl ">
             <input
               onChange={onChangeImage}
               type="file"
-              className=""
+              className="hidden"
               ref={imageInputRef}
             />
             <div
@@ -126,59 +129,55 @@ const PersonalInfo = () => {
             onFinishFailed={onFinishFailed}
           >
             <div className="grid grid-cols-2 gap-5">
-              {/* Form Column One */}
-              <div>
-                <Form.Item
-                  name="name"
-                  label="Your Name"
-                >
-                  <Input className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
+              <Form.Item
+                name="name"
+                label="Your Name"
+              >
+                <Input className="py-3 bg-gray-100 rounded-xl" />
+              </Form.Item>
 
-                <Form.Item
-                  name="email"
-                  label="Email"
-                >
-                  <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
+              <Form.Item
+                name="email"
+                label="Email"
+              >
+                <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
+              </Form.Item>
 
-                <Form.Item
-                  name="dob"
-                  label="Date of Birth"
-                >
-                  <DatePicker className="py-3 bg-gray-100 w-full rounded-xl" />
-                  {/* <DatePicker onChange={onChange} className="py-3 bg-gray-100 rounded-xl" /> */}
-                </Form.Item>
+              <Form.Item
+                name="dob"
+                label="Date of Birth"
+              >
+                <DatePicker className="py-3 bg-gray-100 w-full rounded-xl" />
+                {/* <DatePicker onChange={onChange} className="py-3 bg-gray-100 rounded-xl" /> */}
+              </Form.Item>
 
-                <Form.Item
+              {/* <Form.Item
                   name="permanentAddress"
                   label="Permanent Address"
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
-                <Form.Item
+                </Form.Item> */}
+              {/* <Form.Item
                   name="postalCode"
                   label="Postal Code"
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
-              </div>
-              {/* Form Column One */}
-              <div>
-                <Form.Item
+                </Form.Item> */}
+              {/* <Form.Item
                   name="username"
                   label="User Name"
                 >
                   <Input readOnly placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
+                </Form.Item> */}
 
-                <Form.Item
-                  name="contact"
-                  label="Contact"
-                >
-                  <Input placeholder="Add your phone number" className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
-                <Form.Item
+              <Form.Item
+                name="contact"
+                label="Contact"
+              >
+                <Input placeholder="Add your phone number" className="py-3 bg-gray-100 rounded-xl" />
+              </Form.Item>
+
+              {/* <Form.Item
                   name="presentaddress"
                   label="Present Address"
                 >
@@ -195,27 +194,26 @@ const PersonalInfo = () => {
                   label="Country"
                 >
                   <Input className="py-3 bg-gray-100 rounded-xl" />
-                </Form.Item>
-              </div>
+                </Form.Item> */}
             </div>
             {/* Submit Button */}
             <div className="flex justify-end">
-            <Form.Item>
-              <Button
-                htmlType="submit"
-                block
-                style={{
-                  width: 178,
-                  height: 48,
-                  fontWeight: "400px",
-                  background: "#000000",
-                  color: "white",
-                }}
-                className="roboto-medium text-sm leading-4"
-              >
-                Save and Change
-              </Button>
-            </Form.Item>
+              <Form.Item>
+                <Button
+                  htmlType="submit"
+                  block
+                  style={{
+                    width: 178,
+                    height: 48,
+                    fontWeight: "400px",
+                    background: "#000000",
+                    color: "white",
+                  }}
+                  className="roboto-medium text-sm leading-4"
+                >
+                  Save and Change
+                </Button>
+              </Form.Item>
             </div>
           </Form>
         </div>

@@ -8,10 +8,15 @@ const ChangePassword = () => {
 
   const [changePassword] = useChangePasswordMutation();
 
-  const handleChangePassword = (values) => {
-    // console.log(values);
-    changePassword(values);
-    toast.success("Password changed successfully!");
+  const handleChangePassword = async(values) => {
+    console.log(values);
+    try {
+      const res = await changePassword(values).unwrap();
+      toast.success("Password changed successfully!");
+      form.resetFields();
+    } catch (error) {
+      toast.error("Failed to change password!");
+    }
   };
 
   return (

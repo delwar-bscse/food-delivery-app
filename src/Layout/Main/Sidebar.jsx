@@ -24,12 +24,8 @@ const Sidebar = () => {
   const [openKeys, setOpenKeys] = useState([]);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("adminRole");
-    localStorage.removeItem("refreshToken");
-    sessionStorage.removeItem("authToken");
-    sessionStorage.removeItem("refreshToken");
-    Cookies.remove("refreshToken");
+    localStorage.removeItem("ivan_authToken");
+    Cookies.remove("ivan_refreshToken");
     navigate("/auth/login");
   };
 

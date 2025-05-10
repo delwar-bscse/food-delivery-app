@@ -19,11 +19,11 @@ const authSlice = api.injectEndpoints({
       },
     }),
     changePassword: builder.mutation({
-      query: (value) => {
+      query: (values) => {
         return {
           method: "PUT",
           url: "/admin/change-password",
-          body: value,
+          body: values,
         };
       },
       invalidatesTags: ["AdminData"],

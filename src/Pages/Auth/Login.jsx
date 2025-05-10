@@ -12,32 +12,19 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      // console.log(values);
       const response = await login(values).unwrap();
 
       const accessToken = response?.data?.token;
-      const refreshToken = response?.data?.token;
-      const adminRole = response?.data?.admin?.role;
 
-      if (adminRole === "admin") {
-        localStorage.setItem("authToken", accessToken);
-        localStorage.setItem("adminRole", adminRole);
-        localStorage.setItem("refreshToken", refreshToken);
-        Cookies.set("refreshToken", refreshToken);
-      } else {
-        navigate("/auth/login");
-      }
-
-      navigate("/");
+      // console.log("accessToken : ", response?.data?.token);
       toast.success("Login successful!");
+      localStorage.setItem("ivan_authToken", accessToken);
+      Cookies.set("ivan_refreshToken", accessToken);
+      navigate("/");
+
     } catch (error) {
-      toast.error(error || "An error occurred", {
-        style: {
-          fontSize: "18px",
-          padding: "20px",
-          maxWidth: "600px",
-        },
-      });
+      toast.error("Login failed. Please try again !!!");
+      console.log(error);
     }
   };
 
