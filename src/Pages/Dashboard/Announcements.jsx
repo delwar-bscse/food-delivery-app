@@ -22,9 +22,9 @@ const Announcements = () => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const handleOk = () => {
+    const handleOk = async() => {
         if (singleAnnouncement?.title && singleAnnouncement?.description) {
-            createNewAnnouncment(singleAnnouncement);
+            await createNewAnnouncment(singleAnnouncement);
             refetch();
             console.log(singleAnnouncement);
         };

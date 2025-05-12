@@ -5,6 +5,7 @@ import { Badge } from "antd";
 import { imageUrl } from "../../redux/api/baseApi";
 import { ProfileImg } from "../../assets/assets";
 import { useFetchAdminProfileQuery } from "../../redux/apiSlices/authSlice";
+import { refactorFileUrl } from "../../lib/filePathUrl";
 
 const Header = () => {
   const [imageUrlNew, setImageUrlNew] = useState(null);
@@ -18,9 +19,7 @@ const Header = () => {
   }
 
   const user = userData?.data;
-  // console.log(user);
-  
-  const imgUrl = user?.profileImage?.startsWith("http") ? user?.profileImage : `${imageUrl}${user?.profileImage}`;
+  console.log(refactorFileUrl(user?.image));
 
   
   return (
@@ -38,7 +37,7 @@ const Header = () => {
           height: 45,
         }} 
         className="clip" 
-        src={ProfileImg} alt="profile" 
+        src={`${refactorFileUrl(user?.image)}`} alt="profile" 
         />
         <div className="flex items-center gap-2">
           <p className="text-xl">{user?.fullName

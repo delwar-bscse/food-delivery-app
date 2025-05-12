@@ -110,15 +110,16 @@ const columns = [
 
 const OrderManagement = () => {
     const [activeTab, setActiveTab] = useState('');
-    const [tableData, setTableData] = useState(ordersManagementData);
     const [selectRow, setSelectRow] = useState('orderid');
     const [searchValue, setSearchValue] = useState("");
     const [current, setCurrent] = useState(1);
+    const [limit, setLimit] = useState(10);
 
 
     const { data: orderData, isLoading, refetch } = useOrdersQuery({
         status: activeTab,
-        page: current
+        page: current,
+        limit: limit
     });
     // console.log(orderData);
 
@@ -134,11 +135,10 @@ const OrderManagement = () => {
         .filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
 
     useEffect(() => {
-        refetch({
-            status: activeTab,
-            page: current
-        });
+        refetch();
     }, [activeTab, current]);
+
+    isLoading && <p>Loading...</p>
 
 
     return (
@@ -167,7 +167,7 @@ const OrderManagement = () => {
             </div>
             {/* {console.log("orderData: ", orderData?.data)} */}
             <div className="flex justify-center">
-                <Pagination current={orderData?.pagination?.currentPage} onChange={(e) => setCurrent(e)} total={orderData?.pagination?.totalParcels} />
+                <Pagination current={orderData?.pagination?.currentPage} onChange={(page, pageSize) => {setCurrent(page); setLimit(pageSize)}} total={orderData?.pagination?.totalParcels} />
             </div>
         </div>
     )

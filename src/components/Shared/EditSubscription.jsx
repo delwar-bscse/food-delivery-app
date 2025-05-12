@@ -23,9 +23,10 @@ export default function EditSubscription({ isEditModalOpen, closeEditModal, sing
   const onFinish = async (values) => {
     const editSubscriptionInfo = {
       price: values.price,
-      deliveryLimit: values.deliveryLimit,
+      deliveryLimit: values?.deliveryLimit,
       description: values.description
     };
+    console.log("sub details : ", values)
     await updateSubscription({ id: singleSubscription?._id, data: values });
     form.resetFields();
     closeEditModal();

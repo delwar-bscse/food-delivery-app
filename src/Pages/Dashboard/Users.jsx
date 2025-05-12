@@ -9,9 +9,11 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useUpdateStatusMutation, useUserDeleteByIdMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { refactorFileUrl } from "../../lib/filePathUrl";
 
 const Users = () => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [filterType, setFilterType] = useState("");
   const [isSorting, setIsSorting] = useState(true);
 
@@ -19,6 +21,7 @@ const Users = () => {
   const [userDeleteById] = useUserDeleteByIdMutation();
   const { data: usersData, isLoading, refetch } = useUsersQuery({
     page: pageNumber,
+    limit: limit,
     filterType: filterType,
     sortBy: filterType,
     sortOrder: isSorting ? "asc" : "desc"
@@ -62,15 +65,10 @@ const Users = () => {
       dataIndex: "fullName",
       key: "fullName",
       render: (fullName, record) => {
-        const name = record?.fullName || "Unknown";
-        const imgUrl = record?.profileImg;
-        const fullImgUrl = (imgUrl?.startsWith("http")
-          ? imgUrl
-          : `${import.meta.env.VITE_BASE_URL}${imgUrl}`);
-
+        const name = fullName || "Unknown";
         return (
           <div className="flex items-center gap-2">
-            <Avatar src={randomImg} alt={name} size="large" />
+            <Avatar src={refactorFileUrl(record?.image)} alt={name} size="large" />
             <span>{name}</span>
           </div>
         );
@@ -201,7 +199,7 @@ const Users = () => {
         pagination={false}
       />
       <div className="flex justify-center py-6">
-        <Pagination current={usersData?.data?.currentPage} onChange={(e) => setPageNumber(e)} total={usersData?.data?.totalUsers} />
+        <Pagination current={usersData?.data?.currentPage} onChange={(page, pageSize) =>{setPageNumber(page); setLimit(pageSize)}} total={usersData?.data?.totalUsers} />
       </div>
     </>
   );

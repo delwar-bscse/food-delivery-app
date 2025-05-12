@@ -3,10 +3,10 @@ import { api } from "../api/baseApi";
 const orderSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     orders: builder.query({
-      query: ({status,page}) => {
+      query: ({status,page,limit}) => {
         return {
           method: "GET",
-          url: `/admin/parcel-status?status=${status}&page=${page}`,
+          url: `/admin/parcel-status?status=${status}&page=${page}&limit=${limit}`,
         };
       },
     }),

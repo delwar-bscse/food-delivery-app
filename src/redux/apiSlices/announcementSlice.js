@@ -5,7 +5,7 @@ const announcementSlice = api.injectEndpoints({
     createNewAnnouncment: builder.mutation({
       query: (data) => {
         return {
-          url: '/admin/announcement',
+          url: '/notification/announcement',
           method: "POST",
           body: data,
         };

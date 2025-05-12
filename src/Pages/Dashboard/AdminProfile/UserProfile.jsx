@@ -8,22 +8,17 @@ import {
 } from "../../../redux/apiSlices/authSlice";
 import toast from "react-hot-toast";
 import { ProfileImg } from "../../../assets/assets";
-import moment from "moment/moment";
 import { refactorFileUrl } from "../../../lib/filePathUrl";
+import moment from "moment/moment";
+import dayjs from "dayjs";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const PersonalInfo = () => {
-  const [contact, setContact] = useState("");
   const [imgURL, setImgURL] = useState(null);
   const [file, setFile] = useState(null);
   const [form] = Form.useForm();
   const imageInputRef = useRef(null);
-
-
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
 
 
   const { data: fetchAdminProfile, isLoading, refetch } = useFetchAdminProfileQuery();
@@ -38,14 +33,10 @@ const PersonalInfo = () => {
       form.setFieldsValue({
         name: adminData?.fullName,
         email: adminData?.email,
-        dob: adminData?.dob && moment(adminData?.dob),
+        dob: dayjs(adminData?.dob, 'YYYY-MM-DD'),
         contact: adminData?.contact,
-        // permanentAddress: adminData?.permanentAddress,
-        // postalCode: adminData?.postalCode,
-        // username: adminData?.username,
       });
-      adminData?.profileImage && setImgURL(refactorFileUrl(adminData?.profileImage));
-      // adminData?.profileImage && setImgURL(adminData?.profileImage?.startsWith("http") ? adminData?.profileImage : `${imageUrl}${adminData?.profileImage}`);
+      adminData?.image && setImgURL(refactorFileUrl(adminData?.image));
     }
   }, [form, adminData]);
 
@@ -61,20 +52,17 @@ const PersonalInfo = () => {
   };
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
+    // console.log("Date:", dayjs(values?.dob).format("YYYY-MM-DD"));
     try {
       const formData = new FormData();
       values?.name && formData.append("name", values?.name);
-      values?.dob && formData.append("dob", values?.dob);
-      values?.permanentAddress && formData.append("permanentAddress", values?.permanentAddress);
-      values?.postalCode && formData.append("postalCode", values?.postalCode);
-      // values?.username && formData.append("username", values?.username);
+      values?.dob && formData.append("dob",dayjs(values?.dob).format("YYYY-MM-DD"));
+      values?.contact && formData.append("contact", values?.contact);
 
-      // if (file) {
-      //   formData.append("image", file);
-      // } else {
-      //   formData.append("image", imgURL);
-      // }
+      if (file) {
+        formData.append("image", file);
+      }
 
       const response = await updateAdminProfile({ formData, id: adminData?._id });
       // const response = await updateAdminProfile();
@@ -109,7 +97,7 @@ const PersonalInfo = () => {
             <div
               onClick={() => imageInputRef.current.click()}
               className="relative w-48 h-48 cursor-pointer rounded-full border border-gray-700 bg-white bg-cover bg-center"
-              style={{ backgroundImage: `url(${imgURL ? imgURL : ProfileImg})` }}
+              style={{ backgroundImage: `url(${imgURL || ProfileImg})` }}
             >
               <div className="absolute bottom-2 right-2 w-10 h-10 rounded-full border-2 border-gray-700 bg-gray-100 flex items-center justify-center">
                 <MdOutlineAddPhotoAlternate
@@ -128,7 +116,7 @@ const PersonalInfo = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-5">
               <Form.Item
                 name="name"
                 label="Your Name"
@@ -170,12 +158,12 @@ const PersonalInfo = () => {
                   <Input readOnly placeholder="exampla@deliverly.com" className="py-3 bg-gray-100 rounded-xl" />
                 </Form.Item> */}
 
-              <Form.Item
+              {/* <Form.Item
                 name="contact"
                 label="Contact"
               >
                 <Input placeholder="Add your phone number" className="py-3 bg-gray-100 rounded-xl" />
-              </Form.Item>
+              </Form.Item> */}
 
               {/* <Form.Item
                   name="presentaddress"

@@ -17,10 +17,14 @@ const Login = () => {
       const accessToken = response?.data?.token;
 
       // console.log("accessToken : ", response?.data?.token);
-      toast.success("Login successful!");
+      if(accessToken){
+        toast.success("Login successful!");
       localStorage.setItem("ivan_authToken", accessToken);
       Cookies.set("ivan_refreshToken", accessToken);
       navigate("/");
+      }else{
+        toast.error("Login failed. Please try again.");
+      }
 
     } catch (error) {
       toast.error("Login failed. Please try again !!!");
