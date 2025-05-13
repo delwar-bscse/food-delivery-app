@@ -7,15 +7,26 @@ import { GoStarFill } from "react-icons/go";
 import { Pagination } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useUpdateStatusMutation, useUserDeleteByIdMutation, useUsersQuery } from "../../redux/apiSlices/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { refactorFileUrl } from "../../lib/filePathUrl";
 
 const Users = () => {
-  const [pageNumber, setPageNumber] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [filterType, setFilterType] = useState("");
-  const [isSorting, setIsSorting] = useState(true);
+  // const [pageNumber, setPageNumber] = useState(1);
+  // const [limit, setLimit] = useState(10);
+  // const [filterType, setFilterType] = useState("");
+  // const [isSorting, setIsSorting] = useState(true);
+  const navigation = useNavigate();
+  const [searchParams] = useSearchParams();
+  console.log(searchParams);
+
+  // const searchData = new URLSearchParams(params[0]);
+
+  const pageNumber = +searchParams.get('page') || 1;
+  const limit = +searchParams.get('limit') || 10;
+  const filterType = searchParams.get('filterType') || '';
+  const isSorting = searchParams.get('isSorting') === "true" ? true : false;
+  
 
   const [updateStatus] = useUpdateStatusMutation();
   const [userDeleteById] = useUserDeleteByIdMutation();
@@ -52,6 +63,10 @@ const Users = () => {
   useEffect(() => {
     refetch();
   }, [filterType, pageNumber, isSorting]);
+
+  const handlePagination = (page, pageSize) => {
+        navigation(`?page=${page}&limit=${pageSize}&filterType=${filterType}&isSorting=${isSorting}`);
+    };
 
   //Table Columns
   const columns = [
@@ -172,19 +187,18 @@ const Users = () => {
         <h1 className="text-2xl font-semibold  my-5">Users</h1>
         <div className="flex gap-3 justify-end">
           {filterType !== '' && <div>
-            <Button onClick={() => setIsSorting(!isSorting)} size="large">{isSorting ? 'Ascending' : 'Descending'}</Button>
+            <Button onClick={() => navigation(`?page=${1}&limit=${10}&filterType=${filterType}&isSorting=${!isSorting}`)} size="large">{isSorting ? 'Ascending' : 'Descending'}</Button>
           </div>}
           {/* Filter by email or number */}
           <div className="w-[200px]">
             <Select
               size="large"
-              placeholder="Filter By"
+              placeholder={`${filterType === "" ? "All" : filterType}`}
               style={{
                 width: "100%",
               }}
               onChange={(e) => {
-                setFilterType(e);
-                setPageNumber(1);
+                navigation(`?page=${1}&limit=${10}&filterType=${e}&isSorting=${true}`);
               }}
               options={options}
             />
@@ -199,7 +213,7 @@ const Users = () => {
         pagination={false}
       />
       <div className="flex justify-center py-6">
-        <Pagination current={usersData?.data?.currentPage} onChange={(page, pageSize) =>{setPageNumber(page); setLimit(pageSize)}} total={usersData?.data?.totalUsers} />
+        <Pagination current={usersData?.data?.currentPage} onChange={handlePagination} total={usersData?.data?.totalUsers} showSizeChanger={false} />
       </div>
     </>
   );

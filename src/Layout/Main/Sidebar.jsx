@@ -42,12 +42,12 @@ const Sidebar = () => {
     {
       key: "/users",
       icon: <LuUser size={24} />,
-      label: <Link to="/users">Users</Link>,
+      label: <Link to="/users?page=1&limit=10&filterType=&isSorting=true">Users</Link>,
     },
     {
       key: "/orders",
       icon: <CgShoppingBag size={24} />,
-      label: <Link to="/orders">Parcel Management</Link>,
+      label: <Link to={`/orders?page=1&limit=10&activeTab=`}>Parcel Management</Link>,
     },
     // {
     //   key: "/view-reports",

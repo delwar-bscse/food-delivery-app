@@ -4,6 +4,7 @@ import { useOrderDetailsQuery } from '../../redux/apiSlices/orderSlice';
 import { useParams } from 'react-router-dom';
 import { BiShekel } from "react-icons/bi";
 import moment from 'moment/moment';
+import { refactorFileUrl } from '../../lib/filePathUrl';
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const OrderDetails = () => {
 
   const { _id, senderId, description, pickupLocation, deliveryLocation, title, deliveryStartTime, deliveryEndTime, deliveryType, price, images, deliveryRequests,
     assignedDelivererId } = isSuccess ? data?.data : {};
-  console.log("Order Details : ", data?.data);
+  // console.log("Order Details : ", data?.data);
 
   const orderDetails = {
     productImages: "https://via.placeholder.com/150",
@@ -37,7 +38,7 @@ const OrderDetails = () => {
         <div className='flex gap-4'>
           {/* Product Image */}
           <div>
-            <img src={product01} alt="Product" className='w-[300px]' />
+            <img src={images[0] ? refactorFileUrl(images[0]) : product01} alt="Product" className='w-[300px]' />
           </div>
 
           {/* Product Info */}

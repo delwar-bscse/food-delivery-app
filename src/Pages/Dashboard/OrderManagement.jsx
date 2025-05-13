@@ -5,7 +5,7 @@ import { LuView } from "react-icons/lu";
 import { ordersManagementData } from '../../datas/ordersManagementData';
 import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
 import { BiShekel } from "react-icons/bi";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const options = [
     {
@@ -109,16 +109,27 @@ const columns = [
 ];
 
 const OrderManagement = () => {
-    const [activeTab, setActiveTab] = useState('');
     const [selectRow, setSelectRow] = useState('orderid');
     const [searchValue, setSearchValue] = useState("");
-    const [current, setCurrent] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const navigation = useNavigate();
+    const [searchParams] = useSearchParams();
+    console.log(searchParams);
+
+    // const searchData = new URLSearchParams(params[0]);
+
+    const page = +searchParams.get('page') || 1;
+    const limit = +searchParams.get('limit') || 10;
+    const activeTab = searchParams.get('activeTab') || '';
+
+    // console.log(searchData.get('page'));
+    // console.log(searchData.get('limit'));
+    // console.log(searchData.get('activeTab'));
+    
 
 
     const { data: orderData, isLoading, refetch } = useOrdersQuery({
         status: activeTab,
-        page: current,
+        page: page,
         limit: limit
     });
     // console.log(orderData);
@@ -136,7 +147,15 @@ const OrderManagement = () => {
 
     useEffect(() => {
         refetch();
-    }, [activeTab, current]);
+    }, [activeTab, page, limit]);
+
+    const handlePagination = (page, pageSize) => {
+        navigation(`?page=${page}&limit=${pageSize}&activeTab=${activeTab}`);
+    };
+
+    const handleActiveTab = (tab) => {
+        navigation(`?page=${page}&limit=${limit}&activeTab=${tab}`);
+    };
 
     isLoading && <p>Loading...</p>
 
@@ -146,19 +165,19 @@ const OrderManagement = () => {
 
             {/* Filter by status */}
             <div className='grid grid-cols-5 gap-4 bg-gray-200 rounded-full p-1'>
-                <button onClick={() => setActiveTab('')} className={`${activeTab === '' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => handleActiveTab('')} className={`${activeTab === '' && 'bg-white'} p-3 rounded-full`}>
                     All
                 </button>
-                <button onClick={() => setActiveTab('PENDING')} className={`${activeTab === 'PENDING' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => handleActiveTab('PENDING')} className={`${activeTab === 'PENDING' && 'bg-white'} p-3 rounded-full`}>
                     Pending
                 </button>
-                <button onClick={() => setActiveTab('REQUESTED')} className={`${activeTab === 'REQUESTED' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => handleActiveTab('REQUESTED')} className={`${activeTab === 'REQUESTED' && 'bg-white'} p-3 rounded-full`}>
                     Requested
                 </button>
-                <button onClick={() => setActiveTab('IN_TRANSIT')} className={`${activeTab === 'IN_TRANSIT' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => handleActiveTab('IN_TRANSIT')} className={`${activeTab === 'IN_TRANSIT' && 'bg-white'} p-3 rounded-full`}>
                     In-Transit
                 </button>
-                <button onClick={() => setActiveTab('DELIVERED')} className={`${activeTab === 'DELIVERED' && 'bg-white'} p-3 rounded-full`}>
+                <button onClick={() => handleActiveTab('DELIVERED')} className={`${activeTab === 'DELIVERED' && 'bg-white'} p-3 rounded-full`}>
                     Delivered
                 </button>
             </div>
@@ -167,7 +186,7 @@ const OrderManagement = () => {
             </div>
             {/* {console.log("orderData: ", orderData?.data)} */}
             <div className="flex justify-center">
-                <Pagination current={orderData?.pagination?.currentPage} onChange={(page, pageSize) => {setCurrent(page); setLimit(pageSize)}} total={orderData?.pagination?.totalParcels} />
+                <Pagination current={page} onChange={handlePagination} pageSize={limit} total={orderData?.pagination?.totalParcels} showSizeChanger={true}/>
             </div>
         </div>
     )

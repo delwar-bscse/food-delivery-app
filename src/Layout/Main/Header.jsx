@@ -19,7 +19,7 @@ const Header = () => {
   }
 
   const user = userData?.data;
-  console.log(refactorFileUrl(user?.image));
+  // console.log(refactorFileUrl(user?.image));
 
   
   return (

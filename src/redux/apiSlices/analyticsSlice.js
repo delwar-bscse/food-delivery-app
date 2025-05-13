@@ -1,3 +1,4 @@
+import { use } from "react";
 import { api } from "../api/baseApi";
 
 const userSlice = api.injectEndpoints({
@@ -38,6 +39,15 @@ const userSlice = api.injectEndpoints({
       },
     }),
 
+    ratings: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: `/admin/star-rating`,
+        };
+      },
+    }),
+
   }),
 });
 
@@ -45,5 +55,6 @@ export const {
   useNewUserGrowthQuery,
   useUserAnalyticsQuery,
   useMostActiveUsersQuery,
-  useAverageDeliveryTimeQuery
+  useAverageDeliveryTimeQuery,
+  useRatingsQuery
 } = userSlice;
