@@ -7,21 +7,6 @@ import { useOrdersQuery } from '../../redux/apiSlices/orderSlice';
 import { BiShekel } from "react-icons/bi";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-const options = [
-    {
-        value: 'orderid',
-        label: 'Order ID',
-    },
-    // {
-    //     value: 'customername',
-    //     label: 'Customer Name',
-    // },
-    // {
-    //     value: 'deliveryperson',
-    //     label: 'Delivery Person',
-    // },
-];
-
 const orderStatusColors = {
     pending: 'red',
     requested: 'yellow',
@@ -41,7 +26,66 @@ const senderTypeColors = {
     Professional: 'green',
 };
 
-const columns = [
+
+
+const OrderManagement = () => {
+    const [selectRow, setSelectRow] = useState('orderid');
+    const [searchValue, setSearchValue] = useState("");
+    const navigation = useNavigate();
+    const [searchParams] = useSearchParams();
+    // console.log(searchParams);
+
+    // const searchData = new URLSearchParams(params[0]);
+
+    const page = +searchParams.get('page') || 1;
+    const limit = +searchParams.get('limit') || 10;
+    const activeTab = searchParams.get('activeTab') || '';
+
+    // console.log(searchData.get('page'));
+    // console.log(searchData.get('limit'));
+    // console.log(searchData.get('activeTab'));
+    
+
+
+    const { data: orderData, isLoading, refetch } = useOrdersQuery({
+        status: activeTab,
+        page: page,
+        limit: limit
+    });
+    // console.log(orderData);
+
+    const filteredData = orderData?.data
+        ?.map((item, index) => {
+            return {
+                ...item,
+                no: index + 1 + (page - 1) * limit,
+                key: item?._id,
+                orderid: item?._id,
+                index
+            }
+        })
+        .filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
+
+    useEffect(() => {
+        refetch();
+    }, [activeTab, page, limit]);
+
+    const handlePagination = (page, pageSize) => {
+        navigation(`?page=${page}&limit=${pageSize}&activeTab=${activeTab}`);
+    };
+
+    const handleActiveTab = (tab) => {
+        navigation(`?page=1&limit=10&activeTab=${tab}`);
+    };
+
+    isLoading && <p>Loading...</p>
+
+    const columns = [
+    {
+        title: 'No.',
+        dataIndex: 'no',
+        key: 'no'
+    },
     {
         title: 'ORDER ID.',
         dataIndex: '_id',
@@ -107,57 +151,6 @@ const columns = [
         ),
     },
 ];
-
-const OrderManagement = () => {
-    const [selectRow, setSelectRow] = useState('orderid');
-    const [searchValue, setSearchValue] = useState("");
-    const navigation = useNavigate();
-    const [searchParams] = useSearchParams();
-    console.log(searchParams);
-
-    // const searchData = new URLSearchParams(params[0]);
-
-    const page = +searchParams.get('page') || 1;
-    const limit = +searchParams.get('limit') || 10;
-    const activeTab = searchParams.get('activeTab') || '';
-
-    // console.log(searchData.get('page'));
-    // console.log(searchData.get('limit'));
-    // console.log(searchData.get('activeTab'));
-    
-
-
-    const { data: orderData, isLoading, refetch } = useOrdersQuery({
-        status: activeTab,
-        page: page,
-        limit: limit
-    });
-    // console.log(orderData);
-
-    const filteredData = orderData?.data
-        ?.map((item, index) => {
-            return {
-                ...item,
-                key: item?._id,
-                orderid: item?._id,
-                index
-            }
-        })
-        .filter((item) => item[selectRow].toLowerCase().includes(searchValue.toLowerCase()));
-
-    useEffect(() => {
-        refetch();
-    }, [activeTab, page, limit]);
-
-    const handlePagination = (page, pageSize) => {
-        navigation(`?page=${page}&limit=${pageSize}&activeTab=${activeTab}`);
-    };
-
-    const handleActiveTab = (tab) => {
-        navigation(`?page=${page}&limit=${limit}&activeTab=${tab}`);
-    };
-
-    isLoading && <p>Loading...</p>
 
 
     return (

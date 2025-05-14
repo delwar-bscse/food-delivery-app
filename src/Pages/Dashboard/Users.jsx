@@ -42,7 +42,7 @@ const Users = () => {
   const dataSource = usersData?.data?.users?.map((user, index) => ({
     ...user,
     key: user._id,
-    id: index + 1,
+    id: index + 1 + (limit  * (pageNumber - 1)),
   }));
 
   const handleUpdateStatus = async (record) => {
@@ -51,6 +51,7 @@ const Users = () => {
       isRestricted: record.isRestricted ? false : true
     }).unwrap();
     refetch();
+    toast.success("Status updated successfully!");
   }
 
   const handleDeleteUser = async (record) => {
@@ -71,7 +72,7 @@ const Users = () => {
   //Table Columns
   const columns = [
     {
-      title: "Id",
+      title: "No.",
       dataIndex: "id",
       key: "id"
     },

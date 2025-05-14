@@ -27,8 +27,8 @@ const User = () => {
 
   return (
     <div className="p-6 bg-white rounded-xl">
-      <div className="">
-        <div className='space-y-8 py-6 pt-6'>
+      <div className="flex">
+        <div className='grow space-y-8 py-6 pt-6'>
           <div className="flex items-start gap-6">
             {/* User Image */}
             <div className="w-60 h-60 overflow-hidden">
@@ -54,6 +54,7 @@ const User = () => {
             </div>
           </div>
         </div>
+        <button onClick={() => window.history.back()} className="text-white bg-gray-700 hover:bg-gray-600 px-5 py-1 rounded-lg h-10">Go Back</button>
       </div>
       {isShowReview && profile?.reviews?.length > 0 && <div className="h-[500px] overflow-y-auto grid grid-cols-3 my-6 gap-4 p-4 bg-gray-50 rounded-md border-2 border-gray-200">
         {profile?.reviews?.map((review, index) => (

@@ -1,13 +1,14 @@
 import React from 'react';
 import { product01 } from '../../assets/assets';
 import { useOrderDetailsQuery } from '../../redux/apiSlices/orderSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BiShekel } from "react-icons/bi";
 import moment from 'moment/moment';
 import { refactorFileUrl } from '../../lib/filePathUrl';
 
 const OrderDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data: data, isLoading, isSuccess } = useOrderDetailsQuery(id);
   console.log(data?.data);
@@ -34,7 +35,10 @@ const OrderDetails = () => {
   return (
     <div className='bg-white p-4 rounded-xl flex justify-center'>
       <div className=' p-4  max-w-[1000px]'>
-        <h1 className='text-2xl font-bold pb-4 border-b-2 mb-4'>Order Details</h1>
+        <div className='flex justify-between'>
+          <h1 className='text-2xl font-bold pb-4 border-b-2 mb-4'>Order Details</h1>
+          <button onClick={() => navigate(-1)} className="text-white bg-gray-700 hover:bg-gray-600 px-5 py-1 rounded-lg h-10">Go Back</button>
+        </div>
         <div className='flex gap-4'>
           {/* Product Image */}
           <div>
@@ -53,7 +57,7 @@ const OrderDetails = () => {
               <p><strong>Pickup Time : </strong> {moment(deliveryStartTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
               <p><strong>Delivered Time : </strong> {moment(deliveryEndTime).format('YYYY-MM-DD HH:mm:ss') || "N/A"}</p>
               <div className='flex items-center gap-1'>
-              <strong>Price : </strong> {price ? <p className='flex items-center gap-1'><BiShekel size={16} /><span>{price}</span></p> : "N/A"}
+                <strong>Price : </strong> {price ? <p className='flex items-center gap-1'><BiShekel size={16} /><span>{price}</span></p> : "N/A"}
               </div>
             </div>
           </div>
