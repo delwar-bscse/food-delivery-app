@@ -26,7 +26,7 @@ export default function EditSubscription({ isEditModalOpen, closeEditModal, sing
       deliveryLimit: values?.deliveryLimit,
       description: values.description
     };
-    console.log("sub details : ", values)
+    // console.log("sub details : ", values);
     await updateSubscription({ id: singleSubscription?._id, data: values });
     form.resetFields();
     closeEditModal();
@@ -77,7 +77,7 @@ export default function EditSubscription({ isEditModalOpen, closeEditModal, sing
                     name="price"
                     label="Price"
                   >
-                    <InputNumber size="large" className="w-full py-1 rounded-md" />
+                    <InputNumber min={0} size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
                 </div>
                 <div className="basis-1/2">
@@ -85,7 +85,7 @@ export default function EditSubscription({ isEditModalOpen, closeEditModal, sing
                     name="deliveryLimit"
                     label="Delivery Limit"
                   >
-                    <InputNumber size="large" className="w-full py-1 rounded-md" />
+                    <InputNumber min={0} size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
                 </div>
               </div>

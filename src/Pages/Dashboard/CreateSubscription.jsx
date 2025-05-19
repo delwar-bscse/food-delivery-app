@@ -68,7 +68,7 @@ export default function CreateSubscription() {
                     name="price"
                     label="Price"
                   >
-                    <InputNumber size="large" className="w-full py-1 rounded-md" />
+                    <InputNumber min={0} size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
                 </div>
                 <div className="basis-1/2">
@@ -76,7 +76,7 @@ export default function CreateSubscription() {
                     name="deliveryLimit"
                     label="Delivery Limit"
                   >
-                    <InputNumber size="large" className="w-full py-1 rounded-md" />
+                    <InputNumber min={0} size="large" className="w-full py-1 rounded-md" />
                   </Form.Item>
                 </div>
               </div>
