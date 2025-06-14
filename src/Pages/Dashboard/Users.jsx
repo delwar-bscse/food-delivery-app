@@ -18,7 +18,7 @@ const Users = () => {
   // const [isSorting, setIsSorting] = useState(true);
   const navigation = useNavigate();
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
+  // console.log(searchParams);
 
   // const searchData = new URLSearchParams(params[0]);
 
@@ -105,7 +105,7 @@ const Users = () => {
       title: "Number",
       dataIndex: "mobileNumber",
       key: "mobileNumber",
-      render: (_, record) => `${record?.email ? record?.email : record?.mobileNumber}`,
+      render: (_, record) => `${record?.mobileNumber}`,
     },
     {
       title: "Joined",
