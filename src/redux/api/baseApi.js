@@ -5,8 +5,7 @@ import Cookies from "js-cookie";
 // Enhanced base query to handle token refresh
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
-    // baseUrl: "http://10.0.70.208:3000/api/",
-    baseUrl: "https://azizul3000.binarybards.online/api/",
+    baseUrl: `${import.meta.env.VITE_BASE_URL}/api/`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("ivan_authToken");
       if (token) {
@@ -70,5 +69,4 @@ export const api = createApi({
 });
 
 // Export the image URL as a constant
-export const imageUrl = "https://azizul3000.binarybards.online/"
-// export const imageUrl = "http://10.0.70.208:3000/api";
+export const imageUrl = `${import.meta.env.VITE_BASE_URL}`
