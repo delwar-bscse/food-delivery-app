@@ -30,7 +30,7 @@ const Login = () => {
       toast.error(error || "Login failed. Please try again !!!", {id: "login"});
       console.error(error);
     }
-    toast
+    toast.dismiss("login");
   };
 
   return (
