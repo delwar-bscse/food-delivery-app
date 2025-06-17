@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 // Enhanced base query to handle token refresh
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_BASE_URL}/api/`,
+    baseUrl: `${import.meta.env.VITE_BASE_URL}/api`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("ivan_authToken");
       if (token) {

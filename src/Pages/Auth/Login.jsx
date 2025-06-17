@@ -7,10 +7,10 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [login] = useLoginMutation();
-
   const onFinish = async (values) => {
+    toast.loading("Logging in...", {id: "login"});
+    
     try {
       const response = await login(values).unwrap();
 
@@ -18,18 +18,19 @@ const Login = () => {
 
       // console.log("accessToken : ", response?.data?.token);
       if(accessToken){
-        toast.success("Login successful!");
+        toast.success("Login successful!", {id: "login"});
       localStorage.setItem("ivan_authToken", accessToken);
       Cookies.set("ivan_refreshToken", accessToken);
       navigate("/");
       }else{
-        toast.error("Login failed. Please try again.");
+        toast.error("Login failed. Please try again.", {id: "login"});
       }
 
     } catch (error) {
-      toast.error("Login failed. Please try again !!!");
-      console.log(error);
+      toast.error(error || "Login failed. Please try again !!!", {id: "login"});
+      console.error(error);
     }
+    toast
   };
 
   return (
