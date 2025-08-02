@@ -12,6 +12,7 @@ import { TbUserCircle } from "react-icons/tb";
 import { AiOutlineSound } from "react-icons/ai";
 import { RiLineChartLine } from "react-icons/ri";
 import { CgShoppingBag } from "react-icons/cg";
+import { VscFeedback } from "react-icons/vsc";
 
 import { DeliveryLogo } from "../../assets/assets";
 import { LogOut } from "lucide-react";
@@ -74,6 +75,11 @@ const Sidebar = () => {
     //   icon: <LuClipboardList size={24} />,
     //   label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
     // },
+    {
+      key: "/app-reviews",
+      icon: <VscFeedback size={24} />,
+      label: <Link to="/app-reviews">App-Reviews</Link>,
+    },
     {
       key: "/profile",
       icon: <TbUserCircle size={24} />,

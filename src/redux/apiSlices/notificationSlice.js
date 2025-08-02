@@ -15,20 +15,23 @@ const notificationSlice = api.injectEndpoints({
         };
       },
     }),
-    read: builder.mutation({
-      query: () => {
+    reviews: builder.query({
+      query: ({page=1,limit=10}) => {
         return {
-          url: `/admin/notifications`,
+          url: `/review/?page=${page}&limit=${limit}`,
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
+        };
+      },
+    }),
+    deleteReview: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/review/${id}`,
+          method: "DELETE",
         };
       },
     }),
   }),
 });
 
-export const { useNotificationQuery, useReadMutation } = notificationSlice;
+export const { useNotificationQuery, useReadMutation, useReviewsQuery, useDeleteReviewMutation } = notificationSlice;

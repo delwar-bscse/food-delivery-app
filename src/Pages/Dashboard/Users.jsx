@@ -10,6 +10,7 @@ import { useUpdateStatusMutation, useUserDeleteByIdMutation, useUsersQuery } fro
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { refactorFileUrl } from "../../lib/filePathUrl";
+import { data } from "autoprefixer";
 
 const Users = () => {
   // const [pageNumber, setPageNumber] = useState(1);
@@ -44,6 +45,7 @@ const Users = () => {
     key: user._id,
     id: index + 1 + (limit  * (pageNumber - 1)),
   }));
+  console.log(dataSource);
 
   const handleUpdateStatus = async (record) => {
     await updateStatus({

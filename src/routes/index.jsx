@@ -17,6 +17,7 @@ import Announcements from "../Pages/Dashboard/Announcements";
 import TermsAndCondition from "../Pages/Dashboard/TermsAndCondition";
 import NotFound from "../NotFound";
 import CreateSubscription from "../Pages/Dashboard/CreateSubscription";
+import AppReviews from "../Pages/Dashboard/AppReviews";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       //   path: "/terms-and-conditions",
       //   element: <TermsAndCondition />,
       // },
+      {
+        path: "/app-reviews",
+        element: <AppReviews />,
+      },
       {
         path: "/profile",
         element: <AdminProfile />,

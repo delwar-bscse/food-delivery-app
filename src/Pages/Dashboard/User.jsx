@@ -22,7 +22,7 @@ const User = () => {
 
 
   const { data: singleUser, isLoading, isSuccess, isError, error, refetch } = useUserByIdQuery(id);
-  // console.log( singleUser );
+  console.log( singleUser );
   const profile = singleUser?.profile;
 
   return (
