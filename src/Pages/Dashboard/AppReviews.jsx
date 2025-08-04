@@ -56,11 +56,11 @@ const AppReviews = () => {
                 <div className='flex'>
                   <div className="flex-1 flex items-center mb-4">
                     <div className="bg-blue-100 text-blue-800 rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">
-                      {review.userId.fullName.charAt(0)}
+                      {review?.userId?.fullName.charAt(0)}
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-bold text-gray-800">{review.userId.fullName}</h3>
-                      <p className="text-gray-500 text-sm">{review.userId.email}</p>
+                      <h3 className="font-bold text-gray-800">{review?.userId?.fullName}</h3>
+                      <p className="text-gray-500 text-sm">{review?.userId?.email}</p>
                     </div>
                   </div>
                   <button onClick={() => handleDeleteReview(review?._id)} className='bg-gray-200 w-9 h-9 flex items-center justify-center'>
@@ -73,17 +73,17 @@ const AppReviews = () => {
                     <Rate
                       disabled
                       allowHalf
-                      defaultValue={review.rating}
+                      defaultValue={review?.rating}
                       className="text-yellow-400"
                     />
                   </ConfigProvider>
                   <span className="ml-2 text-gray-600 font-medium">
-                    {review.rating.toFixed(1)}
+                    {review?.rating.toFixed(1)}
                   </span>
                 </div>
 
                 <p className="text-gray-700 italic">
-                  "{review.reviewText}"
+                  "{review?.reviewText}"
                 </p>
               </div>
             </div>
