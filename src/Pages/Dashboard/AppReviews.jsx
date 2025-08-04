@@ -63,7 +63,7 @@ const AppReviews = () => {
                       <p className="text-gray-500 text-sm">{review.userId.email}</p>
                     </div>
                   </div>
-                  <button onClick={() => handleDeleteReview(review._id)} className='bg-gray-200 w-9 h-9 flex items-center justify-center'>
+                  <button onClick={() => handleDeleteReview(review?._id)} className='bg-gray-200 w-9 h-9 flex items-center justify-center'>
                     <RiDeleteBin2Line className='text-red-500 cursor-pointer hover:text-red-700' size={24}  />
                   </button>
                 </div>

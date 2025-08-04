@@ -26,8 +26,8 @@ const notificationSlice = api.injectEndpoints({
     deleteReview: builder.mutation({
       query: (id) => {
         return {
-          url: `/review/${id}`,
           method: "DELETE",
+          url: `/review/${id}`,
         };
       },
     }),
