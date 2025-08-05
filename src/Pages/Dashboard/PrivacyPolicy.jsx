@@ -1,21 +1,21 @@
 import { useRef } from "react";
 import JoditEditor from "jodit-react";
-import { useTermsAndConditionQuery, useUpdateTermsAndConditionsMutation } from "../../redux/apiSlices/rulesSlice";
+import { usePrivacyPolicyQuery, useUpdatePrivacyPolicyMutation } from "../../redux/apiSlices/rulesSlice";
 import toast from "react-hot-toast";
 
-function TermsAndCondition() {
+function PrivacyPolicy() {
   const editor = useRef(null);
 
-  const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
-  const { data: data, isLoading, refetch } = useTermsAndConditionQuery();
+  const [updatePrivacyPolicy] = useUpdatePrivacyPolicyMutation();
+  const { data: data, isLoading, refetch } = usePrivacyPolicyQuery();
 
   const handleOnSave = async () => {
     try {
-      await updateTermsAndConditions({ content: editor.current.value }).unwrap();
-      toast.success("Terms & Conditions saved successfully!");
+      await updatePrivacyPolicy({ content: editor.current.value }).unwrap();
+      toast.success("Privacy Policy saved successfully!");
       refetch(); // Refresh the data after save
     } catch (error) {
-      toast.error("Failed to save Terms & Conditions. Please try again.");
+      toast.error("Failed to save Privacy Policy. Please try again.");
       console.error("Save error:", error);
     }
   };
@@ -24,7 +24,7 @@ function TermsAndCondition() {
     <div className="">
       {/* Jodit Editor */}
       <div className="">
-        <h1 className="text-2xl font-bold pb-4">Terms & Conditions</h1>
+        <h1 className="text-2xl font-bold pb-4">Privacy Policy</h1>
         {!isLoading ? <JoditEditor
           ref={editor}
           value={data?.data?.content}
@@ -40,4 +40,4 @@ function TermsAndCondition() {
   );
 }
 
-export default TermsAndCondition;
+export default PrivacyPolicy;

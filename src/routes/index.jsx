@@ -18,6 +18,8 @@ import TermsAndCondition from "../Pages/Dashboard/TermsAndCondition";
 import NotFound from "../NotFound";
 import CreateSubscription from "../Pages/Dashboard/CreateSubscription";
 import AppReviews from "../Pages/Dashboard/AppReviews";
+import PrivacyPolicy from "../Pages/Dashboard/PrivacyPolicy";
+import AboutUs from "../Pages/Dashboard/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -68,10 +70,18 @@ const router = createBrowserRouter([
         path: "/subscriptions/create",
         element: <CreateSubscription />,
       },
-      // {
-      //   path: "/terms-and-conditions",
-      //   element: <TermsAndCondition />,
-      // },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndCondition />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+      },
       {
         path: "/app-reviews",
         element: <AppReviews />,

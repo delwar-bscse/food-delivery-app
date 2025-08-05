@@ -22,8 +22,11 @@ const User = () => {
 
 
   const { data: singleUser, isLoading, isSuccess, isError, error, refetch } = useUserByIdQuery(id);
-  console.log( singleUser );
+  // console.log(singleUser);
   const profile = singleUser?.profile;
+  console.log(profile);
+
+  // isLoading && <p>Loading...</p>
 
   return (
     <div className="p-6 bg-white rounded-xl">
@@ -32,7 +35,7 @@ const User = () => {
           <div className="flex items-start gap-6">
             {/* User Image */}
             <div className="w-60 h-60 overflow-hidden">
-              <img src={refactorFileUrl(profile?.Image)} alt="" className="cover" />
+              {!profile?.Image && <img src={refactorFileUrl(profile?.image)} alt="" className="cover" />}
             </div>
             {/* User Details */}
             <div className="grid gap-6 grid-flow-col grid-rows-5">

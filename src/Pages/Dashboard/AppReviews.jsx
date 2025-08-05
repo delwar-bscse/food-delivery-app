@@ -1,8 +1,9 @@
 import React from 'react'
 import { useDeleteReviewMutation, useReviewsQuery } from '../../redux/apiSlices/notificationSlice';
 import { ConfigProvider, Pagination, Rate } from 'antd';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import toast from 'react-hot-toast';
 
 const AppReviews = () => {
@@ -63,9 +64,14 @@ const AppReviews = () => {
                       <p className="text-gray-500 text-sm">{review?.userId?.email}</p>
                     </div>
                   </div>
-                  <button onClick={() => handleDeleteReview(review?._id)} className='bg-gray-200 w-9 h-9 flex items-center justify-center'>
-                    <RiDeleteBin2Line className='text-red-500 cursor-pointer hover:text-red-700' size={24}  />
-                  </button>
+                  <div className='flex flex-col items-center'>
+                    <button onClick={() => handleDeleteReview(review?._id)} className=' w-9 h-9 flex items-center justify-center'>
+                      <RiDeleteBin2Line className='text-red-500 cursor-pointer hover:text-red-700' size={24} />
+                    </button>
+                    <Link to={`/users/${review?.userId?._id}`} className=' w-9 h-9 flex items-center justify-center'>
+                      <MdOutlineRemoveRedEye className='text-green-500 cursor-pointer hover:text-green-700' size={24} />
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="mb-4 flex items-center">

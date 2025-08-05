@@ -70,11 +70,21 @@ const Sidebar = () => {
       icon: <AiOutlineSound size={24} />,
       label: <Link to="/announcements">Announcements</Link>,
     },
-    // {
-    //   key: "/terms-and-conditions",
-    //   icon: <LuClipboardList size={24} />,
-    //   label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
-    // },
+    {
+      key: "/terms-and-conditions",
+      icon: <LuClipboardList size={24} />,
+      label: <Link to="/terms-and-conditions">Terms & Conditions</Link>,
+    },
+    {
+      key: "/privacy-policy",
+      icon: <LuClipboardList size={24} />,
+      label: <Link to="/privacy-policy">Privacy Policy</Link>,
+    },
+    {
+      key: "/about-us",
+      icon: <LuClipboardList size={24} />,
+      label: <Link to="/about-us">About Us</Link>,
+    },
     {
       key: "/app-reviews",
       icon: <VscFeedback size={24} />,
