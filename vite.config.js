@@ -10,6 +10,8 @@ export default defineConfig({
 
     host: "72.167.54.115",
 
+    port: 5173,
+
     allowedHosts: [
 
       "www.admin.deliverlydashboard.com",
