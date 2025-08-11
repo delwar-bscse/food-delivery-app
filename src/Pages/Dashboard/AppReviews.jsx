@@ -15,7 +15,7 @@ const AppReviews = () => {
   const [deleteReview] = useDeleteReviewMutation();
   const { data: reviewsData, isLoading, refetch } = useReviewsQuery({
     page: pageNumber,
-    limit: 20
+    limit: 10
   });
   // console.log("Backend Data", reviewsData?.data);
 

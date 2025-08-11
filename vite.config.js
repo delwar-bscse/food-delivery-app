@@ -4,12 +4,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   server: {
-    // host: "72.167.54.115",
-    host: "0.0.0.0",
-    port: 3001,
+    host: "https://www.admin.deliverlydashboard.com",
   },
   preview: {
-    host: "72.167.54.115",
-    port: 3001,
+    host: "https://www.admin.deliverlydashboard.com",
   },
 });
