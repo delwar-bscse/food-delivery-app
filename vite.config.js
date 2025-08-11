@@ -8,6 +8,5 @@ export default defineConfig({
   },
   preview: {
     host: "72.167.54.115",
-    port: 3001,
   },
 });
