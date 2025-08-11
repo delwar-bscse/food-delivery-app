@@ -7,6 +7,7 @@ export default defineConfig({
     host: "https://www.admin.deliverlydashboard.com",
   },
   preview: {
-    host: "https://www.admin.deliverlydashboard.com",
+    host: "72.167.54.115",
+    port: 3001,
   },
 });
